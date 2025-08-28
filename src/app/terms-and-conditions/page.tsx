@@ -4,7 +4,7 @@ import TopBar from "@/components/layout/top-bar";
 
 export default function TermsAndConditionsPage() {
   return (
-    <div className="relative flex flex-col min-h-screen bg-[#0a0a1a] bg-gradient-to-br from-[#0a0a1a] to-[#1a1a3a]">
+    <div className="relative flex flex-col min-h-screen bg-background">
       <div className="relative z-10 flex flex-col flex-1">
         <TopBar />
         <Header />

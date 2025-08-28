@@ -50,8 +50,8 @@ const ParticleBackground = () => {
 
             draw() {
                 if (ctx) {
-                    ctx.fillStyle = 'rgba(0, 240, 255, 0.5)';
-                    ctx.strokeStyle = 'rgba(0, 240, 255, 0.5)';
+                    ctx.fillStyle = 'hsla(45, 56%, 52%, 0.5)';
+                    ctx.strokeStyle = 'hsla(45, 56%, 52%, 0.5)';
                     ctx.lineWidth = 2;
                     ctx.beginPath();
                     ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
@@ -80,7 +80,7 @@ const ParticleBackground = () => {
                     if (distance < 100) {
                         if (ctx) {
                             ctx.beginPath();
-                            ctx.strokeStyle = `rgba(0, 240, 255, ${1 - distance/100})`;
+                            ctx.strokeStyle = `hsla(45, 56%, 52%, ${1 - distance/100})`;
                             ctx.lineWidth = 0.2;
                             ctx.moveTo(particles[i].x, particles[i].y);
                             ctx.lineTo(particles[j].x, particles[j].y);

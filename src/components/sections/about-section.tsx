@@ -79,7 +79,7 @@ const AboutSection = () => {
                       <div className="absolute inset-0 bg-gradient-to-t from-black/80 to-transparent" />
                        <div className="absolute bottom-0 left-0 right-0 p-4 text-left">
                           <h4 className="text-lg font-bold text-white">{member.name}</h4>
-                          <p className="text-sm text-primary">{member.role}</p>
+                          <p className="text-sm text-primary font-semibold">{member.role}</p>
                        </div>
                     </div>
                   </div>
