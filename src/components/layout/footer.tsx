@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from 'react';
 import Link from 'next/link';
-import { Copyright, Facebook, Twitter, Linkedin, Instagram } from "lucide-react";
+import { Copyright, Facebook, Linkedin, Instagram, Youtube } from "lucide-react";
 import HolographicLogo from '@/components/holographic-logo';
 
 const navItems = [
@@ -17,6 +17,7 @@ const socialLinks = [
   { icon: Facebook, href: '#', name: 'Facebook' },
   { icon: Linkedin, href: '#', name: 'LinkedIn' },
   { icon: Instagram, href: '#', name: 'Instagram' },
+  { icon: Youtube, href: '#', name: 'YouTube' },
 ]
 
 const Footer = () => {

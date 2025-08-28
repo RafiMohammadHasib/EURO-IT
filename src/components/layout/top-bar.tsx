@@ -1,12 +1,13 @@
 
 "use client";
 
-import { Mail, Phone, Facebook, Linkedin, Instagram } from "lucide-react";
+import { Mail, Phone, Facebook, Linkedin, Instagram, Youtube } from "lucide-react";
 
 const socialLinks = [
   { icon: Facebook, href: '#', name: 'Facebook' },
   { icon: Linkedin, href: '#', name: 'LinkedIn' },
   { icon: Instagram, href: '#', name: 'Instagram' },
+  { icon: Youtube, href: '#', name: 'YouTube' },
 ]
 
 const TopBar = () => {
