@@ -10,7 +10,6 @@ const teamMembers = [
   { name: 'Jakir Hossain', role: 'Group GM', image: 'https://picsum.photos/300/300?random=4' },
   { name: 'Syed Mominin Islam Tamim', role: 'Creative Designer', image: 'https://picsum.photos/300/300?random=5' },
   { name: 'Md. Shakil Mahmud', role: 'Head of Creative Lead', image: 'https://picsum.photos/300/300?random=6' },
-  { name: 'Md. Salim', role: 'Senior Business Development', image: 'https://picsum.photos/300/300?random=7' },
   { name: 'Samia Chowdhury', role: 'Graphics Design & Video Editing', image: 'https://picsum.photos/300/300?random=8' },
   { name: 'Rafi Md. Hasib', role: 'Software Engineer & Business Developer', image: 'https://picsum.photos/300/300?random=9' },
 ];
@@ -55,9 +54,9 @@ const AboutSection = () => {
 
       <div>
         <h3 className="text-3xl font-bold text-center mb-12 glow-text">Some of Our Key Members</h3>
-        <div className="grid sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-8">
+        <div className="flex overflow-x-auto space-x-8 pb-4">
           {teamMembers.map((member) => (
-            <div key={member.name} className="glass-card group p-0 overflow-hidden text-center transition-all duration-300 hover:shadow-primary/20 hover:border-primary/50 transform hover:-translate-y-2">
+            <div key={member.name} className="flex-shrink-0 w-64 glass-card group p-0 overflow-hidden text-center transition-all duration-300 hover:shadow-primary/20 hover:border-primary/50 transform hover:-translate-y-2">
               <div className="relative h-64">
                 <Image src={member.image} alt={member.name} data-ai-hint="person portrait" fill style={{ objectFit: 'cover' }} className="grayscale group-hover:grayscale-0 transition-all duration-300 group-hover:scale-110" />
                 <div className="absolute inset-0 bg-gradient-to-t from-black/80 to-transparent" />
