@@ -1,6 +1,6 @@
 "use client";
 
-import { Megaphone, Search, Users, Mail, BarChart, PenTool, Monitor, Smartphone, Puzzle } from "lucide-react";
+import { Megaphone, Search, Users, Mail, BarChart, PenTool, Monitor, Smartphone, Puzzle, Lightbulb } from "lucide-react";
 import type { LucideIcon } from "lucide-react";
 
 type Service = {
@@ -26,9 +26,14 @@ const services: Service[] = [
     icon: Megaphone,
   },
   {
-    title: "Content Marketing",
-    description: "Attract and retain your audience with valuable, relevant content that builds brand authority.",
+    title: "Content Creation",
+    description: "High-quality blog posts, videos, and graphics that resonate with your audience.",
     icon: PenTool,
+  },
+  {
+    title: "Content Strategy",
+    description: "Attract and retain your audience with valuable, relevant content that builds brand authority.",
+    icon: Lightbulb,
   },
   {
     title: "Email Marketing",
