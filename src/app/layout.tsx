@@ -3,6 +3,7 @@ import './globals.css';
 import { Toaster } from "@/components/ui/toaster";
 import { cn } from '@/lib/utils';
 import { ThemeProvider } from '@/components/theme-provider';
+import WhatsAppButton from '@/components/whatsapp-button';
 
 export const metadata: Metadata = {
   title: 'EURO IT - Digital Marketing Agency',
@@ -31,6 +32,7 @@ export default function RootLayout({
           >
           {children}
           <Toaster />
+          <WhatsAppButton />
         </ThemeProvider>
       </body>
     </html>
