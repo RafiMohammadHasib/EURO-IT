@@ -8,15 +8,15 @@ import { cn } from '@/lib/utils';
 import { ExternalLink } from 'lucide-react';
 
 const projects = [
-  { id: 1, title: 'AI-Powered Analytics Platform', category: 'AI/ML', image: 'https://picsum.photos/600/400?random=4', description: 'A cutting-edge platform for real-time data analysis.' },
-  { id: 2, title: 'Cloud-Native E-commerce Solution', category: 'Web', image: 'https://picsum.photos/600/400?random=5', description: 'Scalable and secure e-commerce architecture.' },
-  { id: 3, title: 'Cybersecurity Threat Detector', category: 'Security', image: 'https://picsum.photos/600/400?random=6', description: 'Proactive threat detection using machine learning.' },
-  { id: 4, title: 'Mobile Banking Super App', category: 'Mobile', image: 'https://picsum.photos/600/400?random=7', description: 'A comprehensive mobile banking experience.' },
-  { id: 5, title: 'Decentralized Finance App', category: 'Web', image: 'https://picsum.photos/600/400?random=8', description: 'Secure and transparent DeFi application on blockchain.' },
-  { id: 6, title: 'IoT Smart Home System', category: 'AI/ML', image: 'https://picsum.photos/600/400?random=9', description: 'Integrated smart home automation using IoT devices.' },
+  { id: 1, title: 'Global SEO Campaign for Tech Startup', category: 'SEO', image: 'https://picsum.photos/600/400?random=4', description: 'Achieved 200% organic traffic growth in 6 months.' },
+  { id: 2, title: 'Social Media Strategy for Fashion Brand', category: 'Social Media', image: 'https://picsum.photos/600/400?random=5', description: 'Increased engagement by 150% and follower growth by 50K.' },
+  { id: 3, title: 'PPC Campaign for E-commerce Store', category: 'PPC', image: 'https://picsum.photos/600/400?random=6', description: 'Generated a 5X return on ad spend (ROAS).' },
+  { id: 4, title: 'Content Marketing for a B2B SaaS', category: 'Content', image: 'https://picsum.photos/600/400?random=7', description: 'Drove high-quality leads through insightful blog posts and whitepapers.' },
+  { id: 5, title: 'Email Marketing Automation for Retailer', category: 'Email', image: 'https://picsum.photos/600/400?random=8', description: 'Boosted customer retention and repeat purchases by 30%.' },
+  { id: 6, title: 'Influencer Marketing for a New App', category: 'Social Media', image: 'https://picsum.photos/600/400?random=9', description: 'Secured 1M+ impressions through strategic partnerships.' },
 ];
 
-const categories = ['All', 'Web', 'Mobile', 'AI/ML', 'Security'];
+const categories = ['All', 'SEO', 'Social Media', 'PPC', 'Content', 'Email'];
 
 const PortfolioSection = () => {
   const [activeCategory, setActiveCategory] = useState('All');
@@ -28,9 +28,9 @@ const PortfolioSection = () => {
   return (
     <section id="portfolio" className="section-container">
       <div className="text-center mb-16">
-        <h2 className="text-4xl md:text-5xl font-bold glow-text">Our Portfolio</h2>
+        <h2 className="text-4xl md:text-5xl font-bold glow-text">Our Case Studies</h2>
         <p className="mt-4 max-w-2xl mx-auto text-lg text-muted-foreground">
-          A showcase of our successful projects and innovative solutions.
+          A showcase of our successful campaigns and client results.
         </p>
       </div>
 
@@ -56,7 +56,7 @@ const PortfolioSection = () => {
         {filteredProjects.map(project => (
           <div key={project.id} className="glass-card group p-0 overflow-hidden relative transition-all duration-300 hover:shadow-primary/20 hover:border-primary/50">
             <div className="relative h-56 w-full">
-               <Image src={project.image} alt={project.title} data-ai-hint="abstract technology" fill style={{ objectFit: 'cover' }} className="transition-transform duration-500 group-hover:scale-110" />
+               <Image src={project.image} alt={project.title} data-ai-hint="digital marketing abstract" fill style={{ objectFit: 'cover' }} className="transition-transform duration-500 group-hover:scale-110" />
                <div className="absolute inset-0 bg-black/50 group-hover:bg-black/70 transition-all duration-300" />
             </div>
             <div className="p-6">

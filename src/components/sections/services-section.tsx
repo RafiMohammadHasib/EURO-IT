@@ -1,4 +1,4 @@
-import { Code, Cloud, Shield, Database, BrainCircuit, Smartphone } from "lucide-react";
+import { Megaphone, Search, Users, Mail, BarChart, PenTool } from "lucide-react";
 import type { LucideIcon } from "lucide-react";
 
 type Service = {
@@ -9,34 +9,34 @@ type Service = {
 
 const services: Service[] = [
   {
-    title: "Custom Software Development",
-    description: "Tailor-made software solutions to fit your unique business needs and drive growth.",
-    icon: Code,
+    title: "Search Engine Optimization (SEO)",
+    description: "Boost your visibility on search engines and drive organic traffic to your site.",
+    icon: Search,
   },
   {
-    title: "Cloud & DevOps",
-    description: "Scalable cloud infrastructure and streamlined development pipelines for maximum efficiency.",
-    icon: Cloud,
+    title: "Social Media Marketing",
+    description: "Build a strong social presence, engage your audience, and convert followers into customers.",
+    icon: Users,
   },
   {
-    title: "Cybersecurity Solutions",
-    description: "Protect your digital assets with our comprehensive, multi-layered security services.",
-    icon: Shield,
+    title: "Pay-Per-Click (PPC) Ads",
+    description: "Get immediate, targeted traffic with strategic ad campaigns on Google and social media.",
+    icon: Megaphone,
   },
   {
-    title: "Data & Analytics",
-    description: "Unlock valuable insights from your data to make informed business decisions.",
-    icon: Database,
+    title: "Content Marketing",
+    description: "Attract and retain your audience with valuable, relevant content that builds brand authority.",
+    icon: PenTool,
   },
   {
-    title: "AI & Machine Learning",
-    description: "Leverage the power of AI to automate processes and create intelligent applications.",
-    icon: BrainCircuit,
+    title: "Email Marketing",
+    description: "Nurture leads and build customer loyalty with personalized email campaigns.",
+    icon: Mail,
   },
   {
-    title: "Mobile App Development",
-    description: "Engaging and high-performance mobile applications for both iOS and Android platforms.",
-    icon: Smartphone,
+    title: "Analytics & Data Insights",
+    description: "Make data-driven decisions with in-depth analytics and actionable reporting.",
+    icon: BarChart,
   },
 ];
 
@@ -46,7 +46,7 @@ const ServicesSection = () => {
       <div className="text-center mb-16">
         <h2 className="text-4xl md:text-5xl font-bold glow-text">Our Services</h2>
         <p className="mt-4 max-w-2xl mx-auto text-lg text-muted-foreground">
-          We provide a wide range of technology services to power your success.
+          We offer a complete suite of digital marketing services to grow your brand.
         </p>
       </div>
 

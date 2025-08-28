@@ -5,13 +5,13 @@ import { cn } from '@/lib/utils';
 
 const HolographicLogo = () => {
   return (
-    <Link href="/" className="relative font-headline text-2xl font-bold text-white tracking-widest uppercase" aria-label="Euro IT Vision Home">
+    <Link href="/" className="relative font-headline text-2xl font-bold text-white tracking-widest uppercase" aria-label="EURO IT Home">
       <span className={cn(
         "relative z-10",
         "bg-clip-text text-transparent bg-gradient-to-r from-white to-cyan-300",
         "animate-hologram-text"
       )}>
-        Euro IT Vision
+        EURO IT
       </span>
       <style jsx>{`
         @keyframes hologram-text {

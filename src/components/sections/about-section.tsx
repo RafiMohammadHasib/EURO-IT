@@ -4,18 +4,18 @@ import Image from "next/image";
 import { Users, Target, Eye } from "lucide-react";
 
 const teamMembers = [
-  { name: 'John Doe', role: 'CEO & Founder', image: 'https://picsum.photos/300/300?random=1' },
-  { name: 'Jane Smith', role: 'Lead Developer', image: 'https://picsum.photos/300/300?random=2' },
-  { name: 'Peter Jones', role: 'UX/UI Designer', image: 'https://picsum.photos/300/300?random=3' },
+  { name: 'Alex Johnson', role: 'CEO & Founder', image: 'https://picsum.photos/300/300?random=1' },
+  { name: 'Maria Garcia', role: 'Head of SEO', image: 'https://picsum.photos/300/300?random=2' },
+  { name: 'Sam Chen', role: 'Lead Content Strategist', image: 'https://picsum.photos/300/300?random=3' },
 ];
 
 const AboutSection = () => {
   return (
     <section id="about" className="section-container">
       <div className="text-center mb-16">
-        <h2 className="text-4xl md:text-5xl font-bold glow-text">About Euro IT Vision</h2>
+        <h2 className="text-4xl md:text-5xl font-bold glow-text">About EURO IT</h2>
         <p className="mt-4 max-w-2xl mx-auto text-lg text-muted-foreground">
-          Pioneering the future of technology with innovative solutions and a commitment to excellence.
+          Driving growth for ambitious brands with creative digital marketing strategies.
         </p>
       </div>
 
@@ -24,22 +24,22 @@ const AboutSection = () => {
           <div className="p-4 bg-primary/20 rounded-full mb-4">
             <Users className="w-8 h-8 text-primary" />
           </div>
-          <h3 className="text-2xl font-bold mb-2">Our Story</h3>
-          <p className="text-muted-foreground">From a small startup to a leading technology partner, our journey is fueled by passion and innovation.</p>
+          <h3 className="text-2xl font-bold mb-2">Who We Are</h3>
+          <p className="text-muted-foreground">We are a team of passionate marketers, strategists, and creatives dedicated to helping your brand shine online.</p>
         </div>
         <div className="glass-card p-8 flex flex-col items-center">
           <div className="p-4 bg-primary/20 rounded-full mb-4">
             <Target className="w-8 h-8 text-primary" />
           </div>
           <h3 className="text-2xl font-bold mb-2">Our Mission</h3>
-          <p className="text-muted-foreground">To empower businesses with transformative technology that drives growth, efficiency, and success.</p>
+          <p className="text-muted-foreground">To deliver measurable results and exceptional ROI through innovative and data-driven digital marketing solutions.</p>
         </div>
         <div className="glass-card p-8 flex flex-col items-center">
           <div className="p-4 bg-primary/20 rounded-full mb-4">
             <Eye className="w-8 h-8 text-primary" />
           </div>
           <h3 className="text-2xl font-bold mb-2">Our Vision</h3>
-          <p className="text-muted-foreground">To be a global leader in digital innovation, shaping a future where technology and creativity converge.</p>
+          <p className="text-muted-foreground">To be the leading digital partner for businesses seeking to dominate their online space and achieve sustainable growth.</p>
         </div>
       </div>
 
@@ -48,7 +48,7 @@ const AboutSection = () => {
       </div>
 
       <div>
-        <h3 className="text-3xl font-bold text-center mb-12 glow-text">Meet Our Team</h3>
+        <h3 className="text-3xl font-bold text-center mb-12 glow-text">Meet Our Experts</h3>
         <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-8">
           {teamMembers.map((member) => (
             <div key={member.name} className="glass-card group p-0 overflow-hidden text-center transition-all duration-300 hover:shadow-primary/20 hover:border-primary/50">

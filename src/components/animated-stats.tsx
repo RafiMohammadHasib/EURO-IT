@@ -10,10 +10,10 @@ type Stat = {
 };
 
 const stats: Stat[] = [
-  { value: 10, label: "Years of Experience", suffix: "+" },
-  { value: 250, label: "Projects Completed", suffix: "+" },
-  { value: 98, label: "Client Satisfaction", suffix: "%" },
-  { value: 15, label: "Expert Engineers" },
+  { value: 120, label: "Campaigns Launched", suffix: "+" },
+  { value: 50, label: "Happy Clients", suffix: "+" },
+  { value: 95, label: "Client Satisfaction", suffix: "%" },
+  { value: 10, label: "Marketing Experts" },
 ];
 
 const AnimatedStat = ({ stat }: { stat: Stat }) => {

@@ -3,10 +3,10 @@
 import { useState, useEffect } from 'react';
 
 const phrases = [
-  "Innovative Web Solutions.",
-  "AI-Powered Insights.",
-  "Secure Cloud Architectures.",
-  "Next-Gen Mobile Apps.",
+  "We Grow Your Brand.",
+  "Data-Driven Strategies.",
+  "Maximizing Your ROI.",
+  "Creative Campaigns.",
 ];
 
 const TypewriterEffect = () => {
