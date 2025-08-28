@@ -1,3 +1,5 @@
+"use client";
+
 import { Megaphone, Search, Users, Mail, BarChart, PenTool, Monitor, Smartphone, Puzzle } from "lucide-react";
 import type { LucideIcon } from "lucide-react";
 

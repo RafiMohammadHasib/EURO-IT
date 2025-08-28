@@ -1,3 +1,5 @@
+"use client";
+
 import { AnimatedStats } from "@/components/animated-stats";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import Image from "next/image";
