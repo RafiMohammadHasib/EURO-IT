@@ -38,7 +38,7 @@ const HeroSection = () => {
         animate="visible"
       >
         <motion.h1
-          className="text-5xl md:text-7xl font-bold bg-clip-text text-transparent bg-gradient-to-b from-white to-gray-400 mb-6"
+          className="text-5xl md:text-7xl font-bold bg-clip-text text-transparent bg-gradient-to-b from-black to-gray-600 dark:from-white dark:to-gray-400 mb-6"
           variants={itemVariants}
         >
           Results-Driven Digital Marketing.
