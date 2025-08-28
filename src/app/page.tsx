@@ -2,7 +2,6 @@
 
 import Header from "@/components/layout/header";
 import Footer from "@/components/layout/footer";
-import HeroSection from "@/components/sections/hero-section";
 import ServicesSection from "@/components/sections/services-section";
 import AboutSection from "@/components/sections/about-section";
 import PortfolioSection from "@/components/sections/portfolio-section";
@@ -10,6 +9,7 @@ import ContactSection from "@/components/sections/contact-section";
 import TopBar from "@/components/layout/top-bar";
 import BlogSection from "@/components/sections/blog-section";
 import FaqSection from "@/components/sections/faq-section";
+import HeroWrapper from "@/components/hero-wrapper";
 
 
 export default function Home() {
@@ -19,7 +19,7 @@ export default function Home() {
         <TopBar />
         <Header />
         <main className="px-4 sm:px-6 lg:px-8 flex-grow">
-          <HeroSection />
+          <HeroWrapper />
           <ServicesSection />
           <AboutSection />
           <PortfolioSection />
