@@ -6,15 +6,14 @@ import { Copyright, Facebook, Twitter, Linkedin, Instagram } from "lucide-react"
 import HolographicLogo from '@/components/holographic-logo';
 
 const navItems = [
+  { name: 'About Us', href: '#about' },
   { name: 'Services', href: '#services' },
-  { name: 'About', href: '#about' },
   { name: 'Portfolio', href: '#portfolio' },
   { name: 'Contact', href: '#contact' },
 ];
 
 const socialLinks = [
   { icon: Facebook, href: '#', name: 'Facebook' },
-  { icon: Twitter, href: '#', name: 'Twitter' },
   { icon: Linkedin, href: '#', name: 'LinkedIn' },
   { icon: Instagram, href: '#', name: 'Instagram' },
 ]
@@ -33,7 +32,7 @@ const Footer = () => {
           <div className="md:col-span-1">
             <HolographicLogo />
             <p className="mt-4 text-muted-foreground text-sm">
-              Elevating brands with data-driven digital marketing strategies.
+              Euro IT is a leading technology solutions provider specializing in Digital Marketing, ERP systems, and custom web solutions. Elevate your business with cutting-edge digital transformation.
             </p>
           </div>
           
@@ -52,11 +51,12 @@ const Footer = () => {
 
           <div>
             <h3 className="font-headline text-lg font-semibold text-white tracking-wider">Contact Us</h3>
-            <ul className="mt-4 space-y-2 text-sm text-gray-300">
-              <li>contact@euroit.com</li>
-              <li>+1 234 567 890</li>
-              <li>123 Marketing Lane, Digital City, CA</li>
-            </ul>
+            <div className='text-sm text-gray-300 mt-4 space-y-2'>
+              <p className="font-semibold text-white">BD Bangladesh Office</p>
+              <p>Address: Regnum Resource Limited, Rahman's Regnum Centre Business Suite, Tejgaon C/A, Dhaka- 1208, Bangladesh.</p>
+              <p>Phone: +880 1339-844255</p>
+              <p>Email: euroitofficial@gmail.com</p>
+            </div>
           </div>
           
           <div>

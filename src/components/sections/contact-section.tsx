@@ -14,22 +14,22 @@ const ContactSection = () => {
             <div className="flex flex-col gap-4">
               <div className="flex items-center gap-4 text-muted-foreground">
                 <Mail className="w-5 h-5 text-primary" />
-                <span>contact@euroit.com</span>
+                <span>euroitofficial@gmail.com</span>
               </div>
               <div className="flex items-center gap-4 text-muted-foreground">
                 <Phone className="w-5 h-5 text-primary" />
-                <span>+1 234 567 890</span>
+                <span>+880 1339-844255</span>
               </div>
-              <div className="flex items-center gap-4 text-muted-foreground">
-                <MapPin className="w-5 h-5 text-primary" />
-                <span>123 Marketing Lane, Digital City, CA</span>
+              <div className="flex items-start gap-4 text-muted-foreground">
+                <MapPin className="w-5 h-5 text-primary mt-1 flex-shrink-0" />
+                <span>Regnum Resource Limited, Rahman's Regnum Centre Business Suite, Tejgaon C/A, Dhaka- 1208, Bangladesh.</span>
               </div>
             </div>
           </div>
           <div className="flex flex-col items-center justify-center bg-primary/10 p-8 rounded-lg border border-primary/20">
              <h3 className="text-2xl font-bold text-center text-white mb-4">Get a Free Consultation</h3>
               <p className="text-center text-muted-foreground mb-6">Let's discuss your marketing goals.</p>
-              <a href="mailto:contact@euroit.com">
+              <a href="mailto:euroitofficial@gmail.com">
                 <Button size="lg" className="bg-primary text-primary-foreground hover:bg-primary/90 hover:shadow-lg hover:shadow-primary/40 transition-all duration-300 transform hover:scale-105">
                   Contact Us Now
                 </Button>
