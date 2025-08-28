@@ -46,14 +46,19 @@ const Header = () => {
     <header
       className={cn(
         'fixed top-0 left-0 right-0 z-50 transition-all duration-300',
-        scrolled ? 'py-4 bg-black/20 backdrop-blur-lg border-b border-white/10' : 'py-6'
+        scrolled ? 'py-4 bg-black/20 backdrop-blur-lg border-b border-white/10' : 'py-6 bg-transparent'
       )}
     >
       <div className="container mx-auto px-4 sm:px-6 lg:px-8 flex justify-between items-center">
         <HolographicLogo />
 
-        <div className="hidden md:flex items-center gap-4">
+        <div className="hidden md:flex items-center gap-6">
           <NavLinks />
+           <Link href="#contact">
+            <Button size="sm" variant="outline" className="border-primary text-primary hover:bg-primary hover:text-primary-foreground transition-all duration-300">
+              Book a Consultation
+            </Button>
+          </Link>
         </div>
 
         <div className="md:hidden">
@@ -73,7 +78,14 @@ const Header = () => {
                             </Button>
                         </SheetTrigger>
                     </div>
-                    <NavLinks className="flex-col items-start gap-8" />
+                    <div className="flex flex-col items-start gap-8">
+                      <NavLinks className="flex-col items-start gap-8" />
+                      <Link href="#contact" className="w-full" onClick={() => setMobileMenuOpen(false)}>
+                        <Button size="lg" className="w-full bg-primary text-primary-foreground">
+                          Book a Consultation
+                        </Button>
+                      </Link>
+                    </div>
                 </div>
             </SheetContent>
           </Sheet>
