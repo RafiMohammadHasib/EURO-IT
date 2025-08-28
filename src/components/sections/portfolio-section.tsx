@@ -11,12 +11,15 @@ const projects = [
   { id: 1, title: 'Global SEO Campaign for Tech Startup', category: 'SEO', image: 'https://picsum.photos/600/400?random=4', description: 'Achieved 200% organic traffic growth in 6 months.' },
   { id: 2, title: 'Social Media Strategy for Fashion Brand', category: 'Social Media', image: 'https://picsum.photos/600/400?random=5', description: 'Increased engagement by 150% and follower growth by 50K.' },
   { id: 3, title: 'PPC Campaign for E-commerce Store', category: 'PPC', image: 'https://picsum.photos/600/400?random=6', description: 'Generated a 5X return on ad spend (ROAS).' },
+  { id: 7, title: 'E-commerce Website for a Retail Brand', category: 'Web Development', image: 'https://picsum.photos/600/400?random=10', description: 'Built a custom Shopify theme, increasing conversion by 25%.' },
   { id: 4, title: 'Content Marketing for a B2B SaaS', category: 'Content', image: 'https://picsum.photos/600/400?random=7', description: 'Drove high-quality leads through insightful blog posts and whitepapers.' },
+  { id: 8, title: 'Food Delivery Mobile App', category: 'App Development', image: 'https://picsum.photos/600/400?random=11', description: 'Developed a cross-platform app with 10,000+ downloads in 3 months.' },
   { id: 5, title: 'Email Marketing Automation for Retailer', category: 'Email', image: 'https://picsum.photos/600/400?random=8', description: 'Boosted customer retention and repeat purchases by 30%.' },
   { id: 6, title: 'Influencer Marketing for a New App', category: 'Social Media', image: 'https://picsum.photos/600/400?random=9', description: 'Secured 1M+ impressions through strategic partnerships.' },
+  { id: 9, title: 'Custom CRM for a Service Business', category: 'Custom Development', image: 'https://picsum.photos/600/400?random=12', description: 'Streamlined client management and automated workflows, saving 10+ hours/week.' },
 ];
 
-const categories = ['All', 'SEO', 'Social Media', 'PPC', 'Content', 'Email'];
+const categories = ['All', 'SEO', 'Web Development', 'App Development', 'Social Media', 'PPC', 'Content', 'Email', 'Custom Development'];
 
 const PortfolioSection = () => {
   const [activeCategory, setActiveCategory] = useState('All');
@@ -28,9 +31,9 @@ const PortfolioSection = () => {
   return (
     <section id="portfolio" className="section-container">
       <div className="text-center mb-16">
-        <h2 className="text-4xl md:text-5xl font-bold glow-text">Our Case Studies</h2>
+        <h2 className="text-4xl md:text-5xl font-bold glow-text">Our Recent Work</h2>
         <p className="mt-4 max-w-2xl mx-auto text-lg text-muted-foreground">
-          A showcase of our successful campaigns and client results.
+          A showcase of our successful projects and client results.
         </p>
       </div>
 
@@ -41,7 +44,7 @@ const PortfolioSection = () => {
             variant="ghost"
             onClick={() => setActiveCategory(category)}
             className={cn(
-              'rounded-full transition-all duration-300',
+              'rounded-full transition-all duration-300 px-4 py-2 text-sm',
               activeCategory === category
                 ? 'bg-primary text-primary-foreground hover:bg-primary/90'
                 : 'text-muted-foreground hover:bg-accent hover:text-accent-foreground'

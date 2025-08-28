@@ -1,4 +1,4 @@
-import { Megaphone, Search, Users, Mail, BarChart, PenTool } from "lucide-react";
+import { Megaphone, Search, Users, Mail, BarChart, PenTool, Monitor, Smartphone, Puzzle } from "lucide-react";
 import type { LucideIcon } from "lucide-react";
 
 type Service = {
@@ -38,6 +38,21 @@ const services: Service[] = [
     description: "Make data-driven decisions with in-depth analytics and actionable reporting.",
     icon: BarChart,
   },
+  {
+    title: "Website Development",
+    description: "Creating stunning, high-performance websites that convert visitors into customers.",
+    icon: Monitor,
+  },
+  {
+    title: "App Development",
+    description: "Building intuitive and engaging mobile apps for iOS and Android platforms.",
+    icon: Smartphone,
+  },
+  {
+    title: "Custom Development",
+    description: "Tailored software solutions to meet your unique business needs and challenges.",
+    icon: Puzzle,
+  },
 ];
 
 const ServicesSection = () => {
@@ -46,7 +61,7 @@ const ServicesSection = () => {
       <div className="text-center mb-16">
         <h2 className="text-4xl md:text-5xl font-bold glow-text">Our Services</h2>
         <p className="mt-4 max-w-2xl mx-auto text-lg text-muted-foreground">
-          We offer a complete suite of digital marketing services to grow your brand.
+          We offer a complete suite of digital marketing and development services to grow your brand.
         </p>
       </div>
 
