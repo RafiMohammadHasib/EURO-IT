@@ -10,6 +10,7 @@ import PortfolioSection from "@/components/sections/portfolio-section";
 import ContactSection from "@/components/sections/contact-section";
 import TopBar from "@/components/layout/top-bar";
 import BlogSection from "@/components/sections/blog-section";
+import FaqSection from "@/components/sections/faq-section";
 
 
 export default function Home() {
@@ -26,6 +27,7 @@ export default function Home() {
           <PortfolioSection />
           <BlogSection />
           <ContactSection />
+          <FaqSection />
         </main>
         <Footer />
       </div>
