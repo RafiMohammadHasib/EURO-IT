@@ -35,24 +35,24 @@ const AboutSection = () => {
 
       <div className="grid md:grid-cols-3 gap-8 mb-20 text-center">
         <div className="glass-card p-8 flex flex-col items-center">
-          <div className="p-4 bg-primary/20 rounded-full mb-4">
+          <div className="p-4 bg-primary/10 dark:bg-primary/20 rounded-full mb-4">
             <Users className="w-8 h-8 text-primary" />
           </div>
-          <h3 className="text-2xl font-bold mb-2">Who We Are</h3>
+          <h3 className="text-2xl font-bold mb-2 text-foreground">Who We Are</h3>
           <p className="text-muted-foreground">We are a team of passionate marketers, strategists, and creatives dedicated to helping your brand shine online.</p>
         </div>
         <div className="glass-card p-8 flex flex-col items-center">
-          <div className="p-4 bg-primary/20 rounded-full mb-4">
+          <div className="p-4 bg-primary/10 dark:bg-primary/20 rounded-full mb-4">
             <Target className="w-8 h-8 text-primary" />
           </div>
-          <h3 className="text-2xl font-bold mb-2">Our Mission</h3>
+          <h3 className="text-2xl font-bold mb-2 text-foreground">Our Mission</h3>
           <p className="text-muted-foreground">To deliver measurable results and exceptional ROI through innovative and data-driven digital marketing solutions.</p>
         </div>
         <div className="glass-card p-8 flex flex-col items-center">
-          <div className="p-4 bg-primary/20 rounded-full mb-4">
+          <div className="p-4 bg-primary/10 dark:bg-primary/20 rounded-full mb-4">
             <Eye className="w-8 h-8 text-primary" />
           </div>
-          <h3 className="text-2xl font-bold mb-2">Our Vision</h3>
+          <h3 className="text-2xl font-bold mb-2 text-foreground">Our Vision</h3>
           <p className="text-muted-foreground">To be the leading digital partner for businesses seeking to dominate their online space and achieve sustainable growth.</p>
         </div>
       </div>

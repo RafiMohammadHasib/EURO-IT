@@ -55,7 +55,7 @@ const BlogSection = () => {
                 <span className="text-xs font-semibold text-primary uppercase">{post.category}</span>
                 <span className="text-xs text-muted-foreground">{post.date}</span>
               </div>
-              <h3 className="text-xl font-bold text-white mt-2 mb-3 flex-grow">{post.title}</h3>
+              <h3 className="text-xl font-bold text-foreground mt-2 mb-3 flex-grow">{post.title}</h3>
               <p className="text-sm text-muted-foreground mb-4">{post.excerpt}</p>
               <Button variant="link" className="p-0 h-auto text-primary self-start group">
                 Read More

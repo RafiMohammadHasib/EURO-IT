@@ -38,7 +38,7 @@ const HeroSection = () => {
         animate="visible"
       >
         <motion.h1
-          className="text-5xl md:text-7xl font-bold bg-clip-text text-transparent bg-gradient-to-b from-black to-gray-600 dark:from-white dark:to-gray-400 mb-6"
+          className="text-5xl md:text-7xl font-bold bg-clip-text text-transparent bg-gradient-to-b from-foreground/80 to-foreground mb-6"
           variants={itemVariants}
         >
           Results-Driven Digital Marketing.
@@ -51,7 +51,7 @@ const HeroSection = () => {
         </motion.div>
         <motion.div variants={itemVariants}>
           <Link href="#services">
-            <Button size="lg" className="bg-primary text-primary-foreground text-base font-semibold rounded-full px-8 py-6 group hover:bg-primary/90 hover:shadow-lg hover:shadow-primary/40 transition-all duration-300 transform hover:scale-105">
+            <Button size="lg" className="text-base font-semibold rounded-full px-8 py-6 group hover:shadow-lg hover:shadow-primary/40 transition-all duration-300 transform hover:scale-105">
               Our Marketing Services
               <ArrowRight className="ml-2 h-5 w-5 transition-transform duration-300 group-hover:translate-x-1" />
             </Button>

@@ -70,10 +70,10 @@ const ServicesSection = () => {
       <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
         {services.map((service, index) => (
           <div key={index} className="glass-card p-8 group transition-all duration-300 hover:border-primary/50 hover:shadow-primary/20 transform hover:-translate-y-2">
-            <div className="flex items-center justify-center w-16 h-16 rounded-full bg-primary/10 mb-6 border border-primary/20 transition-all duration-300 group-hover:bg-primary/20 group-hover:scale-110">
+            <div className="flex items-center justify-center w-16 h-16 rounded-full bg-primary/10 dark:bg-primary/20 mb-6 border border-primary/20 transition-all duration-300 group-hover:bg-primary/20 group-hover:scale-110">
               <service.icon className="w-8 h-8 text-primary transition-transform duration-300 group-hover:rotate-12" />
             </div>
-            <h3 className="text-2xl font-bold text-white mb-3">{service.title}</h3>
+            <h3 className="text-2xl font-bold text-foreground mb-3">{service.title}</h3>
             <p className="text-muted-foreground">{service.description}</p>
           </div>
         ))}

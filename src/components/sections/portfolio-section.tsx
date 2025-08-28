@@ -64,7 +64,7 @@ const PortfolioSection = () => {
             </div>
             <div className="p-6">
               <span className="text-xs font-semibold text-primary uppercase">{project.category}</span>
-              <h3 className="text-xl font-bold text-white mt-2 mb-3 h-14">{project.title}</h3>
+              <h3 className="text-xl font-bold text-foreground dark:text-white mt-2 mb-3 h-14">{project.title}</h3>
               <p className="text-sm text-muted-foreground h-10">{project.description}</p>
             </div>
              <div className="absolute top-4 right-4 p-2 bg-black/30 rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-300">

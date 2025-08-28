@@ -29,10 +29,10 @@ const ContactSection = () => {
             </div>
           </div>
           <div className="flex flex-col items-center justify-center bg-primary/10 p-8 rounded-lg border border-primary/20">
-             <h3 className="text-2xl font-bold text-center text-white mb-4">Get a Free Consultation</h3>
+             <h3 className="text-2xl font-bold text-center text-foreground mb-4">Get a Free Consultation</h3>
               <p className="text-center text-muted-foreground mb-6">Let's discuss your marketing goals.</p>
               <a href="mailto:euroitofficial@gmail.com">
-                <Button size="lg" className="bg-primary text-primary-foreground hover:bg-primary/90 hover:shadow-lg hover:shadow-primary/40 transition-all duration-300 transform hover:scale-105">
+                <Button size="lg" className="hover:shadow-lg hover:shadow-primary/40 transition-all duration-300 transform hover:scale-105">
                   Contact Us Now
                 </Button>
               </a>

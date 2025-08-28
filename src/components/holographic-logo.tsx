@@ -5,7 +5,7 @@ import { cn } from '@/lib/utils';
 
 const HolographicLogo = () => {
   return (
-    <Link href="/" className="relative font-headline text-2xl font-bold text-white tracking-widest uppercase" aria-label="EURO IT Home">
+    <Link href="/" className="relative font-headline text-2xl font-bold tracking-widest uppercase" aria-label="EURO IT Home">
       <span className={cn(
         "relative z-10",
         "text-primary"
