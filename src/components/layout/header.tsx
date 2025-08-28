@@ -9,11 +9,11 @@ import HolographicLogo from '@/components/holographic-logo';
 import { cn } from '@/lib/utils';
 
 const navItems = [
-  { name: 'Services', href: '#services' },
-  { name: 'About', href: '#about' },
-  { name: 'Portfolio', href: '#portfolio' },
-  { name: 'Blog', href: '#blog' },
-  { name: 'Contact', href: '#contact' },
+  { name: 'Services', href: '/#services' },
+  { name: 'About', href: '/#about' },
+  { name: 'Portfolio', href: '/#portfolio' },
+  { name: 'Blog', href: '/#blog' },
+  { name: 'Contact', href: '/#contact' },
 ];
 
 const Header = () => {
@@ -55,7 +55,7 @@ const Header = () => {
 
         <div className="hidden md:flex items-center gap-6">
           <NavLinks />
-           <Link href="#contact">
+           <Link href="/#contact">
             <Button size="sm" variant="outline" className="border-primary text-primary hover:bg-primary hover:text-primary-foreground transition-all duration-300">
               Book a Consultation
             </Button>
@@ -81,7 +81,7 @@ const Header = () => {
                     </div>
                     <div className="flex flex-col items-start gap-8">
                       <NavLinks className="flex-col items-start gap-8" />
-                      <Link href="#contact" className="w-full" onClick={() => setMobileMenuOpen(false)}>
+                      <Link href="/#contact" className="w-full" onClick={() => setMobileMenuOpen(false)}>
                         <Button size="lg" className="w-full bg-primary text-primary-foreground">
                           Book a Consultation
                         </Button>

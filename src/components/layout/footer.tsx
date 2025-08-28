@@ -6,11 +6,13 @@ import { Copyright, Facebook, Linkedin, Instagram, Youtube } from "lucide-react"
 import HolographicLogo from '@/components/holographic-logo';
 
 const navItems = [
-  { name: 'About Us', href: '#about' },
-  { name: 'Services', href: '#services' },
-  { name: 'Portfolio', href: '#portfolio' },
-  { name: 'Blog', href: '#blog' },
-  { name: 'Contact', href: '#contact' },
+  { name: 'About Us', href: '/#about' },
+  { name: 'Services', href: '/#services' },
+  { name: 'Portfolio', href: '/#portfolio' },
+  { name: 'Blog', href: '/#blog' },
+  { name: 'Contact', href: '/#contact' },
+  { name: 'Privacy Policy', href: '/privacy-policy' },
+  { name: 'Terms & Conditions', href: '/terms-and-conditions' },
 ];
 
 const socialLinks = [
