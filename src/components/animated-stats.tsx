@@ -16,6 +16,33 @@ const stats: Stat[] = [
   { value: 10, label: "Marketing Experts" },
 ];
 
+function useInView(ref: React.RefObject<Element>, options?: IntersectionObserverInit) {
+  const [isInView, setIsInView] = useState(false);
+
+  useEffect(() => {
+    const observer = new IntersectionObserver(([entry]) => {
+      if (entry.isIntersecting) {
+        setIsInView(true);
+        if (options?.once) {
+          observer.disconnect();
+        }
+      }
+    }, options);
+
+    if (ref.current) {
+      observer.observe(ref.current);
+    }
+
+    return () => {
+      if (ref.current) {
+        observer.unobserve(ref.current);
+      }
+    };
+  }, [ref, options]);
+
+  return isInView;
+}
+
 const AnimatedStat = ({ stat }: { stat: Stat }) => {
   const [count, setCount] = useState(0);
   const ref = useRef<HTMLDivElement>(null);
@@ -61,29 +88,3 @@ export const AnimatedStats = () => {
     </div>
   );
 };
-
-
-function useInView(ref: React.RefObject<Element>, options?: IntersectionObserverInit) {
-  const [isInView, setIsInView] = useState(false);
-
-  useEffect(() => {
-    const observer = new IntersectionObserver(([entry]) => {
-      if (entry.isIntersecting) {
-        setIsInView(true);
-        if(options?.once) {
-          observer.disconnect();
-        }
-      }
-    }, options);
-
-    if (ref.current) {
-      observer.observe(ref.current);
-    }
-
-    return () => {
-      observer.disconnect();
-    };
-  }, [ref, options]);
-
-  return isInView;
-}
