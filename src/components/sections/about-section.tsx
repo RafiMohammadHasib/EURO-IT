@@ -2,6 +2,13 @@ import { AnimatedStats } from "@/components/animated-stats";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import Image from "next/image";
 import { Users, Target, Eye } from "lucide-react";
+import {
+  Carousel,
+  CarouselContent,
+  CarouselItem,
+  CarouselNext,
+  CarouselPrevious,
+} from "@/components/ui/carousel";
 
 const teamMembers = [
   { name: 'Md. Zakir Sikder', role: 'Founder', image: 'https://picsum.photos/300/300?random=1' },
@@ -54,20 +61,32 @@ const AboutSection = () => {
 
       <div>
         <h3 className="text-3xl font-bold text-center mb-12 glow-text">Some of Our Key Members</h3>
-        <div className="flex overflow-x-auto space-x-8 pb-4">
-          {teamMembers.map((member) => (
-            <div key={member.name} className="flex-shrink-0 w-64 glass-card group p-0 overflow-hidden text-center transition-all duration-300 hover:shadow-primary/20 hover:border-primary/50 transform hover:-translate-y-2">
-              <div className="relative h-64">
-                <Image src={member.image} alt={member.name} data-ai-hint="person portrait" fill style={{ objectFit: 'cover' }} className="grayscale group-hover:grayscale-0 transition-all duration-300 group-hover:scale-110" />
-                <div className="absolute inset-0 bg-gradient-to-t from-black/80 to-transparent" />
-                 <div className="absolute bottom-0 left-0 right-0 p-4 text-left">
-                    <h4 className="text-lg font-bold text-white">{member.name}</h4>
-                    <p className="text-sm text-primary">{member.role}</p>
-                 </div>
-              </div>
-            </div>
-          ))}
-        </div>
+        <Carousel
+          opts={{
+            align: "start",
+            loop: true,
+          }}
+          className="w-full max-w-xs sm:max-w-xl md:max-w-2xl lg:max-w-4xl xl:max-w-6xl mx-auto"
+        >
+          <CarouselContent className="-ml-4">
+            {teamMembers.map((member, index) => (
+              <CarouselItem key={index} className="pl-4 basis-full sm:basis-1/2 md:basis-1/3 lg:basis-1/4">
+                 <div className="flex-shrink-0 w-full glass-card group p-0 overflow-hidden text-center transition-all duration-300 hover:shadow-primary/20 hover:border-primary/50 transform hover:-translate-y-2">
+                    <div className="relative h-64">
+                      <Image src={member.image} alt={member.name} data-ai-hint="person portrait" fill style={{ objectFit: 'cover' }} className="grayscale group-hover:grayscale-0 transition-all duration-300 group-hover:scale-110" />
+                      <div className="absolute inset-0 bg-gradient-to-t from-black/80 to-transparent" />
+                       <div className="absolute bottom-0 left-0 right-0 p-4 text-left">
+                          <h4 className="text-lg font-bold text-white">{member.name}</h4>
+                          <p className="text-sm text-primary">{member.role}</p>
+                       </div>
+                    </div>
+                  </div>
+              </CarouselItem>
+            ))}
+          </CarouselContent>
+          <CarouselPrevious />
+          <CarouselNext />
+        </Carousel>
       </div>
     </section>
   );
