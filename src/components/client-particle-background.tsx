@@ -1,6 +1,5 @@
 "use client";
 
-import { useTheme } from 'next-themes';
 import dynamic from 'next/dynamic';
 import { useEffect, useState } from 'react';
 
@@ -9,13 +8,13 @@ const ParticleBackground = dynamic(() => import('@/components/particle-backgroun
 });
 
 export default function ClientParticleBackground() {
-    const [isClient, setIsClient] = useState(false);
+    const [isMounted, setIsMounted] = useState(false);
 
     useEffect(() => {
-        setIsClient(true);
+        setIsMounted(true);
     }, []);
 
-    if (!isClient) {
+    if (!isMounted) {
         return null;
     }
   
