@@ -7,30 +7,30 @@ import { ArrowRight } from 'lucide-react';
 const blogPosts = [
   {
     id: 1,
-    title: 'The Rise of AI in Digital Marketing',
+    title: 'Generative AI in Digital Marketing: 5 Winning Strategies for 2024',
     category: 'Artificial Intelligence',
     date: 'October 26, 2023',
     image: 'https://picsum.photos/600/400?random=13',
-    dataAiHint: 'artificial intelligence marketing',
-    excerpt: 'Explore how AI is revolutionizing marketing strategies, from personalization to predictive analytics.'
+    dataAiHint: 'AI marketing strategy',
+    excerpt: 'Learn how to leverage generative AI for hyper-personalized content, predictive analytics, and automated campaign optimization to stay ahead of the curve.'
   },
   {
     id: 2,
-    title: 'Navigating Facebook\'s Latest Ad Policy Updates',
+    title: 'The Ultimate Guide to Facebook\'s 2024 Ad Policy Updates',
     category: 'Social Media',
     date: 'October 22, 2023',
     image: 'https://picsum.photos/600/400?random=14',
-    dataAiHint: 'social media policy',
-    excerpt: 'Stay compliant and optimize your campaigns by understanding the newest changes to Facebook\'s advertising rules.'
+    dataAiHint: 'social media graph',
+    excerpt: 'Navigate the latest changes in Facebook\'s advertising rules. We break down the key updates to help you maintain compliance and maximize your campaign ROI.'
   },
   {
     id: 3,
-    title: 'Web3 and the Future of the Internet',
+    title: 'Web3 Marketing: How to Prepare Your Brand for the Decentralized Web',
     category: 'Latest Inventions',
     date: 'October 18, 2023',
     image: 'https://picsum.photos/600/400?random=15',
-    dataAiHint: 'web3 blockchain technology',
-    excerpt: 'A deep dive into the decentralized web and what it means for businesses and users alike.'
+    dataAiHint: 'web3 future internet',
+    excerpt: 'Web3 is more than a buzzword. Discover how blockchain, NFTs, and the metaverse will reshape digital marketing and how your business can get started.'
   },
 ];
 
