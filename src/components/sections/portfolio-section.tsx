@@ -1,11 +1,14 @@
+
 "use client";
 
 import { useState } from 'react';
 import { Button } from '@/components/ui/button';
-import { Card } from '@/components/ui/card';
 import Image from 'next/image';
 import { cn } from '@/lib/utils';
 import { ExternalLink } from 'lucide-react';
+import { useTheme } from 'next-themes';
+import { useEffect } from 'react';
+
 
 const projects = [
   { id: 1, title: 'Global SEO Campaign for Tech Startup', category: 'SEO', image: 'https://picsum.photos/600/400?random=4', description: 'Achieved 200% organic traffic growth in 6 months.' },
@@ -23,10 +26,18 @@ const categories = ['All', 'SEO', 'Web Development', 'App Development', 'Social 
 
 const PortfolioSection = () => {
   const [activeCategory, setActiveCategory] = useState('All');
+  const { theme } = useTheme();
+  const [isClient, setIsClient] = useState(false);
+
+  useEffect(() => {
+    setIsClient(true);
+  }, []);
 
   const filteredProjects = activeCategory === 'All'
     ? projects
     : projects.filter(p => p.category === activeCategory);
+
+  const titleColorClass = isClient && theme === 'light' ? 'text-foreground' : 'text-white';
 
   return (
     <section id="portfolio" className="section-container">
@@ -64,7 +75,7 @@ const PortfolioSection = () => {
             </div>
             <div className="p-6">
               <span className="text-xs font-semibold text-primary uppercase">{project.category}</span>
-              <h3 className="text-xl font-bold text-foreground dark:text-white mt-2 mb-3 h-14">{project.title}</h3>
+              <h3 className={cn("text-xl font-bold mt-2 mb-3 h-14", titleColorClass)}>{project.title}</h3>
               <p className="text-sm text-muted-foreground h-10">{project.description}</p>
             </div>
              <div className="absolute top-4 right-4 p-2 bg-black/30 rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-300">

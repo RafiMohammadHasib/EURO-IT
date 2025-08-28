@@ -1,3 +1,4 @@
+
 "use client";
 
 import { useState, useEffect } from 'react';
@@ -21,8 +22,10 @@ const Header = () => {
   const [scrolled, setScrolled] = useState(false);
   const [isMobileMenuOpen, setMobileMenuOpen] = useState(false);
   const { theme } = useTheme();
+  const [isClient, setIsClient] = useState(false);
 
   useEffect(() => {
+    setIsClient(true);
     const handleScroll = () => {
       setScrolled(window.scrollY > 10);
     };
@@ -30,9 +33,9 @@ const Header = () => {
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
-  const navLinkClasses = theme === 'dark' 
-    ? "text-gray-300 hover:text-primary" 
-    : "text-gray-600 hover:text-primary";
+  const navLinkClasses = isClient && theme === 'light'
+    ? "text-gray-600 hover:text-primary"
+    : "text-gray-300 hover:text-primary";
 
   const NavLinks = ({ className }: { className?: string }) => (
     <nav className={cn("flex items-center gap-6", className)}>
