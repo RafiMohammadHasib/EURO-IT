@@ -9,6 +9,7 @@ import AboutSection from "@/components/sections/about-section";
 import PortfolioSection from "@/components/sections/portfolio-section";
 import ContactSection from "@/components/sections/contact-section";
 import TopBar from "@/components/layout/top-bar";
+import BlogSection from "@/components/sections/blog-section";
 
 
 export default function Home() {
@@ -23,6 +24,7 @@ export default function Home() {
           <ServicesSection />
           <AboutSection />
           <PortfolioSection />
+          <BlogSection />
           <ContactSection />
         </main>
         <Footer />
