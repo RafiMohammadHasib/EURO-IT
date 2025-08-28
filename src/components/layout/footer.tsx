@@ -1,3 +1,6 @@
+"use client";
+
+import { useState, useEffect } from 'react';
 import Link from 'next/link';
 import { Copyright, Facebook, Twitter, Linkedin, Instagram } from "lucide-react";
 import HolographicLogo from '@/components/holographic-logo';
@@ -17,6 +20,12 @@ const socialLinks = [
 ]
 
 const Footer = () => {
+  const [currentYear, setCurrentYear] = useState<number | null>(null);
+
+  useEffect(() => {
+    setCurrentYear(new Date().getFullYear());
+  }, []);
+
   return (
     <footer className="w-full py-12 mt-auto bg-black/20 border-t border-white/10">
       <div className="container mx-auto px-4 sm:px-6 lg:px-8">
@@ -64,7 +73,7 @@ const Footer = () => {
         
         <div className="mt-12 pt-8 border-t border-white/10 text-center text-muted-foreground text-sm flex items-center justify-center gap-2">
           <Copyright className="h-4 w-4" />
-          <span>{new Date().getFullYear()} EURO IT. All Rights Reserved.</span>
+          {currentYear && <span>{currentYear} EURO IT. All Rights Reserved.</span>}
         </div>
       </div>
     </footer>
