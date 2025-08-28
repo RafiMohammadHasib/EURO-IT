@@ -13,7 +13,7 @@ import {
 } from "@/components/ui/carousel";
 
 const teamMembers = [
-  { name: 'Md. Zakir Sikder', role: 'Founder', image: 'https://euroitechnology.com/images/founder.jpg' },
+  { name: 'Md. Zakir Sikder', role: 'Founder', image: 'https://picsum.photos/400/400?random=1' },
   { name: 'Md. Jony Sikder', role: 'Group Chairman', image: 'https://picsum.photos/400/400?random=2' },
   { name: 'Efaz Sikder', role: 'Managing Director', image: 'https://picsum.photos/400/400?random=3' },
   { name: 'Jakir Hossain', role: 'Group GM', image: 'https://picsum.photos/400/400?random=4' },
