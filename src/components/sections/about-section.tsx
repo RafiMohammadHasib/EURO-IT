@@ -11,14 +11,14 @@ import {
 } from "@/components/ui/carousel";
 
 const teamMembers = [
-  { name: 'Md. Zakir Sikder', role: 'Founder', image: 'https://picsum.photos/300/300?random=1' },
-  { name: 'Md. Jony Sikder', role: 'Group Chairman', image: 'https://picsum.photos/300/300?random=2' },
-  { name: 'Efaz Sikder', role: 'Managing Director', image: 'https://picsum.photos/300/300?random=3' },
-  { name: 'Jakir Hossain', role: 'Group GM', image: 'https://picsum.photos/300/300?random=4' },
-  { name: 'Syed Mominin Islam Tamim', role: 'Creative Designer', image: 'https://picsum.photos/300/300?random=5' },
-  { name: 'Md. Shakil Mahmud', role: 'Head of Creative Lead', image: 'https://picsum.photos/300/300?random=6' },
-  { name: 'Samia Chowdhury', role: 'Graphics Design & Video Editing', image: 'https://picsum.photos/300/300?random=8' },
-  { name: 'Rafi Md. Hasib', role: 'Software Engineer & Business Developer', image: 'https://picsum.photos/300/300?random=9' },
+  { name: 'Md. Zakir Sikder', role: 'Founder', image: '/images/team/md-zakir-sikder.jpg' },
+  { name: 'Md. Jony Sikder', role: 'Group Chairman', image: '/images/team/md-jony-sikder.jpg' },
+  { name: 'Efaz Sikder', role: 'Managing Director', image: '/images/team/efaz-sikder.jpg' },
+  { name: 'Jakir Hossain', role: 'Group GM', image: '/images/team/jakir-hossain.jpg' },
+  { name: 'Syed Mominin Islam Tamim', role: 'Creative Designer', image: '/images/team/syed-mominin-islam-tamim.jpg' },
+  { name: 'Md. Shakil Mahmud', role: 'Head of Creative Lead', image: '/images/team/md-shakil-mahmud.jpg' },
+  { name: 'Samia Chowdhury', role: 'Graphics Design & Video Editing', image: '/images/team/samia-chowdhury.jpg' },
+  { name: 'Rafi Md. Hasib', role: 'Software Engineer & Business Developer', image: '/images/team/rafi-md-hasib.jpg' },
 ];
 
 const AboutSection = () => {
