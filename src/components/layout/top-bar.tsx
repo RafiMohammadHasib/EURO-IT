@@ -1,12 +1,11 @@
-
 "use client";
 
 import { Mail, Phone, Facebook, Linkedin, Instagram, Youtube } from "lucide-react";
 
 const socialLinks = [
-  { icon: Facebook, href: '#', name: 'Facebook' },
-  { icon: Linkedin, href: '#', name: 'LinkedIn' },
-  { icon: Instagram, href: '#', name: 'Instagram' },
+  { icon: Facebook, href: 'https://www.facebook.com/euroitech/', name: 'Facebook' },
+  { icon: Linkedin, href: 'https://bd.linkedin.com/in/euro-it', name: 'LinkedIn' },
+  { icon: Instagram, href: 'https://www.instagram.com/euroitofficial', name: 'Instagram' },
   { icon: Youtube, href: '#', name: 'YouTube' },
 ]
 
@@ -26,7 +25,7 @@ const TopBar = () => {
         </div>
         <div className="flex items-center gap-4">
             {socialLinks.map(social => (
-                <a key={social.name} href={social.href} aria-label={social.name} className="text-gray-300 hover:text-primary transition-colors duration-300">
+                <a key={social.name} href={social.href} target="_blank" rel="noopener noreferrer" aria-label={social.name} className="text-gray-300 hover:text-primary transition-colors duration-300">
                   <social.icon className="h-5 w-5" />
                 </a>
               ))}
