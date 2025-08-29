@@ -57,7 +57,16 @@ const AnimatedStat = ({ stat }: { stat: Stat }) => {
     }
   }, [isInView, stat.value, controls, isMounted]);
   
-  const displayValue = isMounted ? count : 0;
+  if (!isMounted) {
+    return (
+      <div className="text-center">
+        <p className="text-5xl md:text-6xl font-bold text-primary glow-text">
+          0{stat.suffix}
+        </p>
+        <p className="text-muted-foreground mt-2">{stat.label}</p>
+      </div>
+    );
+  }
 
   return (
     <motion.div 
@@ -67,7 +76,7 @@ const AnimatedStat = ({ stat }: { stat: Stat }) => {
       animate={controls}
     >
       <p className="text-5xl md:text-6xl font-bold text-primary glow-text">
-        {displayValue}{stat.suffix}
+        {count}{stat.suffix}
       </p>
       <p className="text-muted-foreground mt-2">{stat.label}</p>
     </motion.div>

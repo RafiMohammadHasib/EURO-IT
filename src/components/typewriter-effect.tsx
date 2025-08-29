@@ -1,3 +1,4 @@
+
 "use client";
 
 import { useState, useEffect } from 'react';
@@ -50,8 +51,6 @@ const TypewriterEffect = () => {
   }, [text, isDeleting, loopNum, typingSpeed, isMounted]);
 
   if (!isMounted) {
-    // Render a non-breaking space or the first phrase statically to prevent layout shift
-    // and to ensure server and client match initially.
     return <span>{phrases[0]}&nbsp;</span>;
   }
 
