@@ -22,9 +22,14 @@ const AnimatedStat = ({ stat }: { stat: Stat }) => {
   const ref = useRef<HTMLDivElement>(null);
   const isInView = useInView(ref, { once: true, margin: "-100px" });
   const controls = useAnimation();
+  const [isMounted, setIsMounted] = useState(false);
 
   useEffect(() => {
-    if (isInView) {
+    setIsMounted(true);
+  }, []);
+
+  useEffect(() => {
+    if (isInView && isMounted) {
       controls.start({
         opacity: 1,
         y: 0,
@@ -43,12 +48,16 @@ const AnimatedStat = ({ stat }: { stat: Stat }) => {
 
         if (frame === totalFrames) {
           clearInterval(counter);
+          // Ensure the final value is set
+          setCount(stat.value);
         }
       }, frameRate);
 
       return () => clearInterval(counter);
     }
-  }, [isInView, stat.value, controls]);
+  }, [isInView, stat.value, controls, isMounted]);
+  
+  const displayValue = isMounted ? count : 0;
 
   return (
     <motion.div 
@@ -58,7 +67,7 @@ const AnimatedStat = ({ stat }: { stat: Stat }) => {
       animate={controls}
     >
       <p className="text-5xl md:text-6xl font-bold text-primary glow-text">
-        {count}{stat.suffix}
+        {displayValue}{stat.suffix}
       </p>
       <p className="text-muted-foreground mt-2">{stat.label}</p>
     </motion.div>
