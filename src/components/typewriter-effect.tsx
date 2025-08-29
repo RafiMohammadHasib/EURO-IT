@@ -20,10 +20,10 @@ const TypewriterEffect = () => {
     setIsMounted(true);
   }, []);
 
-
   useEffect(() => {
     if (!isMounted) return;
 
+    let handle: NodeJS.Timeout;
     const handleType = () => {
       const i = loopNum % phrases.length;
       const fullText = phrases[i];
@@ -37,20 +37,22 @@ const TypewriterEffect = () => {
       setTypingSpeed(isDeleting ? 75 : 150);
 
       if (!isDeleting && text === fullText) {
-        setTimeout(() => setIsDeleting(true), 2000);
+        handle = setTimeout(() => setIsDeleting(true), 2000);
       } else if (isDeleting && text === '') {
         setIsDeleting(false);
         setLoopNum(loopNum + 1);
       }
     };
 
-    const timer = setTimeout(handleType, typingSpeed);
+    handle = setTimeout(handleType, typingSpeed);
 
-    return () => clearTimeout(timer);
+    return () => clearTimeout(handle);
   }, [text, isDeleting, loopNum, typingSpeed, isMounted]);
 
   if (!isMounted) {
-    return <span>{phrases[0]}</span>;
+    // Render a non-breaking space or the first phrase statically to prevent layout shift
+    // and to ensure server and client match initially.
+    return <span>{phrases[0]}&nbsp;</span>;
   }
 
   return (
