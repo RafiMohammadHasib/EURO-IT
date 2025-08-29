@@ -1,7 +1,8 @@
+
 "use client";
 
 import { useState, useEffect, useRef } from 'react';
-import { cn } from '@/lib/utils';
+import { motion, useInView, useAnimation } from 'framer-motion';
 
 type Stat = {
   value: number;
@@ -16,40 +17,20 @@ const stats: Stat[] = [
   { value: 10, label: "Marketing Experts" },
 ];
 
-function useInView(ref: React.RefObject<Element>, options?: IntersectionObserverInit) {
-  const [isInView, setIsInView] = useState(false);
-
-  useEffect(() => {
-    const observer = new IntersectionObserver(([entry]) => {
-      if (entry.isIntersecting) {
-        setIsInView(true);
-        if (options?.once) {
-          observer.disconnect();
-        }
-      }
-    }, options);
-
-    if (ref.current) {
-      observer.observe(ref.current);
-    }
-
-    return () => {
-      if (ref.current) {
-        observer.unobserve(ref.current);
-      }
-    };
-  }, [ref, options]);
-
-  return isInView;
-}
-
 const AnimatedStat = ({ stat }: { stat: Stat }) => {
   const [count, setCount] = useState(0);
   const ref = useRef<HTMLDivElement>(null);
   const isInView = useInView(ref, { once: true, margin: "-100px" });
+  const controls = useAnimation();
 
   useEffect(() => {
     if (isInView) {
+      controls.start({
+        opacity: 1,
+        y: 0,
+        transition: { duration: 0.5 }
+      });
+
       const duration = 2000;
       const frameRate = 1000 / 60;
       const totalFrames = Math.round(duration / frameRate);
@@ -67,15 +48,20 @@ const AnimatedStat = ({ stat }: { stat: Stat }) => {
 
       return () => clearInterval(counter);
     }
-  }, [isInView, stat.value]);
+  }, [isInView, stat.value, controls]);
 
   return (
-    <div ref={ref} className="text-center">
+    <motion.div 
+      ref={ref} 
+      className="text-center"
+      initial={{ opacity: 0, y: 20 }}
+      animate={controls}
+    >
       <p className="text-5xl md:text-6xl font-bold text-primary glow-text">
         {count}{stat.suffix}
       </p>
       <p className="text-muted-foreground mt-2">{stat.label}</p>
-    </div>
+    </motion.div>
   );
 };
 
