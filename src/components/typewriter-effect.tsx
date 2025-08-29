@@ -14,8 +14,16 @@ const TypewriterEffect = () => {
   const [isDeleting, setIsDeleting] = useState(false);
   const [loopNum, setLoopNum] = useState(0);
   const [typingSpeed, setTypingSpeed] = useState(150);
+  const [isMounted, setIsMounted] = useState(false);
 
   useEffect(() => {
+    setIsMounted(true);
+  }, []);
+
+
+  useEffect(() => {
+    if (!isMounted) return;
+
     const handleType = () => {
       const i = loopNum % phrases.length;
       const fullText = phrases[i];
@@ -39,7 +47,11 @@ const TypewriterEffect = () => {
     const timer = setTimeout(handleType, typingSpeed);
 
     return () => clearTimeout(timer);
-  }, [text, isDeleting, loopNum, typingSpeed]);
+  }, [text, isDeleting, loopNum, typingSpeed, isMounted]);
+
+  if (!isMounted) {
+    return <span>{phrases[0]}</span>;
+  }
 
   return (
     <span>
