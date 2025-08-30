@@ -25,20 +25,47 @@ const categories = ['All', 'SEO', 'Web Development', 'App Development', 'Social 
 const PortfolioSection = () => {
   const [activeCategory, setActiveCategory] = useState('All');
   const { theme } = useTheme();
-  const [isClient, setIsClient] = useState(false);
+  const [isMounted, setIsMounted] = useState(false);
 
   useEffect(() => {
-    setIsClient(true);
+    setIsMounted(true);
   }, []);
 
   const filteredProjects = activeCategory === 'All'
     ? projects
     : projects.filter(p => p.category === activeCategory);
 
-  const titleColorClass = isClient && theme === 'light' ? 'text-foreground' : 'text-white';
+  const titleColorClass = isMounted && theme === 'light' ? 'text-foreground' : 'text-white';
   
-  if (!isClient) {
-    return null;
+  if (!isMounted) {
+    return (
+        <section id="portfolio" className="section-container">
+            <div className="text-center mb-16">
+                <h2 className="text-4xl md:text-5xl font-bold glow-text">Our Recent Work</h2>
+                <p className="mt-4 max-w-2xl mx-auto text-lg text-muted-foreground">
+                A showcase of our successful projects and client results.
+                </p>
+            </div>
+            <div className="flex justify-center flex-wrap gap-2 mb-12">
+                {categories.map(category => (
+                <Button
+                    key={category}
+                    variant="ghost"
+                    className="rounded-full transition-all duration-300 px-4 py-2 text-sm text-muted-foreground hover:bg-accent hover:text-accent-foreground"
+                >
+                    {category}
+                </Button>
+                ))}
+            </div>
+            <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+                {projects.slice(0, 3).map(project => (
+                    <div key={project.id} className="glass-card p-0 overflow-hidden h-96">
+                       <div className="w-full h-full bg-muted/50 animate-pulse" />
+                    </div>
+                ))}
+            </div>
+        </section>
+    );
   }
 
   return (
@@ -77,7 +104,7 @@ const PortfolioSection = () => {
             </div>
             <div className="p-6">
               <span className="text-xs font-semibold text-primary uppercase">{project.category}</span>
-              <h3 className={cn("text-xl font-bold mt-2 mb-3 h-14", isClient ? titleColorClass : 'text-white')}>{project.title}</h3>
+              <h3 className={cn("text-xl font-bold mt-2 mb-3 h-14", titleColorClass)}>{project.title}</h3>
               <p className="text-sm text-muted-foreground h-10">{project.description}</p>
             </div>
              <div className="absolute top-4 right-4 p-2 bg-black/30 rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-300">

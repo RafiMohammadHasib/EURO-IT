@@ -22,10 +22,10 @@ const Header = () => {
   const [scrolled, setScrolled] = useState(false);
   const [isMobileMenuOpen, setMobileMenuOpen] = useState(false);
   const { theme } = useTheme();
-  const [isClient, setIsClient] = useState(false);
+  const [isMounted, setIsMounted] = useState(false);
 
   useEffect(() => {
-    setIsClient(true);
+    setIsMounted(true);
     const handleScroll = () => {
       setScrolled(window.scrollY > 10);
     };
@@ -33,12 +33,36 @@ const Header = () => {
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
-  const navLinkClasses = isClient && theme === 'light'
+  const navLinkClasses = isMounted && theme === 'light'
     ? "text-gray-600 hover:text-primary"
     : "text-gray-300 hover:text-primary";
     
-  if (!isClient) {
-    return null;
+  if (!isMounted) {
+    return (
+      <header
+        className={cn(
+          'fixed top-12 left-0 right-0 z-40 transition-all duration-300',
+          'py-6 bg-transparent'
+        )}
+      >
+        <div className="container mx-auto px-4 sm:px-6 lg:px-8 flex justify-between items-center">
+          <HolographicLogo />
+          <div className="hidden md:flex items-center gap-6">
+             <nav className="flex items-center gap-6">
+                {navItems.map((item) => (
+                  <div key={item.name} className="h-5 w-20 rounded-full bg-muted/50 animate-pulse" />
+                ))}
+              </nav>
+              <div className="h-9 w-40 rounded-md bg-muted/50 animate-pulse" />
+          </div>
+          <div className="md:hidden">
+             <Button variant="ghost" size="icon" aria-label="Open menu">
+                <Menu className="h-6 w-6" />
+              </Button>
+          </div>
+        </div>
+      </header>
+    );
   }
 
   const NavLinks = ({ className }: { className?: string }) => (
