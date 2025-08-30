@@ -28,16 +28,17 @@ const socialLinks = [
 const Footer = () => {
   const [currentYear, setCurrentYear] = useState(new Date().getFullYear());
   const [isMounted, setIsMounted] = useState(false);
+  const { theme } = useTheme();
 
   useEffect(() => {
     setIsMounted(true);
     setCurrentYear(new Date().getFullYear());
   }, []);
   
-  const headingClasses = 'text-foreground';
-  const textClasses = 'text-muted-foreground';
-  const linkClasses = 'text-muted-foreground hover:text-primary';
-  const socialIconClasses = 'text-muted-foreground hover:text-primary';
+  const headingClasses = isMounted ? 'text-foreground' : 'text-transparent';
+  const textClasses = isMounted ? 'text-muted-foreground' : 'text-transparent';
+  const linkClasses = isMounted ? 'text-muted-foreground hover:text-primary' : 'text-transparent';
+  const socialIconClasses = isMounted ? 'text-muted-foreground hover:text-primary' : 'text-transparent';
 
   if (!isMounted) {
     return (
