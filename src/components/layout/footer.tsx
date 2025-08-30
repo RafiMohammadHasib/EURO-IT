@@ -35,10 +35,10 @@ const Footer = () => {
     setIsClient(true);
   }, []);
 
-  const headingClasses = theme === 'light' ? 'text-foreground' : 'text-white';
-  const textClasses = theme === 'light' ? 'text-muted-foreground' : 'text-gray-300';
-  const linkClasses = theme === 'light' ? 'text-muted-foreground hover:text-primary' : 'text-gray-300 hover:text-primary';
-  const socialIconClasses = theme === 'light' ? 'text-muted-foreground hover:text-primary' : 'text-gray-400 hover:text-primary';
+  const headingClasses = isClient && theme === 'light' ? 'text-foreground' : 'text-white';
+  const textClasses = isClient && theme === 'light' ? 'text-muted-foreground' : 'text-gray-300';
+  const linkClasses = isClient && theme === 'light' ? 'text-muted-foreground hover:text-primary' : 'text-gray-300 hover:text-primary';
+  const socialIconClasses = isClient && theme === 'light' ? 'text-muted-foreground hover:text-primary' : 'text-gray-400 hover:text-primary';
 
   return (
     <footer className="w-full py-12 mt-auto bg-card border-t">
