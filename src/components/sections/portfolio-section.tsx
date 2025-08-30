@@ -45,13 +45,7 @@ const PortfolioSection = () => {
             </div>
             <div className="flex justify-center flex-wrap gap-2 mb-12">
                 {categories.map(category => (
-                <Button
-                    key={category}
-                    variant="ghost"
-                    className="rounded-full transition-all duration-300 px-4 py-2 text-sm text-muted-foreground hover:bg-accent hover:text-accent-foreground"
-                >
-                    {category}
-                </Button>
+                    <div key={category} className="h-9 w-24 rounded-full bg-muted/50 animate-pulse" />
                 ))}
             </div>
             <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
