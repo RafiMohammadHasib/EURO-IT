@@ -1,7 +1,9 @@
+
 "use client";
 
 import { Button } from "@/components/ui/button";
 import { Check, ArrowRight } from "lucide-react";
+import Link from "next/link";
 
 const pricingTiers = [
   {
@@ -49,6 +51,20 @@ const pricingTiers = [
     buttonText: "Contact Sales",
     popular: false,
   },
+  {
+    name: "Custom",
+    price: "Let's Talk",
+    description: "Need a tailored solution? We'll create a custom package that fits your unique goals.",
+    features: [
+      "Tailored Service Selection",
+      "Flexible Scope & Scale",
+      "Dedicated Strategy Session",
+      "Custom Reporting & KPIs",
+      "Priority Support",
+    ],
+    buttonText: "Inquire Now",
+    popular: false,
+  },
 ];
 
 const PricingSection = () => {
@@ -61,11 +77,11 @@ const PricingSection = () => {
         </p>
       </div>
 
-      <div className="grid lg:grid-cols-3 gap-8 items-stretch">
+      <div className="grid md:grid-cols-2 xl:grid-cols-4 gap-8 items-stretch">
         {pricingTiers.map((tier) => (
           <div
             key={tier.name}
-            className={`glass-card p-8 flex flex-col rounded-2xl transition-all duration-300 ${
+            className={`glass-card p-8 flex flex-col rounded-2xl transition-all duration-300 relative ${
               tier.popular ? 'border-primary/80 shadow-primary/20 scale-105' : 'border-border'
             }`}
           >
@@ -77,8 +93,10 @@ const PricingSection = () => {
               </div>
             )}
             <h3 className="text-2xl font-bold text-center glow-text">{tier.name}</h3>
-            <p className="text-4xl font-bold text-center my-6">{tier.price}<span className="text-lg font-medium text-muted-foreground">/mo</span></p>
-            <p className="text-muted-foreground text-center min-h-[40px] mb-6">{tier.description}</p>
+            <p className="text-4xl font-bold text-center my-6">{tier.price}
+              {tier.name !== "Custom" && <span className="text-lg font-medium text-muted-foreground">/mo</span>}
+            </p>
+            <p className="text-muted-foreground text-center min-h-[60px] mb-6">{tier.description}</p>
             
             <ul className="space-y-4 mb-8 flex-grow">
               {tier.features.map((feature, index) => (
@@ -88,11 +106,12 @@ const PricingSection = () => {
                 </li>
               ))}
             </ul>
-
-            <Button size="lg" className="w-full group mt-auto hover:shadow-lg hover:shadow-primary/40 transition-all duration-300 transform hover:scale-105">
-              {tier.buttonText}
-              <ArrowRight className="ml-2 h-5 w-5 transition-transform duration-300 group-hover:translate-x-1" />
-            </Button>
+            <Link href="/#contact" className="w-full mt-auto">
+              <Button size="lg" className="w-full group hover:shadow-lg hover:shadow-primary/40 transition-all duration-300 transform hover:scale-105">
+                {tier.buttonText}
+                <ArrowRight className="ml-2 h-5 w-5 transition-transform duration-300 group-hover:translate-x-1" />
+              </Button>
+            </Link>
           </div>
         ))}
       </div>
