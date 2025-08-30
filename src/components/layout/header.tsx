@@ -62,6 +62,25 @@ const Header = () => {
       </nav>
     );
   }
+  
+  if (!isMounted) {
+    return (
+      <header className={cn('fixed top-12 left-0 right-0 z-40 transition-all duration-300', 'py-6 bg-transparent')}>
+        <div className="container mx-auto px-4 sm:px-6 lg:px-8 flex justify-between items-center">
+            <HolographicLogo />
+            <div className="hidden md:flex items-center gap-6">
+                <NavLinks />
+                <div className="h-9 w-36 rounded-md bg-muted/50 animate-pulse" />
+            </div>
+            <div className="md:hidden">
+                <Button variant="ghost" size="icon" aria-label="Open menu">
+                    <Menu className="h-6 w-6" />
+                </Button>
+            </div>
+        </div>
+      </header>
+    );
+  }
 
   return (
     <header
