@@ -1,14 +1,12 @@
 
 "use client";
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { Button } from '@/components/ui/button';
 import Image from 'next/image';
 import { cn } from '@/lib/utils';
 import { ExternalLink } from 'lucide-react';
 import { useTheme } from 'next-themes';
-import { useEffect } from 'react';
-
 
 const projects = [
   { id: 1, title: 'Global SEO Campaign for Tech Startup', category: 'SEO', image: 'https://picsum.photos/600/400?random=4', description: 'Achieved 200% organic traffic growth in 6 months.' },
@@ -75,7 +73,7 @@ const PortfolioSection = () => {
             </div>
             <div className="p-6">
               <span className="text-xs font-semibold text-primary uppercase">{project.category}</span>
-              <h3 className={cn("text-xl font-bold mt-2 mb-3 h-14", titleColorClass)}>{project.title}</h3>
+              <h3 className={cn("text-xl font-bold mt-2 mb-3 h-14", isClient ? titleColorClass : 'text-white')}>{project.title}</h3>
               <p className="text-sm text-muted-foreground h-10">{project.description}</p>
             </div>
              <div className="absolute top-4 right-4 p-2 bg-black/30 rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-300">
