@@ -26,19 +26,18 @@ const socialLinks = [
 ]
 
 const Footer = () => {
-  const [currentYear, setCurrentYear] = useState<number | null>(null);
+  const [currentYear, setCurrentYear] = useState(new Date().getFullYear());
   const { theme } = useTheme();
   const [isMounted, setIsMounted] = useState(false);
 
   useEffect(() => {
     setIsMounted(true);
-    setCurrentYear(new Date().getFullYear());
   }, []);
-
-  const headingClasses = isMounted && theme === 'light' ? 'text-foreground' : 'text-white';
-  const textClasses = isMounted && theme === 'light' ? 'text-muted-foreground' : 'text-gray-300';
-  const linkClasses = isMounted && theme === 'light' ? 'text-muted-foreground hover:text-primary' : 'text-gray-300 hover:text-primary';
-  const socialIconClasses = isMounted && theme === 'light' ? 'text-muted-foreground hover:text-primary' : 'text-gray-400 hover:text-primary';
+  
+  const headingClasses = 'text-foreground';
+  const textClasses = 'text-muted-foreground';
+  const linkClasses = 'text-muted-foreground hover:text-primary';
+  const socialIconClasses = 'text-muted-foreground hover:text-primary';
 
   if (!isMounted) {
     return (
@@ -46,7 +45,7 @@ const Footer = () => {
         <div className="container mx-auto px-4 sm:px-6 lg:px-8">
             <div className="mt-12 pt-8 border-t border-border text-center text-muted-foreground text-sm flex items-center justify-center gap-2">
               <Copyright className="h-4 w-4" />
-              <span>EURO IT. All Rights Reserved.</span>
+              <span>{new Date().getFullYear()} EURO IT. All Rights Reserved.</span>
             </div>
         </div>
       </footer>
@@ -101,7 +100,7 @@ const Footer = () => {
         
         <div className="mt-12 pt-8 border-t border-border text-center text-muted-foreground text-sm flex items-center justify-center gap-2">
           <Copyright className="h-4 w-4" />
-          {currentYear && <span>{currentYear} EURO IT. All Rights Reserved.</span>}
+          <span>{currentYear} EURO IT. All Rights Reserved.</span>
         </div>
       </div>
     </footer>

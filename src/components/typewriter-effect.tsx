@@ -51,7 +51,7 @@ const TypewriterEffect = () => {
   }, [text, isDeleting, loopNum, typingSpeed, isMounted]);
   
   if (!isMounted) {
-    return <span>&nbsp;</span>;
+    return <span>We Grow Your Brand.|</span>;
   }
 
   return (
