@@ -19,6 +19,8 @@ const TypewriterEffect = () => {
 
   useEffect(() => {
     setIsMounted(true);
+    // Set initial text to avoid empty span on server
+    setText(phrases[0].substring(0, 1)); 
   }, []);
 
   useEffect(() => {
@@ -49,7 +51,7 @@ const TypewriterEffect = () => {
 
     return () => clearTimeout(handle);
   }, [text, isDeleting, loopNum, typingSpeed, isMounted]);
-
+  
   if (!isMounted) {
     return <span>{phrases[0]}&nbsp;</span>;
   }
