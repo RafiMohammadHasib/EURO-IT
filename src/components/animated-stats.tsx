@@ -83,6 +83,25 @@ const AnimatedStat = ({ stat }: { stat: Stat }) => {
 };
 
 export const AnimatedStats = () => {
+    const [isMounted, setIsMounted] = useState(false);
+    useEffect(() => {
+        setIsMounted(true);
+    }, []);
+
+    if (!isMounted) {
+        return (
+            <div className="grid grid-cols-2 lg:grid-cols-4 gap-8">
+                {stats.map((stat) => (
+                    <div key={stat.label} className="text-center">
+                        <p className="text-5xl md:text-6xl font-bold text-primary glow-text">
+                            0{stat.suffix}
+                        </p>
+                        <p className="text-muted-foreground mt-2">{stat.label}</p>
+                    </div>
+                ))}
+            </div>
+        );
+    }
     return (
         <div className="grid grid-cols-2 lg:grid-cols-4 gap-8">
             {stats.map((stat) => (
