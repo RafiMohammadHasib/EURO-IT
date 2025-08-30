@@ -28,17 +28,17 @@ const socialLinks = [
 const Footer = () => {
   const [currentYear, setCurrentYear] = useState<number | null>(null);
   const { theme } = useTheme();
-  const [isClient, setIsClient] = useState(false);
+  const [isMounted, setIsMounted] = useState(false);
 
   useEffect(() => {
+    setIsMounted(true);
     setCurrentYear(new Date().getFullYear());
-    setIsClient(true);
   }, []);
 
-  const headingClasses = isClient && theme === 'light' ? 'text-foreground' : 'text-white';
-  const textClasses = isClient && theme === 'light' ? 'text-muted-foreground' : 'text-gray-300';
-  const linkClasses = isClient && theme === 'light' ? 'text-muted-foreground hover:text-primary' : 'text-gray-300 hover:text-primary';
-  const socialIconClasses = isClient && theme === 'light' ? 'text-muted-foreground hover:text-primary' : 'text-gray-400 hover:text-primary';
+  const headingClasses = isMounted && theme === 'light' ? 'text-foreground' : 'text-white';
+  const textClasses = isMounted && theme === 'light' ? 'text-muted-foreground' : 'text-gray-300';
+  const linkClasses = isMounted && theme === 'light' ? 'text-muted-foreground hover:text-primary' : 'text-gray-300 hover:text-primary';
+  const socialIconClasses = isMounted && theme === 'light' ? 'text-muted-foreground hover:text-primary' : 'text-gray-400 hover:text-primary';
 
   return (
     <footer className="w-full py-12 mt-auto bg-card border-t">
@@ -88,7 +88,7 @@ const Footer = () => {
         
         <div className="mt-12 pt-8 border-t border-border text-center text-muted-foreground text-sm flex items-center justify-center gap-2">
           <Copyright className="h-4 w-4" />
-          {isClient && <span>{currentYear} EURO IT. All Rights Reserved.</span>}
+          {isMounted && <span>{currentYear} EURO IT. All Rights Reserved.</span>}
         </div>
       </div>
     </footer>
