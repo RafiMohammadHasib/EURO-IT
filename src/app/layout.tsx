@@ -30,6 +30,9 @@ export default function RootLayout({
             enableSystem
             disableTransitionOnChange
           >
+          <div className="fixed top-0 left-0 w-full h-full -z-10 bg-background">
+            <div className="absolute inset-0 bg-gradient-to-br from-primary/10 via-transparent to-primary/10"></div>
+          </div>
           {children}
           <Toaster />
           <WhatsAppButton />
