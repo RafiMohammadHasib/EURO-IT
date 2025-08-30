@@ -35,10 +35,6 @@ const Footer = () => {
     setIsClient(true);
   }, []);
 
-  if (!isClient) {
-    return null;
-  }
-
   const headingClasses = theme === 'light' ? 'text-foreground' : 'text-white';
   const textClasses = theme === 'light' ? 'text-muted-foreground' : 'text-gray-300';
   const linkClasses = theme === 'light' ? 'text-muted-foreground hover:text-primary' : 'text-gray-300 hover:text-primary';
@@ -92,7 +88,7 @@ const Footer = () => {
         
         <div className="mt-12 pt-8 border-t border-border text-center text-muted-foreground text-sm flex items-center justify-center gap-2">
           <Copyright className="h-4 w-4" />
-          {currentYear && <span>{currentYear} EURO IT. All Rights Reserved.</span>}
+          {isClient && currentYear && <span>{currentYear} EURO IT. All Rights Reserved.</span>}
         </div>
       </div>
     </footer>
