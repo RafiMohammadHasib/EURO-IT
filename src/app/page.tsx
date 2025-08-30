@@ -14,7 +14,7 @@ import HeroWrapper from "@/components/hero-wrapper";
 
 export default function Home() {
   return (
-    <div className="relative flex flex-col min-h-screen bg-background">
+    <div className="relative flex flex-col min-h-screen bg-transparent">
       <div className="relative z-10 flex flex-col flex-1">
         <TopBar />
         <Header />

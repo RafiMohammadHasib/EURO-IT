@@ -1,4 +1,3 @@
-
 "use client";
 
 import { useState, useEffect } from 'react';
@@ -34,11 +33,6 @@ const Footer = () => {
     setIsMounted(true);
     setCurrentYear(new Date().getFullYear());
   }, []);
-  
-  const headingClasses = isMounted ? 'text-foreground' : 'text-transparent';
-  const textClasses = isMounted ? 'text-muted-foreground' : 'text-transparent';
-  const linkClasses = isMounted ? 'text-muted-foreground hover:text-primary' : 'text-transparent';
-  const socialIconClasses = isMounted ? 'text-muted-foreground hover:text-primary' : 'text-transparent';
 
   if (!isMounted) {
     return (
@@ -67,17 +61,17 @@ const Footer = () => {
         <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
           <div className="md:col-span-1">
             <HolographicLogo />
-            <p className={cn("mt-4 text-sm", textClasses)}>
+            <p className="mt-4 text-sm text-muted-foreground">
               Euro IT is a leading technology solutions provider specializing in Digital Marketing, ERP systems, and custom web solutions. Elevate your business with cutting-edge digital transformation.
             </p>
           </div>
           
           <div>
-            <h3 className={cn("font-headline text-lg font-semibold tracking-wider", headingClasses)}>Quick Links</h3>
+            <h3 className="font-headline text-lg font-semibold tracking-wider text-foreground">Quick Links</h3>
             <ul className="mt-4 space-y-2">
               {navItems.map((item) => (
                 <li key={item.name}>
-                  <Link href={item.href} className={cn("text-sm transition-colors duration-300", linkClasses)}>
+                  <Link href={item.href} className="text-sm transition-colors duration-300 text-muted-foreground hover:text-primary">
                     {item.name}
                   </Link>
                 </li>
@@ -86,9 +80,9 @@ const Footer = () => {
           </div>
 
           <div>
-            <h3 className={cn("font-headline text-lg font-semibold tracking-wider", headingClasses)}>Contact Us</h3>
-            <div className={cn('text-sm mt-4 space-y-2', textClasses)}>
-              <p className={cn("font-semibold", headingClasses)}>BD Bangladesh Office</p>
+            <h3 className="font-headline text-lg font-semibold tracking-wider text-foreground">Contact Us</h3>
+            <div className='text-sm mt-4 space-y-2 text-muted-foreground'>
+              <p className="font-semibold text-foreground">BD Bangladesh Office</p>
               <p>Address: Regnum Resource Limited, Rahman's Regnum Centre Business Suite, Tejgaon C/A, Dhaka- 1208, Bangladesh.</p>
               <p>Phone: +880 1339-844255</p>
               <p>Email: euroitofficial@gmail.com</p>
@@ -96,10 +90,10 @@ const Footer = () => {
           </div>
           
           <div>
-            <h3 className={cn("font-headline text-lg font-semibold tracking-wider", headingClasses)}>Follow Us</h3>
+            <h3 className="font-headline text-lg font-semibold tracking-wider text-foreground">Follow Us</h3>
             <div className="flex mt-4 space-x-4">
               {socialLinks.map(social => (
-                <a key={social.name} href={social.href} target="_blank" rel="noopener noreferrer" aria-label={social.name} className={cn("transition-colors duration-300", socialIconClasses)}>
+                <a key={social.name} href={social.href} target="_blank" rel="noopener noreferrer" aria-label={social.name} className="transition-colors duration-300 text-muted-foreground hover:text-primary">
                   <social.icon className="h-6 w-6" />
                 </a>
               ))}
