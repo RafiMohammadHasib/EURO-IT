@@ -1,12 +1,13 @@
 
 "use client";
 
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import { Button } from '@/components/ui/button';
 import Image from 'next/image';
 import { cn } from '@/lib/utils';
 import { ExternalLink } from 'lucide-react';
 import { useTheme } from 'next-themes';
+import { useMounted } from '@/hooks/use-mounted';
 
 const projects = [
   { id: 1, title: 'Global SEO Campaign for Tech Startup', category: 'SEO', image: 'https://picsum.photos/600/400?random=4', description: 'Achieved 200% organic traffic growth in 6 months.' },
@@ -25,11 +26,7 @@ const categories = ['All', 'SEO', 'Web Development', 'App Development', 'Social 
 const PortfolioSection = () => {
   const [activeCategory, setActiveCategory] = useState('All');
   const { theme } = useTheme();
-  const [isMounted, setIsMounted] = useState(false);
-
-  useEffect(() => {
-    setIsMounted(true);
-  }, []);
+  const isMounted = useMounted();
 
   const filteredProjects = activeCategory === 'All'
     ? projects

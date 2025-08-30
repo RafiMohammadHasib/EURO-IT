@@ -3,6 +3,7 @@
 
 import { useState, useEffect, useRef } from 'react';
 import { motion, useInView, useAnimation } from 'framer-motion';
+import { useMounted } from '@/hooks/use-mounted';
 
 type Stat = {
   value: number;
@@ -22,11 +23,7 @@ const AnimatedStat = ({ stat }: { stat: Stat }) => {
   const ref = useRef<HTMLDivElement>(null);
   const isInView = useInView(ref, { once: true, margin: "-100px" });
   const controls = useAnimation();
-  const [isMounted, setIsMounted] = useState(false);
-
-  useEffect(() => {
-    setIsMounted(true);
-  }, []);
+  const isMounted = useMounted();
 
   useEffect(() => {
     if (isInView && isMounted) {
@@ -83,10 +80,7 @@ const AnimatedStat = ({ stat }: { stat: Stat }) => {
 };
 
 export const AnimatedStats = () => {
-    const [isMounted, setIsMounted] = useState(false);
-    useEffect(() => {
-        setIsMounted(true);
-    }, []);
+    const isMounted = useMounted();
 
     if (!isMounted) {
         return (
@@ -94,7 +88,7 @@ export const AnimatedStats = () => {
                 {stats.map((stat) => (
                     <div key={stat.label} className="text-center">
                         <p className="text-5xl md:text-6xl font-bold text-primary glow-text">
-                            0{stat.suffix}
+                            0{stat.suffix || ''}
                         </p>
                         <p className="text-muted-foreground mt-2">{stat.label}</p>
                     </div>
