@@ -2,6 +2,7 @@
 "use client";
 
 import { useState, useEffect } from 'react';
+import { useMounted } from '@/hooks/use-mounted';
 
 const phrases = [
   "We Grow Your Brand.",
@@ -15,11 +16,7 @@ const TypewriterEffect = () => {
   const [isDeleting, setIsDeleting] = useState(false);
   const [loopNum, setLoopNum] = useState(0);
   const [typingSpeed, setTypingSpeed] = useState(150);
-  const [isMounted, setIsMounted] = useState(false);
-
-  useEffect(() => {
-    setIsMounted(true);
-  }, []);
+  const isMounted = useMounted();
 
   useEffect(() => {
     if (!isMounted) return;

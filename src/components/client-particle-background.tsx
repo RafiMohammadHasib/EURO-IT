@@ -1,18 +1,15 @@
+
 "use client";
 
 import dynamic from 'next/dynamic';
-import { useEffect, useState } from 'react';
+import { useMounted } from '@/hooks/use-mounted';
 
 const ParticleBackground = dynamic(() => import('@/components/particle-background'), {
   ssr: false,
 });
 
 export default function ClientParticleBackground() {
-    const [isMounted, setIsMounted] = useState(false);
-
-    useEffect(() => {
-        setIsMounted(true);
-    }, []);
+    const isMounted = useMounted();
 
     if (!isMounted) {
         return null;

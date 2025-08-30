@@ -1,10 +1,10 @@
 
 "use client";
 
-import { useState, useEffect } from 'react';
 import Link from 'next/link';
 import { Copyright, Facebook, Linkedin, Instagram, Youtube } from "lucide-react";
 import HolographicLogo from '@/components/holographic-logo';
+import { useMounted } from '@/hooks/use-mounted';
 
 const navItems = [
   { name: 'About Us', href: '/#about' },
@@ -24,12 +24,7 @@ const socialLinks = [
 ]
 
 const Footer = () => {
-  const [isMounted, setIsMounted] = useState(false);
-
-  useEffect(() => {
-    setIsMounted(true);
-  }, []);
-
+  const isMounted = useMounted();
   const currentYear = new Date().getFullYear();
 
   return (

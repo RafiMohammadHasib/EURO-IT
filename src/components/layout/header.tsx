@@ -9,6 +9,7 @@ import { Sheet, SheetContent, SheetTrigger } from '@/components/ui/sheet';
 import HolographicLogo from '@/components/holographic-logo';
 import { cn } from '@/lib/utils';
 import { useTheme } from 'next-themes';
+import { useMounted } from '@/hooks/use-mounted';
 
 const navItems = [
   { name: 'Services', href: '/#services' },
@@ -22,10 +23,9 @@ const Header = () => {
   const [scrolled, setScrolled] = useState(false);
   const [isMobileMenuOpen, setMobileMenuOpen] = useState(false);
   const { theme } = useTheme();
-  const [isMounted, setIsMounted] = useState(false);
+  const isMounted = useMounted();
 
   useEffect(() => {
-    setIsMounted(true);
     const handleScroll = () => {
       setScrolled(window.scrollY > 10);
     };
