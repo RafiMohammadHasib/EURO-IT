@@ -27,7 +27,6 @@ const socialLinks = [
 
 const Footer = () => {
   const [currentYear, setCurrentYear] = useState(new Date().getFullYear());
-  const { theme } = useTheme();
   const [isMounted, setIsMounted] = useState(false);
 
   useEffect(() => {
@@ -43,6 +42,14 @@ const Footer = () => {
     return (
       <footer className="w-full py-12 mt-auto bg-card border-t">
         <div className="container mx-auto px-4 sm:px-6 lg:px-8">
+            <div className="grid grid-cols-1 md:grid-cols-4 gap-8 opacity-0">
+              <div className="md:col-span-1">
+                <HolographicLogo />
+                <p className="mt-4 text-sm">
+                  Euro IT is a leading technology solutions provider specializing in Digital Marketing, ERP systems, and custom web solutions. Elevate your business with cutting-edge digital transformation.
+                </p>
+              </div>
+            </div>
             <div className="mt-12 pt-8 border-t border-border text-center text-muted-foreground text-sm flex items-center justify-center gap-2">
               <Copyright className="h-4 w-4" />
               <span>{new Date().getFullYear()} EURO IT. All Rights Reserved.</span>
