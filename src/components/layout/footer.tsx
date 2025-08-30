@@ -88,7 +88,7 @@ const Footer = () => {
         
         <div className="mt-12 pt-8 border-t border-border text-center text-muted-foreground text-sm flex items-center justify-center gap-2">
           <Copyright className="h-4 w-4" />
-          {isClient && currentYear && <span>{currentYear} EURO IT. All Rights Reserved.</span>}
+          {isClient && <span>{currentYear} EURO IT. All Rights Reserved.</span>}
         </div>
       </div>
     </footer>
