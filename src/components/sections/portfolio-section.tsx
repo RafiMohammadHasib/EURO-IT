@@ -36,6 +36,10 @@ const PortfolioSection = () => {
     : projects.filter(p => p.category === activeCategory);
 
   const titleColorClass = isClient && theme === 'light' ? 'text-foreground' : 'text-white';
+  
+  if (!isClient) {
+    return null;
+  }
 
   return (
     <section id="portfolio" className="section-container">
