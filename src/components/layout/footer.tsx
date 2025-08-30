@@ -31,6 +31,7 @@ const Footer = () => {
 
   useEffect(() => {
     setIsMounted(true);
+    setCurrentYear(new Date().getFullYear());
   }, []);
   
   const headingClasses = 'text-foreground';
