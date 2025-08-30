@@ -40,6 +40,10 @@ const Footer = () => {
   const linkClasses = isMounted && theme === 'light' ? 'text-muted-foreground hover:text-primary' : 'text-gray-300 hover:text-primary';
   const socialIconClasses = isMounted && theme === 'light' ? 'text-muted-foreground hover:text-primary' : 'text-gray-400 hover:text-primary';
 
+  if (!isMounted) {
+    return null;
+  }
+
   return (
     <footer className="w-full py-12 mt-auto bg-card border-t">
       <div className="container mx-auto px-4 sm:px-6 lg:px-8">
@@ -88,7 +92,7 @@ const Footer = () => {
         
         <div className="mt-12 pt-8 border-t border-border text-center text-muted-foreground text-sm flex items-center justify-center gap-2">
           <Copyright className="h-4 w-4" />
-          {isMounted && <span>{currentYear} EURO IT. All Rights Reserved.</span>}
+          {currentYear && <span>{currentYear} EURO IT. All Rights Reserved.</span>}
         </div>
       </div>
     </footer>

@@ -36,6 +36,10 @@ const Header = () => {
   const navLinkClasses = isClient && theme === 'light'
     ? "text-gray-600 hover:text-primary"
     : "text-gray-300 hover:text-primary";
+    
+  if (!isClient) {
+    return null;
+  }
 
   const NavLinks = ({ className }: { className?: string }) => (
     <nav className={cn("flex items-center gap-6", className)}>
