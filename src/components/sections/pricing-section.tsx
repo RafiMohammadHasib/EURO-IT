@@ -52,6 +52,34 @@ const pricingTiers = [
     popular: false,
   },
   {
+    name: "Web Dev (CMS)",
+    price: "From ৳30,000",
+    description: "User-friendly websites built on platforms like WordPress for easy content management.",
+    features: [
+        "Custom Design & Layout",
+        "Responsive on All Devices",
+        "Essential Plugin Setup",
+        "Basic SEO Integration",
+        "1-Hour Training Session",
+    ],
+    buttonText: "Get a Quote",
+    popular: false,
+  },
+  {
+    name: "Web Dev (Raw Code)",
+    price: "From ৳70,000",
+    description: "High-performance, custom-coded websites for unique features and scalability.",
+    features: [
+        "Bespoke Design & Architecture",
+        "Optimized for Speed & SEO",
+        "Scalable & Secure Codebase",
+        "API & Third-party Integrations",
+        "Full Ownership & Support",
+    ],
+    buttonText: "Get a Quote",
+    popular: false,
+  },
+  {
     name: "Custom",
     price: "Let's Talk",
     description: "Need a tailored solution? We'll create a custom package that fits your unique goals.",
@@ -73,11 +101,11 @@ const PricingSection = () => {
       <div className="text-center mb-16">
         <h2 className="text-4xl md:text-5xl font-bold glow-text">Flexible Pricing for Your Growth</h2>
         <p className="mt-4 max-w-2xl mx-auto text-lg text-muted-foreground">
-          Choose a plan that fits your business needs in the Bangladeshi market. All prices are in BDT per month.
+          Choose a plan that fits your business needs in the Bangladeshi market. All prices are in BDT and can be monthly or project-based.
         </p>
       </div>
 
-      <div className="grid md:grid-cols-2 xl:grid-cols-4 gap-8 items-stretch">
+      <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8 items-stretch">
         {pricingTiers.map((tier) => (
           <div
             key={tier.name}
@@ -94,7 +122,7 @@ const PricingSection = () => {
             )}
             <h3 className="text-2xl font-bold text-center glow-text">{tier.name}</h3>
             <p className="text-4xl font-bold text-center my-6">{tier.price}
-              {tier.name !== "Custom" && <span className="text-lg font-medium text-muted-foreground">/mo</span>}
+              {tier.name !== "Custom" && !tier.name.includes("Web Dev") && <span className="text-lg font-medium text-muted-foreground">/mo</span>}
             </p>
             <p className="text-muted-foreground text-center min-h-[60px] mb-6">{tier.description}</p>
             
