@@ -48,7 +48,7 @@ const TypewriterEffect = () => {
 
     return () => clearTimeout(handle);
   }, [text, isDeleting, loopNum, typingSpeed, isMounted]);
-  
+
   if (!isMounted) {
     return <span>{phrases[0]}</span>;
   }

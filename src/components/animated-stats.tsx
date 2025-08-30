@@ -21,7 +21,7 @@ const AnimatedStat = ({ stat }: { stat: Stat }) => {
   const ref = useRef<HTMLDivElement>(null);
   const isInView = useInView(ref, { once: true, margin: "-100px" });
   const controls = useAnimation();
-  
+
   useEffect(() => {
     if (isInView) {
       controls.start({
@@ -51,8 +51,8 @@ const AnimatedStat = ({ stat }: { stat: Stat }) => {
   }, [isInView, stat.value, controls]);
 
   return (
-    <motion.div 
-      ref={ref} 
+    <motion.div
+      ref={ref}
       className="text-center"
       initial={{ opacity: 0, y: 20 }}
       animate={controls}

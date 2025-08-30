@@ -4,8 +4,6 @@ import { useState, useEffect } from 'react';
 import Link from 'next/link';
 import { Copyright, Facebook, Linkedin, Instagram, Youtube } from "lucide-react";
 import HolographicLogo from '@/components/holographic-logo';
-import { useTheme } from 'next-themes';
-import { cn } from '@/lib/utils';
 
 const navItems = [
   { name: 'About Us', href: '/#about' },
@@ -25,14 +23,13 @@ const socialLinks = [
 ]
 
 const Footer = () => {
-  const [currentYear, setCurrentYear] = useState(new Date().getFullYear());
   const [isMounted, setIsMounted] = useState(false);
-  const { theme } = useTheme();
 
   useEffect(() => {
     setIsMounted(true);
-    setCurrentYear(new Date().getFullYear());
   }, []);
+
+  const currentYear = new Date().getFullYear();
 
   if (!isMounted) {
     return (
@@ -48,7 +45,7 @@ const Footer = () => {
             </div>
             <div className="mt-12 pt-8 border-t border-border text-center text-muted-foreground text-sm flex items-center justify-center gap-2">
               <Copyright className="h-4 w-4" />
-              <span>{new Date().getFullYear()} EURO IT. All Rights Reserved.</span>
+              <span>{currentYear} EURO IT. All Rights Reserved.</span>
             </div>
         </div>
       </footer>
