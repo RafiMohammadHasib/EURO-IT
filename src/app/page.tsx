@@ -11,6 +11,7 @@ import TopBar from "@/components/layout/top-bar";
 import BlogSection from "@/components/sections/blog-section";
 import FaqSection from "@/components/sections/faq-section";
 import HeroWrapper from "@/components/hero-wrapper";
+import PricingSection from "@/components/sections/pricing-section";
 
 
 export default function Home() {
@@ -25,6 +26,7 @@ export default function Home() {
           <AboutSection />
           <PortfolioSection />
           <BlogSection />
+          <PricingSection />
           <ContactSection />
           <FaqSection />
         </main>

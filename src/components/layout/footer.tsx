@@ -11,6 +11,7 @@ const navItems = [
   { name: 'Services', href: '/#services' },
   { name: 'Portfolio', href: '/#portfolio' },
   { name: 'Blog', href: '/#blog' },
+  { name: 'Pricing', href: '/#pricing' },
   { name: 'Contact', href: '/#contact' },
   { name: 'Privacy Policy', href: '/privacy-policy' },
   { name: 'Terms & Conditions', href: '/terms-and-conditions' },
