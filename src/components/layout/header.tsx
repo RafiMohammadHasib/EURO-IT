@@ -33,55 +33,35 @@ const Header = () => {
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
-  const navLinkClasses = isMounted && theme === 'light'
-    ? "text-gray-600 hover:text-primary"
-    : "text-gray-300 hover:text-primary";
-    
-  if (!isMounted) {
+  const NavLinks = ({ className }: { className?: string }) => {
+    if (!isMounted) {
+      return (
+        <nav className={cn("flex items-center gap-6", className)}>
+          {navItems.map((item) => (
+            <div key={item.name} className="h-5 w-20 rounded-full bg-muted/50 animate-pulse" />
+          ))}
+        </nav>
+      );
+    }
+  
     return (
-      <header
-        className={cn(
-          'fixed top-12 left-0 right-0 z-40 transition-all duration-300',
-          'py-6 bg-transparent'
-        )}
-      >
-        <div className="container mx-auto px-4 sm:px-6 lg:px-8 flex justify-between items-center">
-          <HolographicLogo />
-          <div className="hidden md:flex items-center gap-6">
-             <nav className="flex items-center gap-6">
-                {navItems.map((item) => (
-                  <div key={item.name} className="h-5 w-20 rounded-full bg-muted/50 animate-pulse" />
-                ))}
-              </nav>
-              <div className="h-9 w-40 rounded-md bg-muted/50 animate-pulse" />
-          </div>
-          <div className="md:hidden">
-             <Button variant="ghost" size="icon" aria-label="Open menu">
-                <Menu className="h-6 w-6" />
-              </Button>
-          </div>
-        </div>
-      </header>
+      <nav className={cn("flex items-center gap-6", className)}>
+        {navItems.map((item) => (
+          <Link
+            key={item.name}
+            href={item.href}
+            onClick={() => setMobileMenuOpen(false)}
+            className={cn(
+              "text-sm font-medium transition-colors duration-300 relative after:content-[''] after:absolute after:left-0 after:bottom-[-4px] after:w-0 after:h-[2px] after:bg-primary after:transition-all after:duration-300 hover:after:w-full",
+              theme === 'light' ? "text-gray-600 hover:text-primary" : "text-gray-300 hover:text-primary"
+            )}
+          >
+            {item.name}
+          </Link>
+        ))}
+      </nav>
     );
   }
-
-  const NavLinks = ({ className }: { className?: string }) => (
-    <nav className={cn("flex items-center gap-6", className)}>
-      {navItems.map((item) => (
-        <Link
-          key={item.name}
-          href={item.href}
-          onClick={() => setMobileMenuOpen(false)}
-          className={cn(
-            "text-sm font-medium transition-colors duration-300 relative after:content-[''] after:absolute after:left-0 after:bottom-[-4px] after:w-0 after:h-[2px] after:bg-primary after:transition-all after:duration-300 hover:after:w-full",
-            navLinkClasses
-          )}
-        >
-          {item.name}
-        </Link>
-      ))}
-    </nav>
-  );
 
   return (
     <header

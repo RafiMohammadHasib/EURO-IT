@@ -2,7 +2,7 @@
 "use client";
 
 import { useState, useEffect, useRef } from 'react';
-import { motion, useInView, useAnimation, AnimatePresence } from 'framer-motion';
+import { motion, useInView, useAnimation } from 'framer-motion';
 
 type Stat = {
   value: number;
@@ -22,9 +22,14 @@ const AnimatedStat = ({ stat }: { stat: Stat }) => {
   const ref = useRef<HTMLDivElement>(null);
   const isInView = useInView(ref, { once: true, margin: "-100px" });
   const controls = useAnimation();
+  const [isMounted, setIsMounted] = useState(false);
 
   useEffect(() => {
-    if (isInView) {
+    setIsMounted(true);
+  }, []);
+
+  useEffect(() => {
+    if (isInView && isMounted) {
       controls.start({
         opacity: 1,
         y: 0,
@@ -49,8 +54,19 @@ const AnimatedStat = ({ stat }: { stat: Stat }) => {
 
       return () => clearInterval(counter);
     }
-  }, [isInView, stat.value, controls]);
+  }, [isInView, stat.value, controls, isMounted]);
   
+
+  if (!isMounted) {
+    return (
+      <div className="text-center">
+        <p className="text-5xl md:text-6xl font-bold text-primary glow-text">
+          0{stat.suffix}
+        </p>
+        <p className="text-muted-foreground mt-2">{stat.label}</p>
+      </div>
+    );
+  }
 
   return (
     <motion.div 
@@ -68,29 +84,11 @@ const AnimatedStat = ({ stat }: { stat: Stat }) => {
 };
 
 export const AnimatedStats = () => {
-    const [isMounted, setIsMounted] = useState(false);
-    useEffect(() => {
-        setIsMounted(true);
-    }, []);
-
     return (
         <div className="grid grid-cols-2 lg:grid-cols-4 gap-8">
-            <AnimatePresence>
-                {isMounted ? (
-                    stats.map((stat) => (
-                        <AnimatedStat key={stat.label} stat={stat} />
-                    ))
-                ) : (
-                    stats.map((stat) => (
-                        <div key={stat.label} className="text-center">
-                            <p className="text-5xl md:text-6xl font-bold text-primary glow-text">
-                                0{stat.suffix}
-                            </p>
-                            <p className="text-muted-foreground mt-2">{stat.label}</p>
-                        </div>
-                    ))
-                )}
-            </AnimatePresence>
+            {stats.map((stat) => (
+                <AnimatedStat key={stat.label} stat={stat} />
+            ))}
         </div>
     );
 };
