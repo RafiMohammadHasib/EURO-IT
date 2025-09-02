@@ -17,6 +17,7 @@ const navItems = [
   { name: 'Portfolio', href: '/#portfolio' },
   { name: 'Blog', href: '/#blog' },
   { name: 'Pricing', href: '/#pricing' },
+  { name: 'AI Market Planner', href: '/ai-market-planner' },
   { name: 'Contact', href: '/#contact' },
 ];
 
