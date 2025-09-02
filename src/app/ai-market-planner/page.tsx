@@ -83,7 +83,6 @@ export default function AiMarketPlannerPage() {
 
   const renderSection = (title: string, content: string | undefined) => {
     if (!content) return null;
-    // Split content by newlines and wrap each line in a <p> tag
     const paragraphs = content.split('\n').filter(p => p.trim() !== '').map((paragraph, index) => (
       <p key={index} className="mb-4 last:mb-0">{paragraph}</p>
     ));
@@ -190,7 +189,7 @@ export default function AiMarketPlannerPage() {
                             <FormControl>
                               <SelectTrigger>
                                 <SelectValue placeholder="Select a funnel stage" />
-                              </Trigger>
+                              </SelectTrigger>
                             </FormControl>
                             <SelectContent>
                               <SelectItem value="Awareness">Awareness</SelectItem>
@@ -287,7 +286,7 @@ export default function AiMarketPlannerPage() {
                   
                   <div className="border-t border-b border-primary/20 py-6 my-8">
                      <h3 className="text-2xl font-bold text-white mb-4">Abstract</h3>
-                     <p className="italic">{result.abstract}</p>
+                     <p className="italic whitespace-pre-line">{result.abstract}</p>
                   </div>
 
                   {renderSection("1. Introduction", result.introduction)}
