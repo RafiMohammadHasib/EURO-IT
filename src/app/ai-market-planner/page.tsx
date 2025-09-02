@@ -9,7 +9,6 @@ import { Button } from "@/components/ui/button";
 import {
   Form,
   FormControl,
-  FormDescription,
   FormField,
   FormItem,
   FormLabel,
@@ -49,11 +48,18 @@ const parseMarkdownTable = (markdown: string): { headers: string[]; rows: string
   const lines = markdown.trim().split('\n');
   if (lines.length < 2) return null;
 
-  const headers = lines[0].split('|').map(h => h.trim()).filter(Boolean);
+  const tableParts = lines.map(line => line.split('|').map(cell => cell.trim()).filter(Boolean));
+  const headers = tableParts[0];
+
   if (headers.length === 0) return null;
   
-  const rows = lines.slice(2).map(line => line.split('|').map(cell => cell.trim()).filter(Boolean));
+  // check for separator line
+  if (lines[1].includes('---')) {
+      const rows = tableParts.slice(2);
+      return { headers, rows };
+  }
   
+  const rows = tableParts.slice(1);
   return { headers, rows };
 };
 
@@ -243,7 +249,7 @@ export default function AiMarketPlannerPage() {
                             <FormControl>
                               <SelectTrigger>
                                 <SelectValue placeholder="Select a funnel stage" />
-                              </Trigger>
+                              </SelectTrigger>
                             </FormControl>
                             <SelectContent>
                               <SelectItem value="Awareness">Awareness</SelectItem>
@@ -361,3 +367,5 @@ export default function AiMarketPlannerPage() {
     </div>
   );
 }
+
+    
