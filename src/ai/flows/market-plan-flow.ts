@@ -42,6 +42,7 @@ export async function generateMarketPlan(input: GenerateMarketPlanInput): Promis
 
 const prompt = ai.definePrompt({
   name: 'marketPlanPrompt',
+  model: 'openai/gpt-4o',
   input: { schema: GenerateMarketPlanInputSchema },
   output: { schema: GenerateMarketPlanOutputSchema },
   prompt: `You are a senior digital marketing strategist with a track record of building multi-channel campaigns. Your task is to create a detailed marketing plan for the provided business. 
@@ -77,10 +78,15 @@ const marketPlanFlow = ai.defineFlow(
     outputSchema: GenerateMarketPlanOutputSchema,
   },
   async (input) => {
-    const { output } = await prompt(input);
-    if (!output) {
-        throw new Error("Failed to generate a marketing plan.");
+    try {
+        const { output } = await prompt(input);
+        if (!output) {
+            throw new Error("API returned no output.");
+        }
+        return output;
+    } catch (e: any) {
+        console.error("Error in marketPlanFlow:", e);
+        throw new Error(`Failed to generate marketing plan: ${e.message}`);
     }
-    return output;
   }
 );
