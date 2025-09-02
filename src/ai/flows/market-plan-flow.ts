@@ -25,13 +25,16 @@ const GenerateMarketPlanInputSchema = z.object({
 export type GenerateMarketPlanInput = z.infer<typeof GenerateMarketPlanInputSchema>;
 
 const GenerateMarketPlanOutputSchema = z.object({
-  audienceSegments: z.string().describe("Detailed audience segments and ICP definitions."),
-  channelStrategy: z.string().describe("Channel strategy (email, social, paid search, etc.) with recommendations for each segment."),
-  budget: z.string().describe("Budget breakdown by channel and initiative."),
-  messaging: z.string().describe("Messaging and positioning recommendations per audience."),
-  timeline: z.string().describe("Timeline and scheduling (campaign phases, launch dates)."),
-  metrics: z.string().describe("Key performance metrics (KPIs) with targets and tracking methods."),
-  recommendations: z.string().describe("Recommendations for iteration and testing."),
+  title: z.string().describe("The title of the research paper-style marketing plan."),
+  abstract: z.string().describe("A concise summary of the entire marketing plan, including objectives, methods, key findings, and primary recommendations."),
+  introduction: z.string().describe("Background on the business, its product, market context, and the explicit objectives of this marketing plan."),
+  audienceAnalysis: z.string().describe("Detailed analysis of the target audience segments (ICPs), including firmographics, psychographics, and key pain points."),
+  channelStrategy: z.string().describe("In-depth channel strategy (email, social, paid search, etc.) with specific recommendations and justifications for each audience segment."),
+  budgetBreakdown: z.string().describe("A detailed breakdown of the proposed budget by channel, initiative, and time period."),
+  messagingFramework: z.string().describe("Core messaging and positioning recommendations, tailored for each primary audience segment."),
+  implementationTimeline: z.string().describe("A strategic timeline outlining campaign phases, key activities, and launch dates."),
+  kpiFramework: z.string().describe("A framework of Key Performance Indicators (KPIs) with specific targets and methods for tracking success."),
+  conclusion: z.string().describe("A concluding summary of the plan and final recommendations for iteration and testing."),
 });
 export type GenerateMarketPlanOutput = z.infer<typeof GenerateMarketPlanOutputSchema>;
 
@@ -44,7 +47,7 @@ const prompt = ai.definePrompt({
   name: 'marketPlanPrompt',
   input: { schema: GenerateMarketPlanInputSchema },
   output: { schema: GenerateMarketPlanOutputSchema },
-  prompt: `You are a senior digital marketing strategist with a track record of building multi-channel campaigns. Your task is to create a detailed marketing plan for the provided business. 
+  prompt: `You are a senior digital marketing strategist and analyst. Your task is to produce a comprehensive marketing plan presented in the formal style of a research paper.
 
 Business Details:
 - Business Model: {{{businessModel}}}
@@ -57,16 +60,20 @@ Business Details:
 - Timeline: {{{timeline}}}
 - Goals: {{{goals}}}
 
-Produce a structured plan covering: 
-(1) audience segments and ICP definitions; 
-(2) channel strategy (email, social, paid search, partnerships, etc.) with recommendations tailored to each segment; 
-(3) budget breakdown by channel and initiative; 
-(4) messaging and positioning recommendations per audience; 
-(5) timeline and scheduling (campaign phases, launch dates); 
-(6) key performance metrics with targets and tracking methods; and 
-(7) recommendations for iteration and testing. 
+Please structure the output as a formal marketing strategy document with the following sections. Use a professional, analytical, and academic tone throughout.
 
-Use a professional and collaborative tone. Follow marketing best practices. Adapt the plan based on the provided inputs. Deliver the plan in the requested structured format, ensuring each section is clearly labeled and actionable.
+1.  **Title:** A formal title for the marketing plan.
+2.  **Abstract:** A brief, comprehensive summary of the plan.
+3.  **Introduction:** Detail the market context, business background, and objectives.
+4.  **Audience Analysis:** Provide a deep dive into the Ideal Customer Profiles (ICPs).
+5.  **Channel Strategy:** Recommend and justify a multi-channel strategy.
+6.  **Budget Breakdown:** Provide a detailed allocation of the marketing budget.
+7.  **Messaging Framework:** Outline the core positioning and messaging.
+8.  **Implementation Timeline:** Present a phased timeline for execution.
+9.  **KPI Framework:** Define the key metrics and targets for measuring success.
+10. **Conclusion:** Summarize the strategic approach and next steps.
+
+Ensure each section is well-developed, actionable, and backed by strategic reasoning based on the provided inputs.
 `,
 });
 

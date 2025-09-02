@@ -81,6 +81,20 @@ export default function AiMarketPlannerPage() {
     }
   }
 
+  const renderSection = (title: string, content: string | undefined) => {
+    if (!content) return null;
+    // Split content by newlines and wrap each line in a <p> tag
+    const paragraphs = content.split('\n').filter(p => p.trim() !== '').map((paragraph, index) => (
+      <p key={index} className="mb-4 last:mb-0">{paragraph}</p>
+    ));
+    return (
+      <section className="mb-8">
+        <h3 className="text-2xl font-bold text-white mb-4">{title}</h3>
+        {paragraphs}
+      </section>
+    );
+  };
+
   return (
     <div className="relative flex flex-col min-h-screen bg-background">
       <div className="relative z-10 flex flex-col flex-1">
@@ -176,7 +190,7 @@ export default function AiMarketPlannerPage() {
                             <FormControl>
                               <SelectTrigger>
                                 <SelectValue placeholder="Select a funnel stage" />
-                              </SelectTrigger>
+                              </Trigger>
                             </FormControl>
                             <SelectContent>
                               <SelectItem value="Awareness">Awareness</SelectItem>
@@ -265,36 +279,25 @@ export default function AiMarketPlannerPage() {
 
             {result && (
               <div className="mt-12 max-w-4xl mx-auto glass-card p-8 md:p-12">
-                <h2 className="text-3xl font-bold glow-text mb-8">Your Custom Marketing Plan</h2>
-                <div className="prose prose-invert text-muted-foreground max-w-none space-y-6">
-                  <section>
-                    <h3 className="text-xl font-bold text-white">1. Audience Segments & ICP</h3>
-                    <p>{result.audienceSegments}</p>
-                  </section>
-                  <section>
-                    <h3 className="text-xl font-bold text-white">2. Channel Strategy</h3>
-                    <p>{result.channelStrategy}</p>
-                  </section>
-                  <section>
-                    <h3 className="text-xl font-bold text-white">3. Budget Breakdown</h3>
-                    <p>{result.budget}</p>
-                  </section>
-                   <section>
-                    <h3 className="text-xl font-bold text-white">4. Messaging & Positioning</h3>
-                    <p>{result.messaging}</p>
-                  </section>
-                  <section>
-                    <h3 className="text-xl font-bold text-white">5. Timeline & Scheduling</h3>
-                    <p>{result.timeline}</p>
-                  </section>
-                  <section>
-                    <h3 className="text-xl font-bold text-white">6. Key Performance Metrics (KPIs)</h3>
-                    <p>{result.metrics}</p>
-                  </section>
-                  <section>
-                    <h3 className="text-xl font-bold text-white">7. Recommendations</h3>
-                    <p>{result.recommendations}</p>
-                  </section>
+                <div className="prose prose-invert text-muted-foreground max-w-none">
+                  <h2 className="text-3xl md:text-4xl font-bold glow-text text-center mb-4">{result.title}</h2>
+                  <div className="text-center text-sm italic mb-10">
+                     <p>A Strategic Marketing Plan</p>
+                  </div>
+                  
+                  <div className="border-t border-b border-primary/20 py-6 my-8">
+                     <h3 className="text-2xl font-bold text-white mb-4">Abstract</h3>
+                     <p className="italic">{result.abstract}</p>
+                  </div>
+
+                  {renderSection("1. Introduction", result.introduction)}
+                  {renderSection("2. Audience Analysis", result.audienceAnalysis)}
+                  {renderSection("3. Channel Strategy", result.channelStrategy)}
+                  {renderSection("4. Budget Breakdown", result.budgetBreakdown)}
+                  {renderSection("5. Messaging Framework", result.messagingFramework)}
+                  {renderSection("6. Implementation Timeline", result.implementationTimeline)}
+                  {renderSection("7. KPI Framework", result.kpiFramework)}
+                  {renderSection("8. Conclusion", result.conclusion)}
                 </div>
               </div>
             )}
