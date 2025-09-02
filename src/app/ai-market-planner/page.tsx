@@ -90,7 +90,7 @@ export default function AiMarketPlannerPage() {
     return (
       <section className="mb-8">
         <h3 className="text-2xl font-bold text-white mb-4">{title}</h3>
-        {paragraphs}
+        <div className="prose prose-invert text-muted-foreground max-w-none">{paragraphs}</div>
       </section>
     );
   };
