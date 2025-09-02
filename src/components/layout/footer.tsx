@@ -56,7 +56,7 @@ const Footer = () => {
             <h3 className="font-headline text-lg font-semibold tracking-wider text-foreground">Contact Us</h3>
             <div className='text-sm mt-4 space-y-2 text-muted-foreground'>
               <p className="font-semibold text-foreground">BD Bangladesh Office</p>
-              <p>Address: Regnum Resource Limited, Rahman's Regnum Centre Business Suite, Tejgaon C/A, Dhaka- 1208, Bangladesh.</p>
+              <p>Address: Regnum Resource Limited, Rahman\'s Regnum Centre Business Suite, Tejgaon C/A, Dhaka- 1208, Bangladesh.</p>
               <p>Phone: +880 1339-844255</p>
               <p>Email: euroitofficial@gmail.com</p>
             </div>

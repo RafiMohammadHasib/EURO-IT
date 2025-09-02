@@ -1,3 +1,4 @@
+
 "use client";
 
 import { Button } from "@/components/ui/button";
@@ -5,8 +6,11 @@ import { ArrowRight } from "lucide-react";
 import TypewriterEffect from "@/components/typewriter-effect";
 import Link from "next/link";
 import { motion } from "framer-motion";
+import { useMounted } from "@/hooks/use-mounted";
 
 const HeroSection = () => {
+  const isMounted = useMounted();
+
   const containerVariants = {
     hidden: { opacity: 0 },
     visible: {
@@ -28,6 +32,25 @@ const HeroSection = () => {
       },
     },
   };
+
+  if (!isMounted) {
+    return (
+        <section id="home" className="h-screen flex items-center justify-center text-center -mt-20">
+            <div className="relative z-10 flex flex-col items-center max-w-4xl mx-auto px-4">
+                <div className="text-5xl md:text-7xl font-bold bg-clip-text text-transparent bg-gradient-to-b from-foreground/80 to-foreground mb-6 h-24 md:h-44">
+                    Results-Driven Digital Marketing.
+                </div>
+                 <div className="text-lg md:text-xl text-muted-foreground mb-10 h-14 md:h-7">
+                    &nbsp;
+                </div>
+                <Button size="lg" className="text-base font-semibold rounded-full px-8 py-6 group">
+                    Our Marketing Services
+                    <ArrowRight className="ml-2 h-5 w-5" />
+                </Button>
+            </div>
+        </section>
+    );
+  }
 
   return (
     <section id="home" className="h-screen flex items-center justify-center text-center -mt-20">
