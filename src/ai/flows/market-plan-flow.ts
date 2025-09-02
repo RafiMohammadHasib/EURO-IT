@@ -3,7 +3,7 @@
 /**
  * @fileOverview An AI agent for generating marketing plans.
  * 
- * - generateMarketPlan - A function that creates a marketing plan.
+ * - generateMarketPlan - a function that creates a marketing plan.
  * - GenerateMarketPlanInput - The input type for the generateMarketPlan function.
  * - GenerateMarketPlanOutput - The return type for the generateMarketPlan function.
  */
@@ -42,7 +42,6 @@ export async function generateMarketPlan(input: GenerateMarketPlanInput): Promis
 
 const prompt = ai.definePrompt({
   name: 'marketPlanPrompt',
-  model: 'openai/gpt-4o',
   input: { schema: GenerateMarketPlanInputSchema },
   output: { schema: GenerateMarketPlanOutputSchema },
   prompt: `You are a senior digital marketing strategist with a track record of building multi-channel campaigns. Your task is to create a detailed marketing plan for the provided business. 
