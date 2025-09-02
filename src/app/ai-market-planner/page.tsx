@@ -30,6 +30,7 @@ import { generateMarketPlan, GenerateMarketPlanInput, GenerateMarketPlanOutput }
 import Header from "@/components/layout/header";
 import Footer from "@/components/layout/footer";
 import TopBar from "@/components/layout/top-bar";
+import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
 
 const formSchema = z.object({
   businessModel: z.string().min(1, "Business model is required."),
@@ -42,6 +43,62 @@ const formSchema = z.object({
   timeline: z.string().min(1, "Timeline is required."),
   goals: z.string().min(1, "Marketing goals are required."),
 });
+
+const parseMarkdownTable = (markdown: string): { headers: string[]; rows: string[][] } | null => {
+  if (!markdown) return null;
+  const lines = markdown.trim().split('\n');
+  if (lines.length < 2) return null;
+
+  const headers = lines[0].split('|').map(h => h.trim()).filter(Boolean);
+  if (headers.length === 0) return null;
+  
+  const rows = lines.slice(2).map(line => line.split('|').map(cell => cell.trim()).filter(Boolean));
+  
+  return { headers, rows };
+};
+
+const MarkdownContent = ({ content }: { content: string }) => {
+  if (!content) return null;
+
+  const tableData = parseMarkdownTable(content);
+
+  if (tableData) {
+    return (
+      <div className="overflow-x-auto">
+        <Table className="min-w-full">
+          <TableHeader>
+            <TableRow>
+              {tableData.headers.map((header, index) => <TableHead key={index}>{header}</TableHead>)}
+            </TableRow>
+          </TableHeader>
+          <TableBody>
+            {tableData.rows.map((row, rowIndex) => (
+              <TableRow key={rowIndex}>
+                {row.map((cell, cellIndex) => <TableCell key={cellIndex}>{cell}</TableCell>)}
+              </TableRow>
+            ))}
+          </TableBody>
+        </Table>
+      </div>
+    );
+  }
+
+  // Fallback for non-table markdown (lists, paragraphs)
+  return (
+    <div
+      className="prose prose-invert text-muted-foreground max-w-none"
+      dangerouslySetInnerHTML={{
+        __html: content
+          .replace(/\n/g, '<br />')
+          .replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>')
+          .replace(/\*(.*?)\*/g, '<em>$1</em>')
+          .replace(/^- (.*$)/gm, '<ul class="list-disc pl-5 mb-2"><li>$1</li></ul>')
+          .replace(/<\/ul><br \/><ul/g, '<ul'), // Merge consecutive lists
+      }}
+    />
+  );
+};
+
 
 export default function AiMarketPlannerPage() {
   const [loading, setLoading] = React.useState(false);
@@ -83,13 +140,10 @@ export default function AiMarketPlannerPage() {
 
   const renderSection = (title: string, content: string | undefined) => {
     if (!content) return null;
-    const paragraphs = content.split('\n').filter(p => p.trim() !== '').map((paragraph, index) => (
-      <p key={index} className="mb-4 last:mb-0">{paragraph}</p>
-    ));
     return (
       <section className="mb-8">
         <h3 className="text-2xl font-bold text-white mb-4">{title}</h3>
-        <div className="prose prose-invert text-muted-foreground max-w-none">{paragraphs}</div>
+        <MarkdownContent content={content} />
       </section>
     );
   };
@@ -104,7 +158,7 @@ export default function AiMarketPlannerPage() {
             <div className="text-center mb-12">
               <h1 className="text-4xl md:text-5xl font-bold glow-text">AI Market Planner</h1>
               <p className="mt-4 max-w-2xl mx-auto text-lg text-muted-foreground">
-                Enter your business details to generate a comprehensive marketing plan.
+                Enter your business details to generate a comprehensive, print-ready marketing plan.
               </p>
             </div>
 
@@ -189,7 +243,7 @@ export default function AiMarketPlannerPage() {
                             <FormControl>
                               <SelectTrigger>
                                 <SelectValue placeholder="Select a funnel stage" />
-                              </SelectTrigger>
+                              </Trigger>
                             </FormControl>
                             <SelectContent>
                               <SelectItem value="Awareness">Awareness</SelectItem>
@@ -278,15 +332,15 @@ export default function AiMarketPlannerPage() {
 
             {result && (
               <div className="mt-12 max-w-4xl mx-auto glass-card p-8 md:p-12">
-                <div className="prose prose-invert text-muted-foreground max-w-none">
+                <div className="max-w-none">
                   <h2 className="text-3xl md:text-4xl font-bold glow-text text-center mb-4">{result.title}</h2>
-                  <div className="text-center text-sm italic mb-10">
+                  <div className="text-center text-sm italic mb-10 text-muted-foreground">
                      <p>A Strategic Marketing Plan</p>
                   </div>
                   
                   <div className="border-t border-b border-primary/20 py-6 my-8">
                      <h3 className="text-2xl font-bold text-white mb-4">Abstract</h3>
-                     <p className="italic whitespace-pre-line">{result.abstract}</p>
+                     <p className="italic text-muted-foreground whitespace-pre-line">{result.abstract}</p>
                   </div>
 
                   {renderSection("1. Introduction", result.introduction)}
