@@ -16,12 +16,13 @@ import {
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { useToast } from "@/hooks/use-toast";
-import { Loader2, User, Mail, Lock } from "lucide-react";
+import { Loader2, User, Mail, Lock, Phone } from "lucide-react";
 import { signUp, signIn } from "@/services/auth";
 
 const signUpSchema = z.object({
     fullName: z.string().min(2, "Full name must be at least 2 characters."),
     email: z.string().email("Please enter a valid email address."),
+    phoneNumber: z.string().min(1, "Phone number is required."),
     password: z.string().min(6, "Password must be at least 6 characters."),
 });
 
@@ -38,7 +39,7 @@ export default function AuthPage() {
 
     const signUpForm = useForm<z.infer<typeof signUpSchema>>({
         resolver: zodResolver(signUpSchema),
-        defaultValues: { fullName: "", email: "", password: "" },
+        defaultValues: { fullName: "", email: "", phoneNumber: "", password: "" },
     });
 
     const signInForm = useForm<z.infer<typeof signInSchema>>({
@@ -49,13 +50,13 @@ export default function AuthPage() {
     const handleSignUp = async (values: z.infer<typeof signUpSchema>) => {
         setLoading(true);
         try {
-            await signUp(values.email, values.password, values.fullName);
+            await signUp(values.email, values.password, values.fullName, values.phoneNumber);
             toast({
                 title: "Account Created",
                 description: "Please sign in to continue.",
             });
-            setIsSignUp(false); // Switch to the sign-in panel
-            signUpForm.reset(); // Reset the form
+            setIsSignUp(false);
+            signUpForm.reset();
         } catch (error: any) {
             toast({
                 variant: "destructive",
@@ -117,6 +118,19 @@ export default function AuthPage() {
                                        <div className="relative">
                                             <Mail className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
                                             <Input placeholder="Email" {...field} className="auth-input" />
+                                        </div>
+                                        <FormMessage />
+                                    </FormItem>
+                                )}
+                            />
+                             <FormField
+                                control={signUpForm.control}
+                                name="phoneNumber"
+                                render={({ field }) => (
+                                    <FormItem className="w-full">
+                                       <div className="relative">
+                                            <Phone className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
+                                            <Input placeholder="Phone (e.g. +11234567890)" {...field} className="auth-input" />
                                         </div>
                                         <FormMessage />
                                     </FormItem>

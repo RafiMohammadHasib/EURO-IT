@@ -13,9 +13,10 @@ type AppUser = {
     uid: string;
     email: string | null;
     fullName: string;
+    phoneNumber: string;
 };
 
-export const signUp = async (email: string, password: string, fullName: string): Promise<AppUser> => {
+export const signUp = async (email: string, password: string, fullName: string, phoneNumber: string): Promise<AppUser> => {
   try {
     const userCredential = await createUserWithEmailAndPassword(auth, email, password);
     const user = userCredential.user;
@@ -24,6 +25,7 @@ export const signUp = async (email: string, password: string, fullName: string):
         uid: user.uid,
         email: user.email,
         fullName: fullName,
+        phoneNumber: phoneNumber,
     };
 
     // Save additional user info in Firestore
@@ -55,6 +57,7 @@ export const signIn = async (email: string, password: string): Promise<AppUser> 
             uid: user.uid,
             email: user.email,
             fullName: userData.fullName || "User",
+            phoneNumber: userData.phoneNumber || ""
         };
     } else {
         // This case should ideally not happen if users are always created via your signUp function
@@ -62,6 +65,7 @@ export const signIn = async (email: string, password: string): Promise<AppUser> 
             uid: user.uid,
             email: user.email,
             fullName: "User",
+            phoneNumber: ""
         };
     }
 
@@ -70,5 +74,3 @@ export const signIn = async (email: string, password: string): Promise<AppUser> 
     throw new Error(error.message || "Failed to sign in.");
   }
 };
-
-    
