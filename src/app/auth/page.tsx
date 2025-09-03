@@ -4,7 +4,7 @@
 import * as React from "react";
 import { useRouter } from "next/navigation";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { useForm, UseFormReturn } from "react-hook-form";
+import { useForm } from "react-hook-form";
 import * as z from "zod";
 import { Button } from "@/components/ui/button";
 import {
@@ -12,251 +12,193 @@ import {
   FormControl,
   FormField,
   FormItem,
-  FormLabel,
   FormMessage,
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { useToast } from "@/hooks/use-toast";
-import { Loader2, User, Mail, Phone, KeyRound } from "lucide-react";
-import TopBar from "@/components/layout/top-bar";
-import Header from "@/components/layout/header";
-import Footer from "@/components/layout/footer";
+import { Loader2, User, Mail, Lock } from "lucide-react";
+import { signUp, signIn } from "@/services/auth";
 
-const formSchema = z.object({
-  fullName: z.string().min(2, "Full name must be at least 2 characters."),
-  email: z.string().email("Please enter a valid email address."),
-  phone: z.string().min(10, "Please enter a valid phone number."),
+const signUpSchema = z.object({
+    fullName: z.string().min(2, "Full name must be at least 2 characters."),
+    email: z.string().email("Please enter a valid email address."),
+    password: z.string().min(6, "Password must be at least 6 characters."),
 });
-type UserInfo = z.infer<typeof formSchema>;
 
-const OTPSchema = z.object({
-  pin: z.string().min(6, {
-    message: "Your one-time password must be 6 characters.",
-  }),
+const signInSchema = z.object({
+    email: z.string().email("Please enter a valid email address."),
+    password: z.string().min(6, "Password must be at least 6 characters."),
 });
-type OTPValues = z.infer<typeof OTPSchema>;
-
-const SIMULATED_OTP = "123456";
-
-
-interface UserInfoFormProps {
-  onFormSubmit: (values: UserInfo) => void;
-  loading: boolean;
-}
-
-const UserInfoForm: React.FC<UserInfoFormProps> = ({ onFormSubmit, loading }) => {
-  const form = useForm<UserInfo>({
-    resolver: zodResolver(formSchema),
-    defaultValues: {
-      fullName: "",
-      email: "",
-      phone: "",
-    },
-  });
-
-  return (
-    <>
-      <div className="text-center mb-8">
-        <h1 className="text-3xl font-bold glow-text">Access the Planner</h1>
-        <p className="text-muted-foreground mt-2">
-          Please enter your details to continue.
-        </p>
-      </div>
-      <Form {...form}>
-        <form onSubmit={form.handleSubmit(onFormSubmit)} className="space-y-6">
-          <FormField
-            control={form.control}
-            name="fullName"
-            render={({ field }) => (
-              <FormItem>
-                <FormLabel>Full Name</FormLabel>
-                <FormControl>
-                  <div className="relative">
-                    <User className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
-                    <Input placeholder="e.g., John Doe" {...field} className="pl-10" />
-                  </div>
-                </FormControl>
-                <FormMessage />
-              </FormItem>
-            )}
-          />
-          <FormField
-            control={form.control}
-            name="email"
-            render={({ field }) => (
-              <FormItem>
-                <FormLabel>Email Address</FormLabel>
-                <FormControl>
-                  <div className="relative">
-                    <Mail className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
-                    <Input type="email" placeholder="e.g., john.doe@example.com" {...field} className="pl-10" />
-                  </div>
-                </FormControl>
-                <FormMessage />
-              </FormItem>
-            )}
-          />
-          <FormField
-            control={form.control}
-            name="phone"
-            render={({ field }) => (
-              <FormItem>
-                <FormLabel>Phone Number</FormLabel>
-                <FormControl>
-                  <div className="relative">
-                    <Phone className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
-                    <Input type="tel" placeholder="e.g., +8801234567890" {...field} className="pl-10" />
-                  </div>
-                </FormControl>
-                <FormMessage />
-              </FormItem>
-            )}
-          />
-          <Button type="submit" disabled={loading} className="w-full" size="lg">
-            {loading && <Loader2 className="mr-2 h-4 w-4 animate-spin" />}
-            Send Verification Code
-          </Button>
-        </form>
-      </Form>
-    </>
-  );
-};
-
-
-interface VerificationFormProps {
-  onVerifySubmit: (values: OTPValues) => void;
-  loading: boolean;
-  onGoBack: () => void;
-}
-
-const VerificationForm: React.FC<VerificationFormProps> = ({ onVerifySubmit, loading, onGoBack }) => {
-    const otpForm = useForm<OTPValues>({
-        resolver: zodResolver(OTPSchema),
-        defaultValues: {
-            pin: "",
-        },
-    });
-
-  return (
-    <>
-      <div className="text-center mb-8">
-        <h1 className="text-3xl font-bold glow-text">Verify Your Phone</h1>
-        <p className="text-muted-foreground mt-2">
-          Enter the 6-digit code we sent to your phone.
-        </p>
-      </div>
-      <Form {...otpForm}>
-        <form onSubmit={otpForm.handleSubmit(onVerifySubmit)} className="space-y-6">
-          <FormField
-            control={otpForm.control}
-            name="pin"
-            render={({ field }) => (
-              <FormItem>
-                <FormLabel>One-Time Password</FormLabel>
-                <FormControl>
-                  <div className="relative">
-                    <KeyRound className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
-                    <Input placeholder="Enter 6-digit OTP" {...field} className="pl-10" />
-                  </div>
-                </FormControl>
-                <FormMessage />
-              </FormItem>
-            )}
-          />
-          <Button type="submit" disabled={loading} className="w-full" size="lg">
-            {loading && <Loader2 className="mr-2 h-4 w-4 animate-spin" />}
-            Verify & Proceed
-          </Button>
-        </form>
-      </Form>
-      <div className="mt-4 text-center">
-        <Button variant="link" onClick={onGoBack} className="text-sm">
-          Go back
-        </Button>
-      </div>
-    </>
-  );
-};
-
 
 export default function AuthPage() {
-  const router = useRouter();
-  const { toast } = useToast();
-  const [loading, setLoading] = React.useState(false);
-  const [showVerification, setShowVerification] = React.useState(false);
-  const [userData, setUserData] = React.useState<UserInfo | null>(null);
+    const [isSignUp, setIsSignUp] = React.useState(true);
+    const [loading, setLoading] = React.useState(false);
+    const { toast } = useToast();
+    const router = useRouter();
 
-  async function onInfoSubmit(values: UserInfo) {
-    setLoading(true);
-    console.log("Simulating OTP send for:", values);
-    setUserData(values);
-    
-    setTimeout(() => {
-        toast({
-            title: "Verification Code Sent",
-            description: `An OTP has been sent to ${values.phone}. (Hint: it's ${SIMULATED_OTP})`,
-        });
-        setShowVerification(true);
-        setLoading(false);
-    }, 1000);
-  }
+    const signUpForm = useForm<z.infer<typeof signUpSchema>>({
+        resolver: zodResolver(signUpSchema),
+        defaultValues: { fullName: "", email: "", password: "" },
+    });
 
-  async function onVerifySubmit(values: OTPValues) {
-    setLoading(true);
-    if (values.pin === SIMULATED_OTP) {
-        if (!userData) {
-            toast({ variant: "destructive", title: "Error", description: "User data not found. Please start over." });
-            setShowVerification(false);
-            setLoading(false);
-            return;
-        }
+    const signInForm = useForm<z.infer<typeof signInSchema>>({
+        resolver: zodResolver(signInSchema),
+        defaultValues: { email: "", password: "" },
+    });
 
-        localStorage.setItem("user", JSON.stringify(userData));
-
-        toast({
-            title: "Success!",
-            description: "You are now logged in and can access the planner.",
-        });
-
-        setTimeout(() => {
+    const handleSignUp = async (values: z.infer<typeof signUpSchema>) => {
+        setLoading(true);
+        try {
+            const user = await signUp(values.email, values.password, values.fullName);
+            toast({
+                title: "Account Created",
+                description: "Your account has been successfully created.",
+            });
+            localStorage.setItem("user", JSON.stringify({ email: user.email, fullName: values.fullName, uid: user.uid }));
             router.push("/ai-market-planner");
-        }, 1000);
+        } catch (error: any) {
+            toast({
+                variant: "destructive",
+                title: "Sign Up Failed",
+                description: error.message,
+            });
+        } finally {
+            setLoading(false);
+        }
+    };
 
-    } else {
-        toast({
-            variant: "destructive",
-            title: "Invalid OTP",
-            description: "The code you entered is incorrect. Please try again.",
-        });
-        setLoading(false);
-    }
-  }
+    const handleSignIn = async (values: z.infer<typeof signInSchema>) => {
+        setLoading(true);
+        try {
+            const user = await signIn(values.email, values.password);
+            // This is a simplification. In a real app, you'd fetch the user's full name from Firestore.
+            localStorage.setItem("user", JSON.stringify({ email: user.user.email, uid: user.user.uid, fullName: 'User' }));
+            toast({
+                title: "Signed In",
+                description: "You have successfully signed in.",
+            });
+            router.push("/ai-market-planner");
+        } catch (error: any) {
+            toast({
+                variant: "destructive",
+                title: "Sign In Failed",
+                description: error.message,
+            });
+        } finally {
+            setLoading(false);
+        }
+    };
 
-  const handleGoBack = () => {
-    setShowVerification(false);
-    setUserData(null);
-  };
+    return (
+        <div className="flex flex-col min-h-screen items-center justify-center bg-background p-4 light">
+            <div id="container" className={`auth-container ${isSignUp ? "right-panel-active" : ""}`}>
+                {/* Sign Up Form */}
+                <div className="form-container sign-up-container">
+                    <Form {...signUpForm}>
+                        <form onSubmit={signUpForm.handleSubmit(handleSignUp)} className="auth-form">
+                            <h1 className="text-2xl font-bold mb-4">Create Account</h1>
+                            <FormField
+                                control={signUpForm.control}
+                                name="fullName"
+                                render={({ field }) => (
+                                    <FormItem className="w-full">
+                                        <div className="relative">
+                                             <User className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
+                                            <Input placeholder="Full Name" {...field} className="auth-input pl-10" />
+                                        </div>
+                                        <FormMessage />
+                                    </FormItem>
+                                )}
+                            />
+                            <FormField
+                                control={signUpForm.control}
+                                name="email"
+                                render={({ field }) => (
+                                    <FormItem className="w-full">
+                                       <div className="relative">
+                                            <Mail className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
+                                            <Input placeholder="Email" {...field} className="auth-input pl-10" />
+                                        </div>
+                                        <FormMessage />
+                                    </FormItem>
+                                )}
+                            />
+                            <FormField
+                                control={signUpForm.control}
+                                name="password"
+                                render={({ field }) => (
+                                    <FormItem className="w-full">
+                                        <div className="relative">
+                                            <Lock className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
+                                            <Input type="password" placeholder="Password" {...field} className="auth-input pl-10" />
+                                        </div>
+                                        <FormMessage />
+                                    </FormItem>
+                                )}
+                            />
+                            <Button type="submit" disabled={loading} className="auth-button mt-4">
+                                {loading && <Loader2 className="mr-2 h-4 w-4 animate-spin" />}
+                                Sign Up
+                            </Button>
+                        </form>
+                    </Form>
+                </div>
 
-  return (
-    <div className="relative flex flex-col min-h-screen bg-background">
-      <div className="relative z-10 flex flex-col flex-1">
-        <TopBar />
-        <Header />
-        <main className="px-4 sm:px-6 lg:px-8 flex-grow flex items-center justify-center pt-32 pb-20">
-          <div className="w-full max-w-md glass-card p-8 md:p-10">
-            {!showVerification ? (
-              <UserInfoForm onFormSubmit={onInfoSubmit} loading={loading} />
-            ) : (
-              <VerificationForm 
-                onVerifySubmit={onVerifySubmit}
-                loading={loading}
-                onGoBack={handleGoBack}
-              />
-            )}
-          </div>
-        </main>
-        <Footer />
-      </div>
-    </div>
-  );
+                {/* Sign In Form */}
+                <div className="form-container sign-in-container">
+                    <Form {...signInForm}>
+                        <form onSubmit={signInForm.handleSubmit(handleSignIn)} className="auth-form">
+                            <h1 className="text-2xl font-bold mb-4">Sign In</h1>
+                             <FormField
+                                control={signInForm.control}
+                                name="email"
+                                render={({ field }) => (
+                                    <FormItem className="w-full">
+                                        <div className="relative">
+                                            <Mail className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
+                                            <Input placeholder="Email" {...field} className="auth-input pl-10" />
+                                        </div>
+                                        <FormMessage />
+                                    </FormItem>
+                                )}
+                            />
+                            <FormField
+                                control={signInForm.control}
+                                name="password"
+                                render={({ field }) => (
+                                    <FormItem className="w-full">
+                                        <div className="relative">
+                                            <Lock className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
+                                            <Input type="password" placeholder="Password" {...field} className="auth-input pl-10" />
+                                        </div>
+                                        <FormMessage />
+                                    </FormItem>
+                                )}
+                            />
+                            <Button type="submit" disabled={loading} className="auth-button mt-4">
+                                {loading && <Loader2 className="mr-2 h-4 w-4 animate-spin" />}
+                                Sign In
+                            </Button>
+                        </form>
+                    </Form>
+                </div>
+
+                {/* Overlay */}
+                <div className="overlay-container">
+                    <div className="overlay">
+                        <div className="overlay-panel overlay-left">
+                            <h1 className="text-2xl font-bold">Welcome Back!</h1>
+                            <p className="mt-2 mb-4">To keep connected with us please login with your personal info</p>
+                            <Button variant="outline" onClick={() => setIsSignUp(false)} className="ghost-button">Sign In</Button>
+                        </div>
+                        <div className="overlay-panel overlay-right">
+                            <h1 className="text-2xl font-bold">Hello, Friend!</h1>
+                            <p className="mt-2 mb-4">Enter your personal details and start your journey with us</p>
+                            <Button variant="outline" onClick={() => setIsSignUp(true)} className="ghost-button">Sign Up</Button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    );
 }

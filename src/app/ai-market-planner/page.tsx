@@ -111,7 +111,7 @@ export default function AiMarketPlannerPage() {
   const [loading, setLoading] = React.useState(false);
   const [result, setResult] = React.useState<GenerateMarketPlanOutput | null>(null);
   const { toast } = useToast();
-  const [user, setUser] = React.useState<{ fullName: string; email: string; phone: string } | null>(null);
+  const [user, setUser] = React.useState<{ fullName: string; email: string; uid: string; } | null>(null);
   const isMounted = useMounted();
   const router = useRouter();
 
@@ -163,8 +163,7 @@ export default function AiMarketPlannerPage() {
       const plan = await generateMarketPlan(values as GenerateMarketPlanInput);
       setResult(plan);
       if (plan) {
-        // Use the user's email as their ID for saving the plan
-        const planId = await saveMarketPlan(user.email, plan);
+        const planId = await saveMarketPlan(user.uid, plan);
         toast({
           title: "Plan Saved!",
           description: `Your marketing plan has been generated and saved.`,
@@ -414,5 +413,3 @@ export default function AiMarketPlannerPage() {
     </div>
   );
 }
-
-    
