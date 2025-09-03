@@ -157,9 +157,9 @@ export default function AuthPage() {
                     "absolute top-0 left-0 md:left-1/2 w-full md:w-1/2 h-full overflow-hidden transition-transform duration-700 ease-in-out z-50",
                     isSignUp ? "md:-translate-x-full" : "md:translate-x-0"
                 )}>
-                    <div className="bg-primary h-full text-primary-foreground relative from-primary to-primary/80 bg-gradient-to-br flex flex-col items-center justify-center px-8 text-center transition-transform duration-700 ease-in-out",
+                    <div className={cn("bg-primary h-full text-primary-foreground relative from-primary to-primary/80 bg-gradient-to-br flex flex-col items-center justify-center px-8 text-center transition-transform duration-700 ease-in-out",
                      isSignUp ? "translate-x-0" : "md:translate-x-full"
-                    >
+                    )}>
                         {/* Overlay for Sign-In */}
                         <div className={cn(
                             "absolute top-0 h-full w-full flex flex-col items-center justify-center transition-all duration-700 ease-in-out p-4",
