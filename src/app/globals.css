@@ -76,12 +76,12 @@
     background-image: linear-gradient(to bottom right, hsl(240 10% 7%), hsl(240 20% 15%));
   }
 
-  h1, h2, h3, .title {
+  h1, h2, h3 {
     font-family: 'Space Grotesk', sans-serif;
     letter-spacing: 0.05em;
   }
   
-  body, .description {
+  body {
     font-family: 'Inter', sans-serif;
   }
 
@@ -108,151 +108,4 @@
 
 html {
   scroll-behavior: smooth;
-}
-
-/* Auth Page Specific Styles */
-.main-container {
-    background-color: hsl(var(--background) / 0.7);
-    backdrop-filter: blur(10px);
-    position: relative;
-    overflow: hidden;
-    box-shadow: 0 14px 28px rgba(0,0,0,0.25), 0 10px 10px rgba(0,0,0,0.22);
-}
-
-.form-container {
-    position: absolute;
-    top: 0;
-    height: 100%;
-    transition: all 0.6s ease-in-out;
-}
-.a-container {
-    left: 0;
-    width: 50%;
-    z-index: 100;
-}
-.b-container {
-    left: 0;
-    width: 50%;
-    opacity: 0;
-    z-index: 100;
-}
-.auth-form {
-    background-color: transparent;
-}
-.auth-form .social {
-    border-color: hsl(var(--foreground) / 0.2);
-    color: hsl(var(--foreground) / 0.8);
-}
-.auth-form .social:hover {
-    background-color: hsl(var(--primary) / 0.1);
-    border-color: hsl(var(--primary));
-    color: hsl(var(--primary));
-}
-.auth-form input {
-    margin: 8px 0;
-}
-.form_button {
-    @apply rounded-full px-10 py-2 uppercase tracking-wider font-bold;
-    background-color: hsl(var(--primary));
-    color: hsl(var(--primary-foreground));
-    border: 1px solid hsl(var(--primary));
-    transition: transform 80ms ease-in;
-}
-.form_button:active {
-    transform: scale(0.95);
-}
-.form_button:focus {
-    outline: none;
-}
-.switch {
-    position: absolute;
-    top: 0;
-    left: 50%;
-    width: 50%;
-    height: 100%;
-    overflow: hidden;
-    transition: transform 0.6s ease-in-out;
-    z-index: 300;
-}
-.switch__circle {
-    background: linear-gradient(45deg, hsl(var(--primary) / 0.8), hsl(var(--primary)));
-    position: absolute;
-    width: 500px;
-    height: 500px;
-    border-radius: 50%;
-    top: -15%;
-    left: -60%;
-    transition: transform 1.8s ease-in-out;
-}
-.switch__circle--t {
-    top: auto;
-    bottom: -30%;
-    left: auto;
-    right: -40%;
-}
-.switch__container {
-    color: hsl(var(--primary-foreground));
-    position: absolute;
-    width: 100%;
-    height: 100%;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    flex-direction: column;
-    text-align: center;
-    padding: 0 30px;
-    transition: opacity 0.5s ease-in-out 0.3s;
-}
-.switch__title {
-    font-size: 2.5rem;
-    font-weight: 700;
-    line-height: 1;
-    margin-bottom: 1rem;
-    color: hsl(var(--primary-foreground));
-}
-.switch__description {
-    font-size: 1rem;
-    letter-spacing: 0.5px;
-    margin-bottom: 1.5rem;
-    color: hsl(var(--primary-foreground) / 0.8);
-}
-.switch__button {
-    @apply rounded-full px-10 py-2 uppercase tracking-wider font-bold;
-    background-color: transparent;
-    color: hsl(var(--primary-foreground));
-    border: 2px solid hsl(var(--primary-foreground));
-}
-.switch__button:hover {
-    background-color: hsl(var(--primary-foreground));
-    color: hsl(var(--primary));
-}
-.switch__button:active {
-    transform: scale(0.95);
-}
-
-/* Animations */
-.main-container.is-g-active .b-container {
-    transform: translateX(100%);
-    opacity: 1;
-    z-index: 500;
-}
-.main-container.is-g-active .switch {
-    transform: translateX(-100%);
-}
-
-.is-txr {
-    transform: translateX(100%);
-}
-.is-txl {
-    transform: translateX(-100%);
-}
-.is-z200 {
-    z-index: 200;
-}
-.is-hidden {
-    opacity: 0;
-    transition: opacity 0.5s;
-}
-.is-gx .switch__circle {
-    transform: rotate(-180deg);
 }
