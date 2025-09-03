@@ -70,3 +70,5 @@ export const signIn = async (email: string, password: string): Promise<AppUser> 
     throw new Error(error.message || "Failed to sign in.");
   }
 };
+
+    
