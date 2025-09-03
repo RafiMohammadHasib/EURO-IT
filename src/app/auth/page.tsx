@@ -11,8 +11,6 @@ import TopBar from '@/components/layout/top-bar';
 import { useToast } from "@/hooks/use-toast";
 import { addUser, getUserByEmail, UserProfile } from '@/services/user';
 import { cn } from '@/lib/utils';
-import HolographicLogo from '@/components/holographic-logo';
-import Link from 'next/link';
 
 export default function AuthPage() {
   const [isSignUp, setIsSignUp] = useState(false);
@@ -23,7 +21,9 @@ export default function AuthPage() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
 
-  const toggleForm = () => setIsSignUp(prev => !prev);
+  const toggleForm = () => {
+      setIsSignUp(!isSignUp);
+  }
 
   const handleSignUp = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -110,114 +110,100 @@ export default function AuthPage() {
         <TopBar />
         <Header />
         <main className="flex-grow flex items-center justify-center px-4 sm:px-6 lg:px-8 py-32">
-          <div className="w-full max-w-4xl lg:max-w-5xl mx-auto">
-            <div className={cn("relative bg-card rounded-2xl shadow-2xl transition-all duration-700 ease-in-out overflow-hidden",
-              "min-h-[520px] lg:min-h-[600px]"
-            )}>
-              {/* Form container */}
-              <div className={cn("absolute top-0 h-full transition-all duration-700 ease-in-out",
-                "left-0 w-full lg:w-1/2",
-                {"lg:left-1/2": isSignUp}
-              )}>
-                {/* Sign In */}
-                 <form onSubmit={handleSignIn} className={cn("flex flex-col justify-center items-center h-full px-4 sm:px-12 md:px-16 transition-all duration-700 ease-in-out",
-                   "absolute w-full",
-                   {"opacity-0 z-0": isSignUp},
-                   {"opacity-100 z-10": !isSignUp}
-                 )}>
-                  <h1 className="text-3xl font-bold text-primary mb-4">Sign In</h1>
-                   <div className="flex items-center gap-4 my-4">
-                        <Button variant="outline" size="icon" className="rounded-full"><Facebook/></Button>
-                        <Button variant="outline" size="icon" className="rounded-full"><Linkedin/></Button>
-                        <Button variant="outline" size="icon" className="rounded-full"><Twitter/></Button>
-                    </div>
-                  <p className="text-muted-foreground text-sm mb-4">or use your email for login</p>
-                  <Input className="bg-input border-none" type="email" placeholder="Email" value={email} onChange={(e) => setEmail(e.target.value)} required />
-                  <Input className="bg-input border-none mt-2" type="password" placeholder="Password" value={password} onChange={(e) => setPassword(e.target.value)} required />
-                  <Button type="submit" className="mt-6 rounded-full px-10" disabled={loading}>
-                    {loading && !isSignUp && <Loader2 className="mr-2 h-4 w-4 animate-spin" />}
-                    Sign In
-                  </Button>
-                </form>
-
-                 {/* Sign Up */}
-                 <form onSubmit={handleSignUp} className={cn("flex flex-col justify-center items-center h-full px-4 sm:px-12 md:px-16 transition-all duration-700 ease-in-out",
-                   "absolute w-full",
-                   {"opacity-0 z-0": !isSignUp},
-                   {"opacity-100 z-10": isSignUp}
-                 )}>
-                  <h1 className="text-3xl font-bold text-primary mb-4">Create Account</h1>
-                  <div className="flex items-center gap-4 my-4">
-                        <Button variant="outline" size="icon" className="rounded-full"><Facebook/></Button>
-                        <Button variant="outline" size="icon" className="rounded-full"><Linkedin/></Button>
-                        <Button variant="outline" size="icon" className="rounded-full"><Twitter/></Button>
-                  </div>
-                  <p className="text-muted-foreground text-sm mb-4">or use your email for registration</p>
-                  <Input className="bg-input border-none" type="text" placeholder="Full Name" value={name} onChange={(e) => setName(e.target.value)} required />
-                  <Input className="bg-input border-none mt-2" type="email" placeholder="Email" value={email} onChange={(e) => setEmail(e.target.value)} required />
-                  <Input className="bg-input border-none mt-2" type="password" placeholder="Password" value={password} onChange={(e) => setPassword(e.target.value)} required />
-                  <Button type="submit" className="mt-6 rounded-full px-10" disabled={loading}>
-                    {loading && isSignUp && <Loader2 className="mr-2 h-4 w-4 animate-spin" />}
-                    Sign Up
-                  </Button>
-                </form>
-              </div>
-
-              {/* Overlay container */}
-              <div className={cn("absolute top-0 left-1/2 w-1/2 h-full overflow-hidden transition-all duration-700 ease-in-out z-50 hidden lg:block",
-                {"-translate-x-full rounded-r-2xl rounded-l-none": isSignUp},
-                {"translate-x-0 rounded-l-2xl rounded-r-none": !isSignUp}
-              )}>
-                <div className={cn("relative h-full w-[200%] bg-primary text-primary-foreground transition-all duration-700 ease-in-out",
-                  "left-[-100%]",
-                  {"left-0": isSignUp}
+            <div 
+                className={cn(
+                    "relative bg-card rounded-2xl shadow-2xl overflow-hidden",
+                    "w-full max-w-4xl min-h-[520px] lg:min-h-[600px]"
+                )}
+                id="container"
+            >
+                {/* Sign-Up Container */}
+                <div className={cn(
+                    "absolute top-0 h-full left-0 w-1/2 opacity-0 z-[1] transition-all duration-700 ease-in-out",
+                    { "translate-x-full opacity-100 z-[5]": isSignUp }
                 )}>
-                  {/* Sign In Overlay */}
-                   <div className={cn("absolute top-0 h-full w-1/2 px-10 flex flex-col items-center justify-center text-center transition-all duration-700 ease-in-out",
-                    "left-0",
-                    {"-translate-x-[20%] opacity-0": isSignUp},
-                    {"translate-x-0 opacity-100": !isSignUp}
-                   )}>
-                    <h1 className="text-3xl font-bold mb-4">Welcome Back!</h1>
-                    <p className="text-sm mb-6">To keep connected with us please login with your personal info</p>
-                    <Button variant="outline" onClick={toggleForm} className="bg-transparent border-primary-foreground text-primary-foreground rounded-full px-10">Sign In</Button>
-                  </div>
-
-                  {/* Sign Up Overlay */}
-                   <div className={cn("absolute top-0 h-full w-1/2 px-10 flex flex-col items-center justify-center text-center transition-all duration-700 ease-in-out",
-                    "right-0",
-                    {"translate-x-0 opacity-100": isSignUp},
-                    {"translate-x-[20%] opacity-0": !isSignUp}
-                   )}>
-                    <h1 className="text-3xl font-bold mb-4">Hello, Friend!</h1>
-                    <p className="text-sm mb-6">Enter your personal details and start your journey with us</p>
-                    <Button variant="outline" onClick={toggleForm} className="bg-transparent border-primary-foreground text-primary-foreground rounded-full px-10">Sign Up</Button>
-                  </div>
+                    <form onSubmit={handleSignUp} className="bg-card h-full flex flex-col justify-center items-center px-12 text-center">
+                        <h1 className="text-3xl font-bold text-primary mb-4">Create Account</h1>
+                        <div className="flex items-center gap-4 my-4">
+                            <Button variant="outline" size="icon" className="rounded-full"><Facebook/></Button>
+                            <Button variant="outline" size="icon" className="rounded-full"><Linkedin/></Button>
+                            <Button variant="outline" size="icon" className="rounded-full"><Twitter/></Button>
+                        </div>
+                        <p className="text-muted-foreground text-sm mb-4">or use your email for registration</p>
+                        <Input className="bg-input border-none" type="text" placeholder="Name" value={name} onChange={(e) => setName(e.target.value)} required />
+                        <Input className="bg-input border-none mt-2" type="email" placeholder="Email" value={email} onChange={(e) => setEmail(e.target.value)} required />
+                        <Input className="bg-input border-none mt-2" type="password" placeholder="Password" value={password} onChange={(e) => setPassword(e.target.value)} required />
+                        <Button type="submit" className="mt-6 rounded-full px-10 bg-primary hover:bg-primary/90 text-primary-foreground" disabled={loading && isSignUp}>
+                            {loading && isSignUp && <Loader2 className="mr-2 h-4 w-4 animate-spin" />}
+                            Sign Up
+                        </Button>
+                    </form>
                 </div>
-              </div>
-               {/* Mobile Toggle */}
-              <div className="lg:hidden text-center py-4">
-                  {isSignUp ? (
-                    <p className="text-sm text-muted-foreground">
-                        Already have an account?{' '}
-                        <Button variant="link" type="button" onClick={toggleForm} className="p-0 h-auto text-primary">
-                        Sign In
+
+                {/* Sign-In Container */}
+                <div className={cn(
+                    "absolute top-0 h-full left-0 w-1/2 z-[2] transition-all duration-700 ease-in-out",
+                    { "translate-x-full": isSignUp }
+                )}>
+                    <form onSubmit={handleSignIn} className="bg-card h-full flex flex-col justify-center items-center px-12 text-center">
+                        <h1 className="text-3xl font-bold text-primary mb-4">Sign In</h1>
+                        <div className="flex items-center gap-4 my-4">
+                            <Button variant="outline" size="icon" className="rounded-full"><Facebook/></Button>
+                            <Button variant="outline" size="icon" className="rounded-full"><Linkedin/></Button>
+                            <Button variant="outline" size="icon" className="rounded-full"><Twitter/></Button>
+                        </div>
+                        <p className="text-muted-foreground text-sm mb-4">or use your account</p>
+                        <Input className="bg-input border-none" type="email" placeholder="Email" value={email} onChange={(e) => setEmail(e.target.value)} required />
+                        <Input className="bg-input border-none mt-2" type="password" placeholder="Password" value={password} onChange={(e) => setPassword(e.target.value)} required />
+                        <Button type="submit" className="mt-6 rounded-full px-10 bg-primary hover:bg-primary/90 text-primary-foreground" disabled={loading && !isSignUp}>
+                            {loading && !isSignUp && <Loader2 className="mr-2 h-4 w-4 animate-spin" />}
+                            Sign In
                         </Button>
-                    </p>
-                  ) : (
-                    <p className="text-sm text-muted-foreground">
-                        Don't have an account?{' '}
-                        <Button variant="link" type="button" onClick={toggleForm} className="p-0 h-auto text-primary">
-                        Sign Up
-                        </Button>
-                    </p>
-                  )}
-              </div>
+                    </form>
+                </div>
+
+                {/* Overlay Container */}
+                <div className={cn(
+                    "absolute top-0 left-1/2 w-1/2 h-full overflow-hidden z-[100] transition-all duration-700 ease-in-out",
+                    { "-translate-x-full": isSignUp }
+                )}>
+                    <div className={cn(
+                        "bg-primary text-primary-foreground relative -left-full h-full w-[200%] transition-all duration-700 ease-in-out",
+                        { "translate-x-1/2": isSignUp }
+                    )}>
+                        {/* Overlay Left */}
+                        <div className={cn(
+                            "absolute top-0 h-full w-1/2 flex flex-col items-center justify-center text-center px-10 transition-all duration-700 ease-in-out",
+                             "translate-x-0",
+                            { "-translate-x-[20%]": isSignUp }
+                        )}>
+                            <h1 className="text-3xl font-bold mb-4">Welcome Back!</h1>
+                            <p className="text-sm mb-6">To keep connected with us please login with your personal info</p>
+                            <Button variant="outline" onClick={toggleForm} className="bg-transparent border-primary-foreground text-primary-foreground rounded-full px-10">
+                                Sign In
+                            </Button>
+                        </div>
+                        {/* Overlay Right */}
+                        <div className={cn(
+                            "absolute top-0 h-full w-1/2 right-0 flex flex-col items-center justify-center text-center px-10 transition-all duration-700 ease-in-out",
+                            "translate-x-[20%]",
+                            { "translate-x-0": isSignUp }
+                        )}>
+                            <h1 className="text-3xl font-bold mb-4">Hello, Friend!</h1>
+                            <p className="text-sm mb-6">Enter your personal details and start your journey with us</p>
+                            <Button variant="outline" onClick={toggleForm} className="bg-transparent border-primary-foreground text-primary-foreground rounded-full px-10">
+                                Sign Up
+                            </Button>
+                        </div>
+                    </div>
+                </div>
+
             </div>
-          </div>
         </main>
         <Footer />
        </div>
     </div>
   );
 }
+
+    
