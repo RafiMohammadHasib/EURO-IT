@@ -2,6 +2,7 @@
 "use client";
 
 import * as React from "react";
+import { useRouter } from "next/navigation";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import * as z from "zod";
@@ -31,6 +32,7 @@ import Header from "@/components/layout/header";
 import Footer from "@/components/layout/footer";
 import TopBar from "@/components/layout/top-bar";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
+import { useMounted } from "@/hooks/use-mounted";
 
 const formSchema = z.object({
   businessModel: z.string().min(1, "Business model is required."),
@@ -109,8 +111,26 @@ export default function AiMarketPlannerPage() {
   const [loading, setLoading] = React.useState(false);
   const [result, setResult] = React.useState<GenerateMarketPlanOutput | null>(null);
   const { toast } = useToast();
-  // NOTE: This is a placeholder. In a real app, you'd get this from your auth context.
-  const userId = "test-user-id"; 
+  const [user, setUser] = React.useState<{ fullName: string; email: string; phone: string } | null>(null);
+  const isMounted = useMounted();
+  const router = useRouter();
+
+  React.useEffect(() => {
+    if (isMounted) {
+      try {
+        const storedUser = localStorage.getItem("user");
+        if (storedUser) {
+          setUser(JSON.parse(storedUser));
+        } else {
+          router.push("/auth");
+        }
+      } catch (error) {
+        console.error("Failed to parse user from localStorage", error);
+        router.push("/auth");
+      }
+    }
+  }, [isMounted, router]);
+
 
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
@@ -128,17 +148,26 @@ export default function AiMarketPlannerPage() {
   });
 
   async function onSubmit(values: z.infer<typeof formSchema>) {
+    if (!user) {
+        toast({
+            variant: "destructive",
+            title: "Authentication Error",
+            description: "You must be logged in to generate a plan.",
+        });
+        router.push('/auth');
+        return;
+    }
     setLoading(true);
     setResult(null);
     try {
       const plan = await generateMarketPlan(values as GenerateMarketPlanInput);
       setResult(plan);
-      // After generating, save the plan to Firestore
       if (plan) {
-        const planId = await saveMarketPlan(userId, plan);
+        // Use the user's email as their ID for saving the plan
+        const planId = await saveMarketPlan(user.email, plan);
         toast({
           title: "Plan Saved!",
-          description: `Your marketing plan has been saved with ID: ${planId}`,
+          description: `Your marketing plan has been generated and saved.`,
         });
       }
     } catch (error) {
@@ -162,6 +191,15 @@ export default function AiMarketPlannerPage() {
       </section>
     );
   };
+  
+  if (!isMounted || !user) {
+    return (
+      <div className="relative flex flex-col min-h-screen bg-background items-center justify-center">
+        <Loader2 className="h-12 w-12 animate-spin text-primary" />
+        <p className="mt-4 text-muted-foreground">Verifying access...</p>
+      </div>
+    );
+  }
 
   return (
     <div className="relative flex flex-col min-h-screen bg-background">
@@ -173,7 +211,7 @@ export default function AiMarketPlannerPage() {
             <div className="text-center mb-12">
               <h1 className="text-4xl md:text-5xl font-bold glow-text">AI Market Planner</h1>
               <p className="mt-4 max-w-2xl mx-auto text-lg text-muted-foreground">
-                Enter your business details to generate a comprehensive, print-ready marketing plan.
+                Welcome, {user.fullName}! Enter your business details to generate a comprehensive, print-ready marketing plan.
               </p>
             </div>
 
