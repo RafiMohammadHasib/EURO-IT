@@ -5,7 +5,7 @@ import { useState, useEffect } from 'react';
 import Link from 'next/link';
 import { Menu, X } from 'lucide-react';
 import { Button } from '@/components/ui/button';
-import { Sheet, SheetContent, SheetTrigger } from '@/components/ui/sheet';
+import { Sheet, SheetContent, SheetHeader, SheetTitle, SheetTrigger } from '@/components/ui/sheet';
 import HolographicLogo from '@/components/holographic-logo';
 import { cn } from '@/lib/utils';
 import { useTheme } from 'next-themes';
@@ -111,6 +111,9 @@ const Header = () => {
               </Button>
             </SheetTrigger>
             <SheetContent side="right" className="bg-background/90 backdrop-blur-xl w-full">
+              <SheetHeader>
+                <SheetTitle className="sr-only">Mobile Menu</SheetTitle>
+              </SheetHeader>
                 <div className="flex flex-col h-full p-6">
                     <div className="flex justify-between items-center mb-12">
                          <HolographicLogo />
