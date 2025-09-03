@@ -27,16 +27,24 @@ export default function AuthPage() {
     e.preventDefault();
     setLoading(true);
     try {
-      // For now, we're not implementing phone verification, so phone can be empty
-      const newUser: UserProfile = { name, email, phone: '' };
+      const existingUser = await getUserByEmail(email);
+      if (existingUser) {
+        toast({
+          variant: "destructive",
+          title: "Sign Up Failed",
+          description: "An account with this email already exists.",
+        });
+        return;
+      }
+
+      const newUser: UserProfile = { name, email, phone: '' }; // Phone is not used for now
       const userId = await addUser(newUser);
       toast({
         title: "Account Created!",
-        description: "You've been successfully signed up.",
+        description: "You've been successfully signed up. Please sign in.",
       });
-      // Here you would typically handle user session, e.g., redirect to a dashboard
       console.log("New user created with ID:", userId);
-      setIsSignUp(false); // Switch to sign-in view after successful sign-up
+      setIsSignUp(false); // Switch to sign-in view
     } catch (error) {
       console.error(error);
       toast({
@@ -56,16 +64,18 @@ export default function AuthPage() {
         const user = await getUserByEmail(email);
         if (user) {
             // NOTE: Password check is not implemented. This is for demonstration.
+            // In a real app, you would hash the password on signup and compare hashes here.
             toast({
                 title: "Sign In Successful!",
                 description: `Welcome back, ${user.name}!`,
             });
-            // Here you would redirect or manage session
+            // Here you would typically handle user session, e.g., using cookies or context,
+            // and redirect to a dashboard page.
         } else {
             toast({
                 variant: "destructive",
                 title: "Sign In Failed",
-                description: "No user found with that email.",
+                description: "No user found with that email. Please sign up first.",
             });
         }
     } catch (error) {
@@ -88,12 +98,13 @@ export default function AuthPage() {
         <main className="flex-grow flex items-center justify-center px-4 sm:px-6 lg:px-8 py-32">
             <div className={cn(
                 "relative glass-card max-w-4xl w-full transition-all duration-700 ease-in-out rounded-2xl overflow-hidden",
-                isSignUp ? "md:min-h-[30rem]" : "md:min-h-[30rem]"
+                "min-h-[34rem]"
             )}>
+                {/* Sign-Up Form Panel */}
                 <div className={cn(
                     "absolute top-0 h-full transition-all duration-700 ease-in-out",
                     "w-full md:w-1/2",
-                    isSignUp ? "left-0 md:left-1/2 opacity-100 z-20" : "left-0 opacity-0 z-10"
+                    isSignUp ? "left-0 md:left-1/2 opacity-100 z-20" : "left-0 opacity-0 z-10 md:left-0"
                 )}>
                     <form onSubmit={handleSignUp} className="bg-transparent h-full flex flex-col items-center justify-center px-8 sm:px-12 text-center">
                         <h1 className="text-3xl font-bold mb-4 glow-text">Create Account</h1>
@@ -115,6 +126,7 @@ export default function AuthPage() {
                     </form>
                 </div>
 
+                {/* Sign-In Form Panel */}
                 <div className={cn(
                     "absolute top-0 h-full transition-all duration-700 ease-in-out",
                     "w-full md:w-1/2",
@@ -140,22 +152,28 @@ export default function AuthPage() {
                     </form>
                 </div>
 
+                {/* Overlay Panel */}
                 <div className={cn(
-                    "absolute top-0 left-0 md:left-1/2 w-full md:w-1/2 h-full overflow-hidden transition-all duration-700 ease-in-out rounded-l-2xl z-50",
-                    isSignUp ? "md:-translate-x-full rounded-r-2xl md:rounded-l-none" : ""
+                    "absolute top-0 left-0 md:left-1/2 w-full md:w-1/2 h-full overflow-hidden transition-transform duration-700 ease-in-out z-50",
+                    isSignUp ? "md:-translate-x-full" : "md:translate-x-0"
                 )}>
-                    <div className="bg-primary h-full text-primary-foreground relative from-primary to-primary/80 bg-gradient-to-br flex flex-col items-center justify-center px-8 text-center">
+                    <div className="bg-primary h-full text-primary-foreground relative from-primary to-primary/80 bg-gradient-to-br flex flex-col items-center justify-center px-8 text-center transition-transform duration-700 ease-in-out",
+                     isSignUp ? "translate-x-0" : "md:translate-x-full"
+                    >
+                        {/* Overlay for Sign-In */}
                         <div className={cn(
-                            "absolute top-0 h-full w-full flex flex-col items-center justify-center transition-all duration-700 ease-in-out",
-                            isSignUp ? "left-0" : "-left-full"
+                            "absolute top-0 h-full w-full flex flex-col items-center justify-center transition-all duration-700 ease-in-out p-4",
+                            isSignUp ? "opacity-100" : "opacity-0"
                         )}>
                             <h1 className="text-4xl font-bold mb-2">Welcome Back!</h1>
                             <p className="text-sm mb-6 max-w-xs">To keep connected with us please login with your personal info</p>
                             <Button variant="outline" className="rounded-full px-10 text-primary" onClick={() => setIsSignUp(false)}>Sign In</Button>
                         </div>
+                        
+                         {/* Overlay for Sign-Up */}
                          <div className={cn(
-                            "absolute top-0 h-full w-full flex flex-col items-center justify-center transition-all duration-700 ease-in-out",
-                             isSignUp ? "right-full" : "right-0"
+                            "absolute top-0 h-full w-full flex flex-col items-center justify-center transition-all duration-700 ease-in-out p-4",
+                             isSignUp ? "opacity-0" : "opacity-100"
                         )}>
                             <h1 className="text-4xl font-bold mb-2">Hello, Friend!</h1>
                             <p className="text-sm mb-6 max-w-xs">Enter your personal details and start your journey with us</p>
@@ -170,3 +188,5 @@ export default function AuthPage() {
     </div>
   );
 }
+
+    
