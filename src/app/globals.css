@@ -232,9 +232,9 @@ html {
 
 /* Animations */
 .main-container.is-g-active .b-container {
+    transform: translateX(100%);
     opacity: 1;
     z-index: 500;
-    transform: translateX(100%);
 }
 .main-container.is-g-active .switch {
     transform: translateX(-100%);
