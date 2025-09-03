@@ -19,7 +19,7 @@ export default function AuthPage() {
        <div className="relative z-10 flex flex-col flex-1">
         <TopBar />
         <Header />
-        <main className="flex-grow flex items-center justify-center px-4 sm:px-6 lg:px-8 py-24">
+        <main className="flex-grow flex items-center justify-center px-4 sm:px-6 lg:px-8 pt-32">
             <div className={cn(
                 "relative bg-card rounded-2xl shadow-2xl overflow-hidden max-w-4xl w-full transition-all duration-700 ease-in-out",
                 isSignUp ? "md:min-h-[30rem]" : "md:min-h-[30rem]"
