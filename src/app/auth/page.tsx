@@ -97,14 +97,14 @@ export default function AuthPage() {
         <Header />
         <main className="flex-grow flex items-center justify-center px-4 sm:px-6 lg:px-8 py-32">
             <div className={cn(
-                "relative glass-card max-w-4xl w-full transition-all duration-700 ease-in-out rounded-2xl overflow-hidden",
+                "relative glass-card max-w-md w-full md:max-w-4xl transition-all duration-700 ease-in-out rounded-2xl overflow-hidden",
                 "min-h-[34rem]"
             )}>
                 {/* Sign-Up Form Panel */}
                 <div className={cn(
                     "absolute top-0 h-full transition-all duration-700 ease-in-out",
                     "w-full md:w-1/2",
-                    isSignUp ? "left-0 md:left-1/2 opacity-100 z-20" : "left-0 opacity-0 z-10 md:left-0"
+                    isSignUp ? "left-0 md:left-1/2 opacity-100 z-20" : "left-0 md:left-0 opacity-0 z-10"
                 )}>
                     <form onSubmit={handleSignUp} className="bg-transparent h-full flex flex-col items-center justify-center px-8 sm:px-12 text-center">
                         <h1 className="text-3xl font-bold mb-4 glow-text">Create Account</h1>
@@ -130,7 +130,7 @@ export default function AuthPage() {
                 <div className={cn(
                     "absolute top-0 h-full transition-all duration-700 ease-in-out",
                     "w-full md:w-1/2",
-                    isSignUp ? "left-0 -translate-x-full opacity-0 z-10" : "left-0 opacity-100 z-20"
+                    isSignUp ? "left-0 md:left-[-100%] opacity-0 z-10" : "left-0 md:left-0 opacity-100 z-20"
                 )}>
                     <form onSubmit={handleSignIn} className="bg-transparent h-full flex flex-col items-center justify-center px-8 sm:px-12 text-center">
                         <h1 className="text-3xl font-bold mb-4 glow-text">Sign In</h1>
@@ -155,15 +155,15 @@ export default function AuthPage() {
                 {/* Overlay Panel */}
                 <div className={cn(
                     "absolute top-0 left-0 md:left-1/2 w-full md:w-1/2 h-full overflow-hidden transition-transform duration-700 ease-in-out z-50",
-                    isSignUp ? "md:-translate-x-full" : "md:translate-x-0"
+                    isSignUp ? "md:-translate-x-full" : "translate-x-0"
                 )}>
                     <div className={cn("bg-primary h-full text-primary-foreground relative from-primary to-primary/80 bg-gradient-to-br flex flex-col items-center justify-center px-8 text-center transition-transform duration-700 ease-in-out",
                      isSignUp ? "translate-x-0" : "md:translate-x-full"
                     )}>
                         {/* Overlay for Sign-In */}
                         <div className={cn(
-                            "absolute top-0 h-full w-full flex flex-col items-center justify-center transition-all duration-700 ease-in-out p-4",
-                            isSignUp ? "opacity-100" : "opacity-0"
+                            "absolute top-0 h-full w-full flex flex-col items-center justify-center transition-all duration-700 ease-in-out p-4 transform",
+                            isSignUp ? "translate-x-0" : "-translate-x-[200%]"
                         )}>
                             <h1 className="text-4xl font-bold mb-2">Welcome Back!</h1>
                             <p className="text-sm mb-6 max-w-xs">To keep connected with us please login with your personal info</p>
@@ -172,8 +172,8 @@ export default function AuthPage() {
                         
                          {/* Overlay for Sign-Up */}
                          <div className={cn(
-                            "absolute top-0 h-full w-full flex flex-col items-center justify-center transition-all duration-700 ease-in-out p-4",
-                             isSignUp ? "opacity-0" : "opacity-100"
+                            "absolute top-0 h-full w-full flex flex-col items-center justify-center transition-all duration-700 ease-in-out p-4 transform",
+                             isSignUp ? "translate-x-[200%]" : "translate-x-0"
                         )}>
                             <h1 className="text-4xl font-bold mb-2">Hello, Friend!</h1>
                             <p className="text-sm mb-6 max-w-xs">Enter your personal details and start your journey with us</p>
@@ -187,6 +187,5 @@ export default function AuthPage() {
        </div>
     </div>
   );
-}
 
     
