@@ -250,6 +250,7 @@ html {
     margin: 8px 0;
     width: 100%;
     color: #000;
+    padding-left: 2.5rem; /* Add padding for the icon */
 }
 
 .auth-button {
