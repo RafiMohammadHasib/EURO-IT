@@ -54,7 +54,7 @@ export default function AuthPage() {
                 title: "Account Created",
                 description: "Your account has been successfully created.",
             });
-            localStorage.setItem("user", JSON.stringify({ email: user.email, fullName: values.fullName, uid: user.uid }));
+            localStorage.setItem("user", JSON.stringify(user));
             router.push("/ai-market-planner");
         } catch (error: any) {
             toast({
@@ -71,8 +71,7 @@ export default function AuthPage() {
         setLoading(true);
         try {
             const user = await signIn(values.email, values.password);
-            // This is a simplification. In a real app, you'd fetch the user's full name from Firestore.
-            localStorage.setItem("user", JSON.stringify({ email: user.user.email, uid: user.user.uid, fullName: 'User' }));
+            localStorage.setItem("user", JSON.stringify(user));
             toast({
                 title: "Signed In",
                 description: "You have successfully signed in.",
