@@ -112,8 +112,8 @@ export default function AuthPage() {
         <main className="flex-grow flex items-center justify-center px-4 sm:px-6 lg:px-8 py-32">
             <div 
                 className={cn(
-                    "relative bg-card rounded-2xl shadow-2xl overflow-hidden",
-                    "w-full max-w-4xl min-h-[520px] lg:min-h-[600px]"
+                    "relative bg-card rounded-2xl shadow-2xl overflow-hidden w-full max-w-4xl min-h-[600px]",
+                    {"right-panel-active": isSignUp}
                 )}
                 id="container"
             >
@@ -169,13 +169,15 @@ export default function AuthPage() {
                 )}>
                     <div className={cn(
                         "bg-primary text-primary-foreground relative -left-full h-full w-[200%] transition-all duration-700 ease-in-out",
-                        { "translate-x-1/2": isSignUp }
+                        "transform",
+                         {"translate-x-1/2": isSignUp },
+                         {"translate-x-0": !isSignUp}
                     )}>
                         {/* Overlay Left */}
                         <div className={cn(
                             "absolute top-0 h-full w-1/2 flex flex-col items-center justify-center text-center px-10 transition-all duration-700 ease-in-out",
-                             "translate-x-0",
-                            { "-translate-x-[20%]": isSignUp }
+                            "transform",
+                            { "translate-x-0": !isSignUp, "-translate-x-[20%]": isSignUp }
                         )}>
                             <h1 className="text-3xl font-bold mb-4">Welcome Back!</h1>
                             <p className="text-sm mb-6">To keep connected with us please login with your personal info</p>
@@ -186,8 +188,8 @@ export default function AuthPage() {
                         {/* Overlay Right */}
                         <div className={cn(
                             "absolute top-0 h-full w-1/2 right-0 flex flex-col items-center justify-center text-center px-10 transition-all duration-700 ease-in-out",
-                            "translate-x-[20%]",
-                            { "translate-x-0": isSignUp }
+                            "transform",
+                            {"translate-x-0": isSignUp, "translate-x-[20%]": !isSignUp}
                         )}>
                             <h1 className="text-3xl font-bold mb-4">Hello, Friend!</h1>
                             <p className="text-sm mb-6">Enter your personal details and start your journey with us</p>
@@ -205,5 +207,3 @@ export default function AuthPage() {
     </div>
   );
 }
-
-    
