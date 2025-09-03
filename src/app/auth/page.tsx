@@ -49,13 +49,13 @@ export default function AuthPage() {
     const handleSignUp = async (values: z.infer<typeof signUpSchema>) => {
         setLoading(true);
         try {
-            const user = await signUp(values.email, values.password, values.fullName);
+            await signUp(values.email, values.password, values.fullName);
             toast({
                 title: "Account Created",
-                description: "Your account has been successfully created.",
+                description: "Please sign in to continue.",
             });
-            localStorage.setItem("user", JSON.stringify(user));
-            router.push("/ai-market-planner");
+            setIsSignUp(false); // Switch to the sign-in panel
+            signUpForm.reset(); // Reset the form
         } catch (error: any) {
             toast({
                 variant: "destructive",
@@ -95,7 +95,7 @@ export default function AuthPage() {
                 <div className="form-container sign-up-container">
                     <Form {...signUpForm}>
                         <form onSubmit={signUpForm.handleSubmit(handleSignUp)} className="auth-form">
-                            <h1 className="text-2xl font-bold mb-4">Create Account</h1>
+                            <h1 className="text-2xl font-bold mb-4 text-foreground">Create Account</h1>
                             <FormField
                                 control={signUpForm.control}
                                 name="fullName"
@@ -147,7 +147,7 @@ export default function AuthPage() {
                 <div className="form-container sign-in-container">
                     <Form {...signInForm}>
                         <form onSubmit={signInForm.handleSubmit(handleSignIn)} className="auth-form">
-                            <h1 className="text-2xl font-bold mb-4">Sign In</h1>
+                            <h1 className="text-2xl font-bold mb-4 text-foreground">Sign In</h1>
                              <FormField
                                 control={signInForm.control}
                                 name="email"
@@ -201,5 +201,3 @@ export default function AuthPage() {
         </div>
     );
 }
-
-    
