@@ -56,7 +56,7 @@ const Header = () => {
             onClick={() => setMobileMenuOpen(false)}
             className={cn(
               "text-sm font-medium transition-colors duration-300 relative after:content-[''] after:absolute after:left-0 after:bottom-[-4px] after:w-0 after:h-[2px] after:bg-primary after:transition-all after:duration-300 hover:after:w-full",
-              theme === 'light' ? "text-gray-600 hover:text-primary" : "text-gray-300 hover:text-primary"
+              "text-muted-foreground hover:text-primary"
             )}
           >
             {item.name}
@@ -98,7 +98,7 @@ const Header = () => {
         <div className="hidden md:flex items-center gap-6">
           <NavLinks />
            <Link href="/#contact">
-            <Button size="sm">
+            <Button size="sm" className="rounded-full">
               Book a Consultation
             </Button>
           </Link>
@@ -124,7 +124,7 @@ const Header = () => {
                     <div className="flex flex-col items-start gap-8">
                       <NavLinks className="flex-col items-start gap-8 text-xl" />
                       <Link href="/#contact" className="w-full" onClick={() => setMobileMenuOpen(false)}>
-                        <Button size="lg" className="w-full">
+                        <Button size="lg" className="w-full rounded-full">
                           Book a Consultation
                         </Button>
                       </Link>
