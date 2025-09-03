@@ -1,7 +1,9 @@
+
 "use client";
 
 import { Mail, Phone, Facebook, Linkedin, Instagram, Youtube } from "lucide-react";
 import { ThemeToggle } from "@/components/theme-toggle";
+import UserSessionButton from "../user-session-button";
 
 const socialLinks = [
   { icon: Facebook, href: 'https://www.facebook.com/euroitech/', name: 'Facebook' },
@@ -31,6 +33,7 @@ const TopBar = () => {
                 </a>
               ))}
               <ThemeToggle />
+              <UserSessionButton />
         </div>
       </div>
     </div>

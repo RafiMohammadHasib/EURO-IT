@@ -96,11 +96,6 @@ const Header = () => {
 
         <div className="hidden md:flex items-center gap-4">
           <NavLinks />
-           <Link href="/auth">
-            <Button variant="outline" size="sm" className="rounded-full">
-              Login
-            </Button>
-          </Link>
            <Link href="/#contact">
             <Button size="sm" className="rounded-full">
               Book a Consultation
