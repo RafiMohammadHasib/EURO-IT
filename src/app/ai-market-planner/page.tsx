@@ -385,7 +385,7 @@ export default function AiMarketPlannerPage() {
             {result && (
               <div className="mt-12 max-w-4xl mx-auto glass-card p-8 md:p-12">
                 <div className="max-w-none">
-                  <h2 className="text-3xl md:text-4xl font-bold glow-text text-center mb-4">{result.title}</h2>
+                  <h2 className="text-3xl md:text-4xl font-bold text-foreground text-center mb-4">{result.title}</h2>
                   <div className="text-center text-sm italic mb-10 text-muted-foreground">
                      <p>A Strategic Marketing Plan</p>
                   </div>
@@ -413,5 +413,3 @@ export default function AiMarketPlannerPage() {
     </div>
   );
 }
-
-    

@@ -94,8 +94,13 @@ const Header = () => {
       <div className="container mx-auto px-4 sm:px-6 lg:px-8 flex justify-between items-center">
         <HolographicLogo />
 
-        <div className="hidden md:flex items-center gap-6">
+        <div className="hidden md:flex items-center gap-4">
           <NavLinks />
+           <Link href="/auth">
+            <Button variant="outline" size="sm" className="rounded-full">
+              Login
+            </Button>
+          </Link>
            <Link href="/#contact">
             <Button size="sm" className="rounded-full">
               Book a Consultation
@@ -125,6 +130,11 @@ const Header = () => {
                     </div>
                     <div className="flex flex-col items-start gap-8">
                       <NavLinks className="flex-col items-start gap-8 text-xl" />
+                      <Link href="/auth" className="w-full" onClick={() => setMobileMenuOpen(false)}>
+                        <Button size="lg" className="w-full rounded-full" variant="outline">
+                          Login
+                        </Button>
+                      </Link>
                       <Link href="/#contact" className="w-full" onClick={() => setMobileMenuOpen(false)}>
                         <Button size="lg" className="w-full rounded-full">
                           Book a Consultation
@@ -141,5 +151,3 @@ const Header = () => {
 };
 
 export default Header;
-
-    
