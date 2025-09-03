@@ -19,9 +19,9 @@ export default function AuthPage() {
        <div className="relative z-10 flex flex-col flex-1">
         <TopBar />
         <Header />
-        <main className="flex-grow flex items-center justify-center px-4 sm:px-6 lg:px-8 pt-32">
+        <main className="flex-grow flex items-center justify-center px-4 sm:px-6 lg:px-8 py-32">
             <div className={cn(
-                "relative bg-card rounded-2xl shadow-2xl overflow-hidden max-w-4xl w-full transition-all duration-700 ease-in-out",
+                "relative glass-card max-w-4xl w-full transition-all duration-700 ease-in-out rounded-2xl overflow-hidden",
                 isSignUp ? "md:min-h-[30rem]" : "md:min-h-[30rem]"
             )}>
                 <div className={cn(
@@ -29,7 +29,7 @@ export default function AuthPage() {
                     "w-full md:w-1/2",
                     isSignUp ? "left-0 md:left-1/2 opacity-100 z-20" : "left-0 opacity-0 z-10"
                 )}>
-                    <form className="bg-card h-full flex flex-col items-center justify-center px-8 sm:px-12 text-center">
+                    <form className="bg-transparent h-full flex flex-col items-center justify-center px-8 sm:px-12 text-center">
                         <h1 className="text-3xl font-bold mb-4 glow-text">Create Account</h1>
                         <div className="flex space-x-4 mb-4">
                             <Button variant="outline" size="icon" className="rounded-full"><Facebook className="h-5 w-5" /></Button>
@@ -51,7 +51,7 @@ export default function AuthPage() {
                     "w-full md:w-1/2",
                     isSignUp ? "left-0 -translate-x-full opacity-0 z-10" : "left-0 opacity-100 z-20"
                 )}>
-                    <form className="bg-card h-full flex flex-col items-center justify-center px-8 sm:px-12 text-center">
+                    <form className="bg-transparent h-full flex flex-col items-center justify-center px-8 sm:px-12 text-center">
                         <h1 className="text-3xl font-bold mb-4 glow-text">Sign In</h1>
                         <div className="flex space-x-4 mb-4">
                             <Button variant="outline" size="icon" className="rounded-full"><Facebook className="h-5 w-5" /></Button>
