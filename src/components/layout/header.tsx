@@ -19,7 +19,6 @@ const navItems = [
   { name: 'Pricing', href: '/#pricing' },
   { name: 'AI Market Planner', href: '/ai-market-planner' },
   { name: 'Contact', href: '/#contact' },
-  { name: 'Login', href: '/auth' },
 ];
 
 const Header = () => {
