@@ -15,3 +15,5 @@ const app = !getApps().length ? initializeApp(firebaseConfig) : getApp();
 const db = getFirestore(app);
 
 export { app, db };
+
+    

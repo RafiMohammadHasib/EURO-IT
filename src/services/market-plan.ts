@@ -15,3 +15,5 @@ export const saveMarketPlan = async (userId: string, plan: GenerateMarketPlanOut
     throw new Error("Could not save marketing plan.");
   }
 };
+
+    
