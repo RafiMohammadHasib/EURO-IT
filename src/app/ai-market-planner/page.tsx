@@ -26,6 +26,7 @@ import {
 import { useToast } from "@/hooks/use-toast";
 import { Loader2 } from "lucide-react";
 import { generateMarketPlan, GenerateMarketPlanInput, GenerateMarketPlanOutput } from "@/ai/flows/market-plan-flow";
+import { saveMarketPlan } from "@/services/market-plan";
 import Header from "@/components/layout/header";
 import Footer from "@/components/layout/footer";
 import TopBar from "@/components/layout/top-bar";
@@ -53,7 +54,6 @@ const parseMarkdownTable = (markdown: string): { headers: string[]; rows: string
 
   if (headers.length === 0) return null;
   
-  // check for separator line
   if (lines[1].includes('---')) {
       const rows = tableParts.slice(2);
       return { headers, rows };
@@ -68,7 +68,7 @@ const MarkdownContent = ({ content }: { content: string }) => {
 
   const tableData = parseMarkdownTable(content);
 
-  if (tableData) {
+  if (tableData && tableData.headers.length > 0) {
     return (
       <div className="overflow-x-auto">
         <Table className="min-w-full">
@@ -89,7 +89,6 @@ const MarkdownContent = ({ content }: { content: string }) => {
     );
   }
 
-  // Fallback for non-table markdown (lists, paragraphs)
   return (
     <div
       className="prose prose-invert text-muted-foreground max-w-none"
@@ -99,7 +98,7 @@ const MarkdownContent = ({ content }: { content: string }) => {
           .replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>')
           .replace(/\*(.*?)\*/g, '<em>$1</em>')
           .replace(/^- (.*$)/gm, '<ul class="list-disc pl-5 mb-2"><li>$1</li></ul>')
-          .replace(/<\/ul><br \/><ul/g, '<ul'), // Merge consecutive lists
+          .replace(/<\/ul><br \/><ul/g, '<ul'),
       }}
     />
   );
@@ -110,6 +109,8 @@ export default function AiMarketPlannerPage() {
   const [loading, setLoading] = React.useState(false);
   const [result, setResult] = React.useState<GenerateMarketPlanOutput | null>(null);
   const { toast } = useToast();
+  // NOTE: This is a placeholder. In a real app, you'd get this from your auth context.
+  const userId = "test-user-id"; 
 
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
@@ -132,12 +133,20 @@ export default function AiMarketPlannerPage() {
     try {
       const plan = await generateMarketPlan(values as GenerateMarketPlanInput);
       setResult(plan);
+      // After generating, save the plan to Firestore
+      if (plan) {
+        const planId = await saveMarketPlan(userId, plan);
+        toast({
+          title: "Plan Saved!",
+          description: `Your marketing plan has been saved with ID: ${planId}`,
+        });
+      }
     } catch (error) {
-      console.error("Error generating market plan:", error);
+      console.error("Error in generating or saving market plan:", error);
       toast({
         variant: "destructive",
         title: "Error",
-        description: "Failed to generate marketing plan. Please try again.",
+        description: "Failed to generate or save the marketing plan. Please try again.",
       });
     } finally {
       setLoading(false);
@@ -367,5 +376,3 @@ export default function AiMarketPlannerPage() {
     </div>
   );
 }
-
-    
