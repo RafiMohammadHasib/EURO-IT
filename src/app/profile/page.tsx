@@ -2,7 +2,6 @@
 "use client";
 
 import * as React from "react";
-import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useMounted } from "@/hooks/use-mounted";
 import { Loader2, User, Mail, Phone, Edit, Upload, History, FileText } from "lucide-react";
@@ -16,6 +15,11 @@ import { getMarketPlans, MarketPlan } from "@/services/market-plan";
 import { format } from "date-fns";
 import { useToast } from "@/hooks/use-toast";
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip";
+import { Dialog, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
+import { updateUserProfile } from "@/services/auth";
+import Link from "next/link";
 
 
 type AppUser = {
@@ -24,6 +28,68 @@ type AppUser = {
   fullName: string;
   phoneNumber: string;
 };
+
+const EditProfileDialog = ({ user, onProfileUpdate }: { user: AppUser, onProfileUpdate: (updatedUser: AppUser) => void }) => {
+  const [isOpen, setIsOpen] = React.useState(false);
+  const [loading, setLoading] = React.useState(false);
+  const [fullName, setFullName] = React.useState(user.fullName);
+  const [phoneNumber, setPhoneNumber] = React.useState(user.phoneNumber);
+  const { toast } = useToast();
+
+  const handleSave = async () => {
+    setLoading(true);
+    try {
+      const updatedUser = await updateUserProfile(user.uid, { fullName, phoneNumber });
+      onProfileUpdate(updatedUser);
+      toast({ title: "Success", description: "Profile updated successfully." });
+      setIsOpen(false);
+    } catch (error: any) {
+      toast({ variant: "destructive", title: "Error", description: error.message });
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  return (
+    <Dialog open={isOpen} onOpenChange={setIsOpen}>
+      <DialogTrigger asChild>
+        <Button className="w-full mt-4">
+          <Edit className="w-4 h-4 mr-2" />
+          Edit Profile
+        </Button>
+      </DialogTrigger>
+      <DialogContent className="sm:max-w-[425px]">
+        <DialogHeader>
+          <DialogTitle>Edit Profile</DialogTitle>
+          <DialogDescription>
+            Make changes to your profile here. Click save when you're done.
+          </DialogDescription>
+        </DialogHeader>
+        <div className="grid gap-4 py-4">
+          <div className="grid grid-cols-4 items-center gap-4">
+            <Label htmlFor="name" className="text-right">
+              Full Name
+            </Label>
+            <Input id="name" value={fullName} onChange={(e) => setFullName(e.target.value)} className="col-span-3" />
+          </div>
+          <div className="grid grid-cols-4 items-center gap-4">
+            <Label htmlFor="phone" className="text-right">
+              Phone
+            </Label>
+            <Input id="phone" value={phoneNumber} onChange={(e) => setPhoneNumber(e.target.value)} className="col-span-3" />
+          </div>
+        </div>
+        <DialogFooter>
+          <Button onClick={handleSave} disabled={loading}>
+            {loading && <Loader2 className="mr-2 h-4 w-4 animate-spin" />}
+            Save changes
+          </Button>
+        </DialogFooter>
+      </DialogContent>
+    </Dialog>
+  );
+};
+
 
 export default function ProfilePage() {
   const [user, setUser] = React.useState<AppUser | null>(null);
@@ -69,6 +135,11 @@ export default function ProfilePage() {
       fetchPlans();
     }
   }, [user, toast]);
+
+  const handleProfileUpdate = (updatedUser: AppUser) => {
+    setUser(updatedUser);
+    localStorage.setItem("user", JSON.stringify(updatedUser));
+  };
 
   const getInitials = (name: string) => {
     if (!name) return "U";
@@ -117,10 +188,19 @@ export default function ProfilePage() {
                            <AvatarImage src="https://picsum.photos/100/100" data-ai-hint="user avatar" alt={user.fullName} />
                            <AvatarFallback>{getInitials(user.fullName)}</AvatarFallback>
                         </Avatar>
-                         <Button variant="outline" size="sm" disabled>
-                            <Upload className="w-4 h-4 mr-2" />
-                            Upload Photo
-                         </Button>
+                        <TooltipProvider>
+                          <Tooltip>
+                            <TooltipTrigger asChild>
+                               <Button variant="outline" size="sm" disabled>
+                                  <Upload className="w-4 h-4 mr-2" />
+                                  Upload Photo
+                               </Button>
+                            </TooltipTrigger>
+                             <TooltipContent>
+                              <p>This feature is coming soon!</p>
+                            </TooltipContent>
+                          </Tooltip>
+                        </TooltipProvider>
                       </div>
                     <div className="flex items-center gap-3 pt-4">
                         <User className="w-5 h-5 text-muted-foreground" />
@@ -132,21 +212,9 @@ export default function ProfilePage() {
                     </div>
                     <div className="flex items-center gap-3">
                         <Phone className="w-5 h-5 text-muted-foreground" />
-                        <span>{user.phoneNumber}</span>
+                        <span>{user.phoneNumber || "Not provided"}</span>
                     </div>
-                    <TooltipProvider>
-                      <Tooltip>
-                        <TooltipTrigger asChild>
-                          <Button className="w-full mt-4" disabled>
-                              <Edit className="w-4 h-4 mr-2" />
-                              Edit Profile
-                          </Button>
-                        </TooltipTrigger>
-                        <TooltipContent>
-                          <p>This feature is coming soon!</p>
-                        </TooltipContent>
-                      </Tooltip>
-                    </TooltipProvider>
+                    <EditProfileDialog user={user} onProfileUpdate={handleProfileUpdate} />
                   </CardContent>
                 </Card>
               </div>

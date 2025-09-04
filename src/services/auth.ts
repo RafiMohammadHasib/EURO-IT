@@ -7,7 +7,7 @@ import {
   signInWithEmailAndPassword, 
   type UserCredential
 } from "firebase/auth";
-import { doc, setDoc, getDoc } from "firebase/firestore";
+import { doc, setDoc, getDoc, updateDoc } from "firebase/firestore";
 
 type AppUser = {
     uid: string;
@@ -73,4 +73,27 @@ export const signIn = async (email: string, password: string): Promise<AppUser> 
     console.error("Sign in error:", error);
     throw new Error(error.message || "Failed to sign in.");
   }
+};
+
+export const updateUserProfile = async (uid: string, data: { fullName?: string; phoneNumber?: string }): Promise<AppUser> => {
+    try {
+        const userDocRef = doc(db, "users", uid);
+        await updateDoc(userDocRef, data);
+        const updatedDoc = await getDoc(userDocRef);
+        const userData = updatedDoc.data();
+
+        if (!userData) {
+            throw new Error("Could not find updated user data.");
+        }
+
+        return {
+            uid: uid,
+            email: userData.email,
+            fullName: userData.fullName,
+            phoneNumber: userData.phoneNumber,
+        };
+    } catch (error: any) {
+        console.error("Update profile error:", error);
+        throw new Error(error.message || "Failed to update profile.");
+    }
 };
