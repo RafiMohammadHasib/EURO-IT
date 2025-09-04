@@ -1,14 +1,13 @@
 
 "use client";
 
-import { auth, db, storage } from "@/lib/firebase";
+import { auth, db } from "@/lib/firebase";
 import { 
   createUserWithEmailAndPassword, 
   signInWithEmailAndPassword, 
   type UserCredential
 } from "firebase/auth";
 import { doc, setDoc, getDoc, updateDoc, serverTimestamp } from "firebase/firestore";
-import { ref, uploadBytes, getDownloadURL } from "firebase/storage";
 
 type AppUser = {
     uid: string;
@@ -28,7 +27,7 @@ export const signUp = async (email: string, password: string, fullName: string, 
         email: user.email,
         fullName: fullName,
         phoneNumber: phoneNumber,
-        photoURL: user.photoURL || `https://picsum.photos/seed/${user.uid}/100/100`,
+        photoURL: `https://picsum.photos/seed/${user.uid}/100/100`,
     };
 
     // Save additional user info in Firestore.
@@ -93,17 +92,18 @@ export const updateUserProfile = async (uid: string, data: { fullName?: string; 
         
         const docSnap = await getDoc(userDocRef);
         if (!docSnap.exists()) {
-            console.warn(`User document for ${uid} not found on update. Creating it now.`);
+             console.warn(`User document for ${uid} not found on update. Creating it now.`);
             const user = auth.currentUser;
             if (!user) throw new Error("Authentication error: No user is currently signed in.");
 
-            const newUser: Omit<AppUser, 'uid' | 'email'> & { createdAt: any } = {
+             const newUser: AppUser = {
+                uid: user.uid,
+                email: user.email,
                 fullName: data.fullName || "User",
                 phoneNumber: data.phoneNumber || "",
                 photoURL: `https://picsum.photos/seed/${user.uid}/100/100`,
-                createdAt: serverTimestamp()
             };
-            await setDoc(userDocRef, { ...newUser, ...data });
+            await setDoc(userDocRef, { ...newUser, createdAt: serverTimestamp(), ...data });
         } else {
             await updateDoc(userDocRef, data);
         }
@@ -128,20 +128,4 @@ export const updateUserProfile = async (uid: string, data: { fullName?: string; 
     }
 };
 
-export const updateUserProfilePicture = async (uid: string, file: File): Promise<string> => {
-    try {
-        const storageRef = ref(storage, `profile-pictures/${uid}/${file.name}`);
-        const snapshot = await uploadBytes(storageRef, file);
-        const downloadURL = await getDownloadURL(snapshot.ref);
-
-        const userDocRef = doc(db, "users", uid);
-        await updateDoc(userDocRef, {
-            photoURL: downloadURL
-        });
-        
-        return downloadURL;
-    } catch (error: any) {
-        console.error("Profile picture upload error:", error);
-        throw new Error(error.message || "Failed to upload profile picture.");
-    }
-};
+// Removed updateUserProfilePicture as Firebase Storage is not available on the current plan.

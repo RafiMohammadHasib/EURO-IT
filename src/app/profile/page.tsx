@@ -4,7 +4,7 @@
 import * as React from "react";
 import { useRouter } from "next/navigation";
 import { useMounted } from "@/hooks/use-mounted";
-import { Loader2, User, Mail, Phone, Edit, Upload, History, FileText } from "lucide-react";
+import { Loader2, User, Mail, Phone, Edit, History, FileText } from "lucide-react";
 import TopBar from "@/components/layout/top-bar";
 import Header from "@/components/layout/header";
 import Footer from "@/components/layout/footer";
@@ -17,7 +17,7 @@ import { useToast } from "@/hooks/use-toast";
 import { Dialog, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { updateUserProfile, updateUserProfilePicture } from "@/services/auth";
+import { updateUserProfile } from "@/services/auth";
 import Link from "next/link";
 
 type AppUser = {
@@ -93,11 +93,9 @@ export default function ProfilePage() {
   const [user, setUser] = React.useState<AppUser | null>(null);
   const [plans, setPlans] = React.useState<MarketPlan[]>([]);
   const [loading, setLoading] = React.useState(true);
-  const [uploading, setUploading] = React.useState(false);
   const isMounted = useMounted();
   const router = useRouter();
   const { toast } = useToast();
-  const fileInputRef = React.useRef<HTMLInputElement>(null);
 
   React.useEffect(() => {
     if (isMounted) {
@@ -141,29 +139,6 @@ export default function ProfilePage() {
     const newUserState = { ...user, ...updatedUser };
     setUser(newUserState as AppUser);
     localStorage.setItem("user", JSON.stringify(newUserState));
-  };
-  
-  const handleFileSelect = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const file = e.target.files?.[0];
-    if (file && user) {
-        handlePictureUpload(file);
-    }
-  };
-
-  const handlePictureUpload = async (file: File) => {
-    if (!user) return;
-    setUploading(true);
-    try {
-        const newPhotoURL = await updateUserProfilePicture(user.uid, file);
-        const updatedUser = { ...user, photoURL: newPhotoURL };
-        setUser(updatedUser);
-        localStorage.setItem("user", JSON.stringify(updatedUser));
-        toast({ title: "Success", description: "Profile picture updated!" });
-    } catch (error: any) {
-        toast({ variant: "destructive", title: "Upload Failed", description: error.message });
-    } finally {
-        setUploading(false);
-    }
   };
 
   const getInitials = (name: string) => {
@@ -209,25 +184,10 @@ export default function ProfilePage() {
                   <CardContent className="space-y-4">
                      <div className="flex items-center justify-center flex-col space-y-4">
                         <Avatar className="w-24 h-24 text-4xl">
-                           <AvatarImage src={user.photoURL} alt={user.fullName} />
+                           <AvatarImage src={user.photoURL} alt={user.fullName} data-ai-hint="placeholder avatar" />
                            <AvatarFallback>{getInitials(user.fullName)}</AvatarFallback>
                         </Avatar>
-                        <input
-                            type="file"
-                            ref={fileInputRef}
-                            onChange={handleFileSelect}
-                            accept="image/*"
-                            className="hidden"
-                        />
-                        <Button 
-                            variant="outline" 
-                            size="sm" 
-                            onClick={() => fileInputRef.current?.click()}
-                            disabled={uploading}
-                        >
-                            {uploading ? <Loader2 className="w-4 h-4 mr-2 animate-spin" /> : <Upload className="w-4 h-4 mr-2" />}
-                            {uploading ? 'Uploading...' : 'Upload Photo'}
-                        </Button>
+                        <p className="text-xs text-muted-foreground text-center">Avatar is auto-generated. Custom uploads coming soon.</p>
                       </div>
                     <div className="flex items-center gap-3 pt-4">
                         <User className="w-5 h-5 text-muted-foreground" />
