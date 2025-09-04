@@ -14,19 +14,18 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/com
 import { getMarketPlans, MarketPlan } from "@/services/market-plan";
 import { format } from "date-fns";
 import { useToast } from "@/hooks/use-toast";
-import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip";
 import { Dialog, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { updateUserProfile } from "@/services/auth";
+import { updateUserProfile, updateUserProfilePicture } from "@/services/auth";
 import Link from "next/link";
-
 
 type AppUser = {
   uid: string;
   email: string | null;
   fullName: string;
   phoneNumber: string;
+  photoURL?: string;
 };
 
 const EditProfileDialog = ({ user, onProfileUpdate }: { user: AppUser, onProfileUpdate: (updatedUser: AppUser) => void }) => {
@@ -90,14 +89,15 @@ const EditProfileDialog = ({ user, onProfileUpdate }: { user: AppUser, onProfile
   );
 };
 
-
 export default function ProfilePage() {
   const [user, setUser] = React.useState<AppUser | null>(null);
   const [plans, setPlans] = React.useState<MarketPlan[]>([]);
   const [loading, setLoading] = React.useState(true);
+  const [uploading, setUploading] = React.useState(false);
   const isMounted = useMounted();
   const router = useRouter();
   const { toast } = useToast();
+  const fileInputRef = React.useRef<HTMLInputElement>(null);
 
   React.useEffect(() => {
     if (isMounted) {
@@ -119,6 +119,7 @@ export default function ProfilePage() {
   React.useEffect(() => {
     if (user) {
       const fetchPlans = async () => {
+        setLoading(true);
         try {
           const userPlans = await getMarketPlans(user.uid);
           setPlans(userPlans);
@@ -137,8 +138,32 @@ export default function ProfilePage() {
   }, [user, toast]);
 
   const handleProfileUpdate = (updatedUser: AppUser) => {
-    setUser(updatedUser);
-    localStorage.setItem("user", JSON.stringify(updatedUser));
+    const newUserState = { ...user, ...updatedUser };
+    setUser(newUserState as AppUser);
+    localStorage.setItem("user", JSON.stringify(newUserState));
+  };
+  
+  const handleFileSelect = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (file && user) {
+        handlePictureUpload(file);
+    }
+  };
+
+  const handlePictureUpload = async (file: File) => {
+    if (!user) return;
+    setUploading(true);
+    try {
+        const newPhotoURL = await updateUserProfilePicture(user.uid, file);
+        const updatedUser = { ...user, photoURL: newPhotoURL };
+        setUser(updatedUser);
+        localStorage.setItem("user", JSON.stringify(updatedUser));
+        toast({ title: "Success", description: "Profile picture updated!" });
+    } catch (error: any) {
+        toast({ variant: "destructive", title: "Upload Failed", description: error.message });
+    } finally {
+        setUploading(false);
+    }
   };
 
   const getInitials = (name: string) => {
@@ -172,7 +197,6 @@ export default function ProfilePage() {
             </div>
             
             <div className="max-w-4xl mx-auto grid lg:grid-cols-3 gap-8">
-              {/* Left column for profile details */}
               <div className="lg:col-span-1 space-y-8">
                 <Card className="glass-card">
                   <CardHeader>
@@ -185,22 +209,25 @@ export default function ProfilePage() {
                   <CardContent className="space-y-4">
                      <div className="flex items-center justify-center flex-col space-y-4">
                         <Avatar className="w-24 h-24 text-4xl">
-                           <AvatarImage src="https://picsum.photos/100/100" data-ai-hint="user avatar" alt={user.fullName} />
+                           <AvatarImage src={user.photoURL} alt={user.fullName} />
                            <AvatarFallback>{getInitials(user.fullName)}</AvatarFallback>
                         </Avatar>
-                        <TooltipProvider>
-                          <Tooltip>
-                            <TooltipTrigger asChild>
-                               <Button variant="outline" size="sm" disabled>
-                                  <Upload className="w-4 h-4 mr-2" />
-                                  Upload Photo
-                               </Button>
-                            </TooltipTrigger>
-                             <TooltipContent>
-                              <p>This feature is coming soon!</p>
-                            </TooltipContent>
-                          </Tooltip>
-                        </TooltipProvider>
+                        <input
+                            type="file"
+                            ref={fileInputRef}
+                            onChange={handleFileSelect}
+                            accept="image/*"
+                            className="hidden"
+                        />
+                        <Button 
+                            variant="outline" 
+                            size="sm" 
+                            onClick={() => fileInputRef.current?.click()}
+                            disabled={uploading}
+                        >
+                            {uploading ? <Loader2 className="w-4 h-4 mr-2 animate-spin" /> : <Upload className="w-4 h-4 mr-2" />}
+                            {uploading ? 'Uploading...' : 'Upload Photo'}
+                        </Button>
                       </div>
                     <div className="flex items-center gap-3 pt-4">
                         <User className="w-5 h-5 text-muted-foreground" />
@@ -219,7 +246,6 @@ export default function ProfilePage() {
                 </Card>
               </div>
 
-              {/* Right column for plan history */}
               <div className="lg:col-span-2">
                  <Card className="glass-card">
                    <CardHeader>

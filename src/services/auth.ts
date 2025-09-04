@@ -1,19 +1,21 @@
 
 "use client";
 
-import { auth, db } from "@/lib/firebase";
+import { auth, db, storage } from "@/lib/firebase";
 import { 
   createUserWithEmailAndPassword, 
   signInWithEmailAndPassword, 
   type UserCredential
 } from "firebase/auth";
 import { doc, setDoc, getDoc, updateDoc, serverTimestamp } from "firebase/firestore";
+import { ref, uploadBytes, getDownloadURL } from "firebase/storage";
 
 type AppUser = {
     uid: string;
     email: string | null;
     fullName: string;
     phoneNumber: string;
+    photoURL?: string;
 };
 
 export const signUp = async (email: string, password: string, fullName: string, phoneNumber: string): Promise<AppUser> => {
@@ -26,10 +28,10 @@ export const signUp = async (email: string, password: string, fullName: string, 
         email: user.email,
         fullName: fullName,
         phoneNumber: phoneNumber,
+        photoURL: user.photoURL || `https://picsum.photos/seed/${user.uid}/100/100`,
     };
 
     // Save additional user info in Firestore.
-    // This creates the document that was previously missing.
     await setDoc(doc(db, "users", user.uid), {
       ...appUser,
       createdAt: serverTimestamp(),
@@ -56,17 +58,17 @@ export const signIn = async (email: string, password: string): Promise<AppUser> 
             uid: user.uid,
             email: user.email,
             fullName: userData.fullName || "User",
-            phoneNumber: userData.phoneNumber || ""
+            phoneNumber: userData.phoneNumber || "",
+            photoURL: userData.photoURL || `https://picsum.photos/seed/${user.uid}/100/100`,
         };
     } else {
-        // This case handles users created before the document creation fix.
-        // We create their document now to prevent future errors.
         console.warn(`User document for ${user.uid} not found. Creating one.`);
         const newUser: AppUser = {
           uid: user.uid,
           email: user.email,
-          fullName: 'New User', // Default name
+          fullName: 'New User',
           phoneNumber: '',
+          photoURL: `https://picsum.photos/seed/${user.uid}/100/100`,
         };
         await setDoc(doc(db, "users", user.uid), {
           ...newUser,
@@ -78,7 +80,6 @@ export const signIn = async (email: string, password: string): Promise<AppUser> 
   } catch (error: any)
 {
     console.error("Sign in error:", error);
-    // Provide a more user-friendly error message
     if (error.code === 'auth/user-not-found' || error.code === 'auth/wrong-password' || error.code === 'auth/invalid-credential') {
         throw new Error("Invalid email or password. Please try again.");
     }
@@ -92,18 +93,17 @@ export const updateUserProfile = async (uid: string, data: { fullName?: string; 
         
         const docSnap = await getDoc(userDocRef);
         if (!docSnap.exists()) {
-             // If document doesn't exist, create it first, then update.
             console.warn(`User document for ${uid} not found on update. Creating it now.`);
             const user = auth.currentUser;
             if (!user) throw new Error("Authentication error: No user is currently signed in.");
 
-            const newUser: AppUser = {
-                uid: user.uid,
-                email: user.email,
+            const newUser: Omit<AppUser, 'uid' | 'email'> & { createdAt: any } = {
                 fullName: data.fullName || "User",
                 phoneNumber: data.phoneNumber || "",
+                photoURL: `https://picsum.photos/seed/${user.uid}/100/100`,
+                createdAt: serverTimestamp()
             };
-            await setDoc(userDocRef, { ...newUser, createdAt: serverTimestamp(), ...data });
+            await setDoc(userDocRef, { ...newUser, ...data });
         } else {
             await updateDoc(userDocRef, data);
         }
@@ -120,9 +120,28 @@ export const updateUserProfile = async (uid: string, data: { fullName?: string; 
             email: userData.email,
             fullName: userData.fullName,
             phoneNumber: userData.phoneNumber,
+            photoURL: userData.photoURL,
         };
     } catch (error: any) {
         console.error("Update profile error:", error);
         throw new Error(error.message || "Failed to update profile.");
+    }
+};
+
+export const updateUserProfilePicture = async (uid: string, file: File): Promise<string> => {
+    try {
+        const storageRef = ref(storage, `profile-pictures/${uid}/${file.name}`);
+        const snapshot = await uploadBytes(storageRef, file);
+        const downloadURL = await getDownloadURL(snapshot.ref);
+
+        const userDocRef = doc(db, "users", uid);
+        await updateDoc(userDocRef, {
+            photoURL: downloadURL
+        });
+        
+        return downloadURL;
+    } catch (error: any) {
+        console.error("Profile picture upload error:", error);
+        throw new Error(error.message || "Failed to upload profile picture.");
     }
 };

@@ -22,6 +22,7 @@ type AppUser = {
   email: string | null;
   fullName: string;
   phoneNumber: string;
+  photoURL?: string;
 };
 
 export default function UserSessionButton() {
@@ -31,15 +32,27 @@ export default function UserSessionButton() {
 
   React.useEffect(() => {
     if (isMounted) {
-      try {
-        const storedUser = localStorage.getItem("user");
-        if (storedUser) {
-          setUser(JSON.parse(storedUser));
+      const handleStorageChange = () => {
+        try {
+          const storedUser = localStorage.getItem("user");
+          if (storedUser) {
+            setUser(JSON.parse(storedUser));
+          } else {
+            setUser(null);
+          }
+        } catch (error) {
+          console.error("Failed to parse user from localStorage", error);
+          localStorage.removeItem("user");
+          setUser(null);
         }
-      } catch (error) {
-        console.error("Failed to parse user from localStorage", error);
-        localStorage.removeItem("user");
-      }
+      };
+
+      window.addEventListener('storage', handleStorageChange);
+      handleStorageChange(); // Initial load
+
+      return () => {
+        window.removeEventListener('storage', handleStorageChange);
+      };
     }
   }, [isMounted]);
 
@@ -77,7 +90,7 @@ export default function UserSessionButton() {
       <DropdownMenuTrigger asChild>
         <Button variant="ghost" className="relative h-8 w-8 rounded-full">
           <Avatar className="h-8 w-8">
-             <AvatarImage src="https://picsum.photos/100/100" data-ai-hint="user avatar" alt={user.fullName} />
+             <AvatarImage src={user.photoURL} alt={user.fullName} />
             <AvatarFallback>{getInitials(user.fullName)}</AvatarFallback>
           </Avatar>
         </Button>
