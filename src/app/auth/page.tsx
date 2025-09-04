@@ -2,6 +2,7 @@
 "use client";
 
 import * as React from "react";
+import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
@@ -16,7 +17,7 @@ import {
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { useToast } from "@/hooks/use-toast";
-import { Loader2, User, Mail, Lock, Phone } from "lucide-react";
+import { Loader2, User, Mail, Lock, Phone, X } from "lucide-react";
 import { signUp, signIn } from "@/services/auth";
 
 const signUpSchema = z.object({
@@ -92,6 +93,12 @@ export default function AuthPage() {
     return (
         <div className="flex flex-col min-h-screen items-center justify-center bg-background p-4 light">
             <div id="container" className={`auth-container ${isSignUp ? "right-panel-active" : ""}`}>
+                <Link href="/" aria-label="Close" className="absolute top-4 right-4 z-[101]">
+                    <Button variant="ghost" size="icon" className="h-8 w-8 rounded-full bg-background/50 hover:bg-background/80">
+                        <X className="h-5 w-5 text-muted-foreground" />
+                    </Button>
+                </Link>
+
                 {/* Sign Up Form */}
                 <div className="form-container sign-up-container">
                     <Form {...signUpForm}>
