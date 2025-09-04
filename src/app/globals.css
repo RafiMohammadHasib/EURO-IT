@@ -111,10 +111,9 @@ html {
 
 /* Auth Page Styles */
 .auth-container {
-	background-color: #fff;
+	background-color: hsl(var(--card));
 	border-radius: 10px;
-  box-shadow: 0 14px 28px rgba(0,0,0,0.25), 
-			0 10px 10px rgba(0,0,0,0.22);
+  	box-shadow: 0 14px 28px rgba(0,0,0,0.25), 0 10px 10px rgba(0,0,0,0.22);
 	position: relative;
 	overflow: hidden;
 	width: 768px;
@@ -233,7 +232,7 @@ html {
 }
 
 .auth-form {
-    background-color: #ffffff;
+    background-color: hsl(var(--card));
     display: flex;
     align-items: center;
     justify-content: center;
@@ -244,13 +243,9 @@ html {
 }
 
 .auth-input {
-    background-color: #eee;
+    background-color: hsl(var(--input));
     border: none;
-    padding: 12px 15px;
-    margin: 8px 0;
-    width: 100%;
-    color: #000;
-    padding-left: 2.5rem; /* Add padding for the icon */
+    color: hsl(var(--foreground));
 }
 
 .auth-button {
@@ -286,3 +281,5 @@ html {
 .auth-button:focus, .ghost-button:focus {
 	outline: none;
 }
+
+    

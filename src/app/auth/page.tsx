@@ -91,7 +91,7 @@ export default function AuthPage() {
     };
 
     return (
-        <div className="flex flex-col min-h-screen items-center justify-center bg-background p-4 light">
+        <div className="fixed inset-0 z-[100] flex items-center justify-center bg-background/80 backdrop-blur-sm">
             <div id="container" className={`auth-container ${isSignUp ? "right-panel-active" : ""}`}>
                 <Link href="/" aria-label="Close" className="absolute top-4 right-4 z-[101]">
                     <Button variant="ghost" size="icon" className="h-8 w-8 rounded-full bg-background/50 hover:bg-background/80">
@@ -111,7 +111,7 @@ export default function AuthPage() {
                                     <FormItem className="w-full">
                                         <div className="relative">
                                              <User className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
-                                            <Input placeholder="Full Name" {...field} className="pl-10" />
+                                            <Input placeholder="Full Name" {...field} className="pl-10 auth-input" />
                                         </div>
                                         <FormMessage />
                                     </FormItem>
@@ -124,7 +124,7 @@ export default function AuthPage() {
                                     <FormItem className="w-full">
                                        <div className="relative">
                                             <Mail className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
-                                            <Input placeholder="Email" {...field} className="pl-10" />
+                                            <Input placeholder="Email" {...field} className="pl-10 auth-input" />
                                         </div>
                                         <FormMessage />
                                     </FormItem>
@@ -137,7 +137,7 @@ export default function AuthPage() {
                                     <FormItem className="w-full">
                                        <div className="relative">
                                             <Phone className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
-                                            <Input placeholder="Phone (e.g. +11234567890)" {...field} className="pl-10" />
+                                            <Input placeholder="Phone (e.g. +11234567890)" {...field} className="pl-10 auth-input" />
                                         </div>
                                         <FormMessage />
                                     </FormItem>
@@ -150,7 +150,7 @@ export default function AuthPage() {
                                     <FormItem className="w-full">
                                         <div className="relative">
                                             <Lock className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
-                                            <Input type="password" placeholder="Password" {...field} className="pl-10" />
+                                            <Input type="password" placeholder="Password" {...field} className="pl-10 auth-input" />
                                         </div>
                                         <FormMessage />
                                     </FormItem>
@@ -176,7 +176,7 @@ export default function AuthPage() {
                                     <FormItem className="w-full">
                                         <div className="relative">
                                             <Mail className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
-                                            <Input placeholder="Email" {...field} className="pl-10" />
+                                            <Input placeholder="Email" {...field} className="pl-10 auth-input" />
                                         </div>
                                         <FormMessage />
                                     </FormItem>
@@ -189,7 +189,7 @@ export default function AuthPage() {
                                     <FormItem className="w-full">
                                         <div className="relative">
                                             <Lock className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
-                                            <Input type="password" placeholder="Password" {...field} className="pl-10" />
+                                            <Input type="password" placeholder="Password" {...field} className="pl-10 auth-input" />
                                         </div>
                                         <FormMessage />
                                     </FormItem>
@@ -222,3 +222,5 @@ export default function AuthPage() {
         </div>
     );
 }
+
+    
