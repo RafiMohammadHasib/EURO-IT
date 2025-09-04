@@ -7,7 +7,7 @@ import {
   signInWithEmailAndPassword, 
   type UserCredential
 } from "firebase/auth";
-import { doc, setDoc, getDoc, updateDoc } from "firebase/firestore";
+import { doc, setDoc, getDoc, updateDoc, serverTimestamp } from "firebase/firestore";
 
 type AppUser = {
     uid: string;
@@ -21,6 +21,7 @@ export const signUp = async (email: string, password: string, fullName: string, 
     const userCredential = await createUserWithEmailAndPassword(auth, email, password);
     const user = userCredential.user;
     
+    // This is the data structure for the new user document in Firestore.
     const appUser: AppUser = {
         uid: user.uid,
         email: user.email,
@@ -28,15 +29,15 @@ export const signUp = async (email: string, password: string, fullName: string, 
         phoneNumber: phoneNumber,
     };
 
-    // Save additional user info in Firestore
+    // Save additional user info in Firestore.
+    // This creates the document that was previously missing.
     await setDoc(doc(db, "users", user.uid), {
       ...appUser,
-      createdAt: new Date(),
+      createdAt: serverTimestamp(),
     });
     
     return appUser;
   } catch (error: any) {
-    // Handle specific Firebase errors if needed
     console.error("Sign up error:", error);
     throw new Error(error.message || "Failed to sign up.");
   }
@@ -60,13 +61,20 @@ export const signIn = async (email: string, password: string): Promise<AppUser> 
             phoneNumber: userData.phoneNumber || ""
         };
     } else {
-        // This case should ideally not happen if users are always created via your signUp function
-        return {
-            uid: user.uid,
-            email: user.email,
-            fullName: "User",
-            phoneNumber: ""
+        // This case might happen for users created before the fix.
+        // We can create their document now to prevent future errors.
+        console.warn(`User document for ${user.uid} not found. Creating one.`);
+        const newUser: AppUser = {
+          uid: user.uid,
+          email: user.email,
+          fullName: 'User', // Default name
+          phoneNumber: '',
         };
+        await setDoc(doc(db, "users", user.uid), {
+          ...newUser,
+          createdAt: serverTimestamp(),
+        });
+        return newUser;
     }
 
   } catch (error: any) {
@@ -78,6 +86,12 @@ export const signIn = async (email: string, password: string): Promise<AppUser> 
 export const updateUserProfile = async (uid: string, data: { fullName?: string; phoneNumber?: string }): Promise<AppUser> => {
     try {
         const userDocRef = doc(db, "users", uid);
+        
+        const docSnap = await getDoc(userDocRef);
+        if (!docSnap.exists()) {
+            throw new Error("User document does not exist. Cannot update.");
+        }
+
         await updateDoc(userDocRef, data);
         const updatedDoc = await getDoc(userDocRef);
         const userData = updatedDoc.data();
@@ -97,3 +111,4 @@ export const updateUserProfile = async (uid: string, data: { fullName?: string; 
         throw new Error(error.message || "Failed to update profile.");
     }
 };
+
