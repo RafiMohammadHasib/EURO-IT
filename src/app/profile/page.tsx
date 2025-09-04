@@ -2,6 +2,7 @@
 "use client";
 
 import * as React from "react";
+import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useMounted } from "@/hooks/use-mounted";
 import { Loader2, User, Mail, Phone, Edit, Upload, History, FileText } from "lucide-react";
