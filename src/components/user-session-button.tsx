@@ -50,6 +50,7 @@ export default function UserSessionButton() {
   };
 
   const getInitials = (name: string) => {
+    if (!name) return "U";
     const names = name.split(' ');
     if (names.length === 1) return names[0][0].toUpperCase();
     return (names[0][0] + names[names.length - 1][0]).toUpperCase();
@@ -76,6 +77,7 @@ export default function UserSessionButton() {
       <DropdownMenuTrigger asChild>
         <Button variant="ghost" className="relative h-8 w-8 rounded-full">
           <Avatar className="h-8 w-8">
+             <AvatarImage src="/placeholder-avatar.png" alt={user.fullName} />
             <AvatarFallback>{getInitials(user.fullName)}</AvatarFallback>
           </Avatar>
         </Button>

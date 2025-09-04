@@ -15,6 +15,8 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/com
 import { getMarketPlans, MarketPlan } from "@/services/market-plan";
 import { format } from "date-fns";
 import { useToast } from "@/hooks/use-toast";
+import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip";
+
 
 type AppUser = {
   uid: string;
@@ -115,7 +117,7 @@ export default function ProfilePage() {
                            <AvatarImage src="/placeholder-avatar.png" alt={user.fullName} />
                            <AvatarFallback>{getInitials(user.fullName)}</AvatarFallback>
                         </Avatar>
-                         <Button variant="outline" size="sm">
+                         <Button variant="outline" size="sm" disabled>
                             <Upload className="w-4 h-4 mr-2" />
                             Upload Photo
                          </Button>
@@ -132,10 +134,19 @@ export default function ProfilePage() {
                         <Phone className="w-5 h-5 text-muted-foreground" />
                         <span>{user.phoneNumber}</span>
                     </div>
-                     <Button className="w-full mt-4">
-                        <Edit className="w-4 h-4 mr-2" />
-                        Edit Profile
-                     </Button>
+                    <TooltipProvider>
+                      <Tooltip>
+                        <TooltipTrigger asChild>
+                          <Button className="w-full mt-4" disabled>
+                              <Edit className="w-4 h-4 mr-2" />
+                              Edit Profile
+                          </Button>
+                        </TooltipTrigger>
+                        <TooltipContent>
+                          <p>This feature is coming soon!</p>
+                        </TooltipContent>
+                      </Tooltip>
+                    </TooltipProvider>
                   </CardContent>
                 </Card>
               </div>
