@@ -19,7 +19,7 @@ const teamMembers = [
   { name: 'Jakir Hossain', role: 'Group GM', image: 'https://picsum.photos/400/400?random=4' },
   { name: 'Syed Mominin Islam Tamim', role: 'Creative Designer', image: 'https://picsum.photos/400/400?random=5' },
   { name: 'Md. Shakil Mahmud', role: 'Head of Creative Lead', image: 'https://picsum.photos/400/400?random=6' },
-  { name: 'Samia Chowdhury', role: 'Graphics Design & Video Editing', image: 'https://picsum.photos/400/400?random=7' },
+  { name: 'Muzahidul Islam Chowdhury', role: 'Graphics Design & Video Editing', image: 'https://picsum.photos/400/400?random=7' },
   { name: 'Rafi Md. Hasib', role: 'Software Engineer & Business Developer', image: 'https://picsum.photos/400/400?random=8' },
 ];
 
