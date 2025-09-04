@@ -114,7 +114,7 @@ export default function ProfilePage() {
                   <CardContent className="space-y-4">
                      <div className="flex items-center justify-center flex-col space-y-4">
                         <Avatar className="w-24 h-24 text-4xl">
-                           <AvatarImage src="/placeholder-avatar.png" alt={user.fullName} />
+                           <AvatarImage src="https://picsum.photos/100/100" data-ai-hint="user avatar" alt={user.fullName} />
                            <AvatarFallback>{getInitials(user.fullName)}</AvatarFallback>
                         </Avatar>
                          <Button variant="outline" size="sm" disabled>

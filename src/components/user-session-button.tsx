@@ -77,7 +77,7 @@ export default function UserSessionButton() {
       <DropdownMenuTrigger asChild>
         <Button variant="ghost" className="relative h-8 w-8 rounded-full">
           <Avatar className="h-8 w-8">
-             <AvatarImage src="/placeholder-avatar.png" alt={user.fullName} />
+             <AvatarImage src="https://picsum.photos/100/100" data-ai-hint="user avatar" alt={user.fullName} />
             <AvatarFallback>{getInitials(user.fullName)}</AvatarFallback>
           </Avatar>
         </Button>
