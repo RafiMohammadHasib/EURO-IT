@@ -21,7 +21,6 @@ export const signUp = async (email: string, password: string, fullName: string, 
     const userCredential = await createUserWithEmailAndPassword(auth, email, password);
     const user = userCredential.user;
     
-    // This is the data structure for the new user document in Firestore.
     const appUser: AppUser = {
         uid: user.uid,
         email: user.email,
@@ -48,7 +47,6 @@ export const signIn = async (email: string, password: string): Promise<AppUser> 
     const userCredential = await signInWithEmailAndPassword(auth, email, password);
     const user = userCredential.user;
 
-    // Fetch user profile from Firestore
     const userDocRef = doc(db, "users", user.uid);
     const userDoc = await getDoc(userDocRef);
 
@@ -61,13 +59,13 @@ export const signIn = async (email: string, password: string): Promise<AppUser> 
             phoneNumber: userData.phoneNumber || ""
         };
     } else {
-        // This case might happen for users created before the fix.
-        // We can create their document now to prevent future errors.
+        // This case handles users created before the document creation fix.
+        // We create their document now to prevent future errors.
         console.warn(`User document for ${user.uid} not found. Creating one.`);
         const newUser: AppUser = {
           uid: user.uid,
           email: user.email,
-          fullName: 'User', // Default name
+          fullName: 'New User', // Default name
           phoneNumber: '',
         };
         await setDoc(doc(db, "users", user.uid), {
@@ -77,8 +75,13 @@ export const signIn = async (email: string, password: string): Promise<AppUser> 
         return newUser;
     }
 
-  } catch (error: any) {
+  } catch (error: any)
+{
     console.error("Sign in error:", error);
+    // Provide a more user-friendly error message
+    if (error.code === 'auth/user-not-found' || error.code === 'auth/wrong-password' || error.code === 'auth/invalid-credential') {
+        throw new Error("Invalid email or password. Please try again.");
+    }
     throw new Error(error.message || "Failed to sign in.");
   }
 };
@@ -89,10 +92,22 @@ export const updateUserProfile = async (uid: string, data: { fullName?: string; 
         
         const docSnap = await getDoc(userDocRef);
         if (!docSnap.exists()) {
-            throw new Error("User document does not exist. Cannot update.");
+             // If document doesn't exist, create it first, then update.
+            console.warn(`User document for ${uid} not found on update. Creating it now.`);
+            const user = auth.currentUser;
+            if (!user) throw new Error("Authentication error: No user is currently signed in.");
+
+            const newUser: AppUser = {
+                uid: user.uid,
+                email: user.email,
+                fullName: data.fullName || "User",
+                phoneNumber: data.phoneNumber || "",
+            };
+            await setDoc(userDocRef, { ...newUser, createdAt: serverTimestamp(), ...data });
+        } else {
+            await updateDoc(userDocRef, data);
         }
 
-        await updateDoc(userDocRef, data);
         const updatedDoc = await getDoc(userDocRef);
         const userData = updatedDoc.data();
 
@@ -111,4 +126,3 @@ export const updateUserProfile = async (uid: string, data: { fullName?: string; 
         throw new Error(error.message || "Failed to update profile.");
     }
 };
-
