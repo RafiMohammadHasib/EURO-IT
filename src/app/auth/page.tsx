@@ -95,7 +95,7 @@ export default function AuthPage() {
                 {/* Sign Up Form */}
                 <div className="form-container sign-up-container">
                     <Form {...signUpForm}>
-                        <form onSubmit={signUpForm.handleSubmit(handleSignUp)} className="auth-form">
+                        <form onSubmit={signUpForm.handleSubmit(handleSignUp)} className="auth-form space-y-4">
                             <h1 className="text-2xl font-bold mb-4 text-foreground">Create Account</h1>
                             <FormField
                                 control={signUpForm.control}
@@ -160,7 +160,7 @@ export default function AuthPage() {
                 {/* Sign In Form */}
                 <div className="form-container sign-in-container">
                     <Form {...signInForm}>
-                        <form onSubmit={signInForm.handleSubmit(handleSignIn)} className="auth-form">
+                        <form onSubmit={signInForm.handleSubmit(handleSignIn)} className="auth-form space-y-4">
                             <h1 className="text-2xl font-bold mb-4 text-foreground">Sign In</h1>
                              <FormField
                                 control={signInForm.control}
