@@ -140,6 +140,11 @@ export default function ProfilePage() {
     setUser(newUserState as AppUser);
     localStorage.setItem("user", JSON.stringify(newUserState));
   };
+  
+  const handleViewPlan = (plan: MarketPlan) => {
+    sessionStorage.setItem('currentPlan', JSON.stringify(plan));
+    router.push(`/plan/${plan.id}`);
+  }
 
   const getInitials = (name: string) => {
     if (!name) return "U";
@@ -229,11 +234,11 @@ export default function ProfilePage() {
                                         <div>
                                             <p className="font-semibold text-foreground">{plan.title}</p>
                                             <p className="text-sm text-muted-foreground">
-                                                Created on {format(plan.createdAt, "MMMM d, yyyy")}
+                                                Created on {format(new Date(plan.createdAt), "MMMM d, yyyy")}
                                             </p>
                                         </div>
                                     </div>
-                                    <Button variant="outline" size="sm">View</Button>
+                                    <Button variant="outline" size="sm" onClick={() => handleViewPlan(plan)}>View</Button>
                                 </div>
                             ))}
                         </div>
@@ -257,3 +262,5 @@ export default function ProfilePage() {
     </div>
   );
 }
+
+    

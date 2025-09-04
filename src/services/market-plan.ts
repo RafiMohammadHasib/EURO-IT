@@ -1,11 +1,11 @@
 
 import { db } from '@/lib/firebase';
-import { collection, addDoc, serverTimestamp, getDocs, query, orderBy } from 'firebase/firestore';
+import { collection, addDoc, serverTimestamp, getDocs, query, orderBy, Timestamp } from 'firebase/firestore';
 import type { GenerateMarketPlanOutput } from '@/ai/flows/market-plan-flow';
 
 export type MarketPlan = GenerateMarketPlanOutput & {
     id: string;
-    createdAt: Date;
+    createdAt: Date | Timestamp;
 };
 
 
@@ -30,10 +30,13 @@ export const getMarketPlans = async (userId: string): Promise<MarketPlan[]> => {
         const plans: MarketPlan[] = [];
         querySnapshot.forEach((doc) => {
             const data = doc.data();
+            const createdAt = data.createdAt;
             plans.push({
                 id: doc.id,
                 ...data,
-                createdAt: data.createdAt.toDate(),
+                // Firestore timestamps need to be converted to a serializable format (ISO string)
+                // to be stored in localStorage or passed between components.
+                createdAt: createdAt.toDate().toISOString(),
             } as MarketPlan);
         });
         return plans;
@@ -42,4 +45,6 @@ export const getMarketPlans = async (userId: string): Promise<MarketPlan[]> => {
         throw new Error("Could not fetch market plans.");
     }
 }
+    
+
     
