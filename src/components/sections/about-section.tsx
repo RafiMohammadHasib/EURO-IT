@@ -62,7 +62,7 @@ const AboutSection = () => {
       </div>
 
       <div>
-        <h3 className="text-3xl font-bold text-center mb-12 glow-text">Some of Our Key Members</h3>
+        <h2 className="text-4xl md:text-5xl font-bold text-center mb-12 glow-text">Some of Our Key Members</h2>
         <Carousel
           opts={{
             align: "start",
